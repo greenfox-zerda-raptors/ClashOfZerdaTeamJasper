@@ -7,5 +7,16 @@ public class Barracks extends Building {
 
     public Barracks() {
         super();
+        this.constructionTime = 30000;
+        this.unitBuildTime = 10000;
+        this.baseCost = 100;
+    }
+
+    public long getUnitBuildTime() {
+        return unitBuildTime;
+    }
+
+    public void setUnitBuildTime(long unitBuildTime) {
+        this.unitBuildTime = unitBuildTime;
     }
 }
