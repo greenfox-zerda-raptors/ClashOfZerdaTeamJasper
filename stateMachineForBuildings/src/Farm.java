@@ -2,14 +2,17 @@
  * Created by Zoltán on 2017.01.18..
  */
 public class Farm extends Building {
-    protected int foodPerMinute = 10;
+    protected int foodPerMinute = 10 * buildingLevel;
 
-    public Farm(){
+    public Farm() {
+        super();
+        this.constructionTime = 15000;
+        this.baseCost = 30;
+        this.buildingUpgradeCost = 30;
+        this.buildingUpgradeTime = 100000;
 
     }
-    public Farm(long constructionTime, int buildingLevel, BuildingState buildingState){
-        super(constructionTime, buildingLevel, buildingState);
-    }
+
 
     public int getFoodPerMinute() {
         return foodPerMinute;

@@ -1,14 +1,16 @@
 /**
  * Created by Zoltán on 2017.01.18..
  */
-public class Mine extends Building{
-    protected int goldPerMinute = 10;
+public class Mine extends Building {
+    protected int goldPerMinute = 10 * buildingLevel;
 
-    public Mine(){
+    public Mine() {
+        super();
+        this.constructionTime = 15000;
+        this.baseCost = 40;
+        this.buildingUpgradeCost = 40;
+        this.buildingUpgradeTime = 150000;
 
-    }
-    public Mine(long constructionTime, int buildingLevel, BuildingState buildingState){
-        super(constructionTime, buildingLevel, buildingState);
     }
 
     public int getGoldPerMinute() {

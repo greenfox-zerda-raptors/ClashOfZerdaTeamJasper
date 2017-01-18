@@ -5,22 +5,18 @@
 public class Building {
 
 
-    protected long constructionTime;
-    protected int buildingLevel;
     protected BuildingState buildingState;
+    protected int buildingLevel;
+
+    protected long constructionTime;
     protected int baseCost;
     protected int buildingUpgradeCost;
+    protected long buildingUpgradeTime;
 
 
     public Building() {
         this.buildingState = new Idle();
-        this.buildingLevel = 0;
-    }
-
-    public Building(long constructionTime, int buildingLevel, BuildingState buildingState) {
-        this.constructionTime = constructionTime;
-        this.buildingLevel = buildingLevel;
-        this.buildingState = buildingState;
+        this.buildingLevel = 1;
     }
 
     public BuildingState getBuildingState() {
@@ -35,4 +31,35 @@ public class Building {
         this.buildingState.switchState(this);
     }
 
+    public long getConstructionTime() {
+        return constructionTime;
+    }
+
+    public void setConstructionTime(long constructionTime) {
+        this.constructionTime = constructionTime;
+    }
+
+    public int getBuildingLevel() {
+        return buildingLevel;
+    }
+
+    public void setBuildingLevel(int buildingLevel) {
+        this.buildingLevel = buildingLevel;
+    }
+
+    public int getBaseCost() {
+        return baseCost;
+    }
+
+    public void setBaseCost(int baseCost) {
+        this.baseCost = baseCost;
+    }
+
+    public int getBuildingUpgradeCost() {
+        return buildingUpgradeCost;
+    }
+
+    public void setBuildingUpgradeCost(int buildingUpgradeCost) {
+        this.buildingUpgradeCost = buildingUpgradeCost;
+    }
 }

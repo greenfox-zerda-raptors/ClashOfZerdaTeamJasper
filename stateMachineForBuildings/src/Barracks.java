@@ -8,8 +8,10 @@ public class Barracks extends Building {
     public Barracks() {
         super();
         this.constructionTime = 30000;
-        this.unitBuildTime = 10000;
         this.baseCost = 100;
+        this.unitBuildTime = 10000 / buildingLevel;
+        this.buildingUpgradeCost = 100;
+        this.buildingUpgradeTime = 600000 / buildingLevel;
     }
 
     public long getUnitBuildTime() {
