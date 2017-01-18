@@ -1,7 +1,9 @@
 /**
  * Created by almasics on 2017.01.18..
  */
+
 public class Building {
+
 
     protected long constructionTime;
     protected int buildingLevel;
@@ -13,6 +15,12 @@ public class Building {
     public Building() {
         this.buildingState = new Idle();
         this.buildingLevel = 0;
+    }
+
+    public Building(long constructionTime, int buildingLevel, BuildingState buildingState) {
+        this.constructionTime = constructionTime;
+        this.buildingLevel = buildingLevel;
+        this.buildingState = buildingState;
     }
 
     public BuildingState getBuildingState() {
