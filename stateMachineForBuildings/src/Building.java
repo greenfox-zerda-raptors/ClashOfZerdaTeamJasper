@@ -4,13 +4,17 @@
 
 public class Building {
 
-    protected long constructionTime = 20000;
-    protected int buildingLevel = 0;
+
+    protected long constructionTime;
+    protected int buildingLevel;
     protected BuildingState buildingState;
+    protected int baseCost;
+    protected int buildingUpgradeCost;
 
 
     public Building() {
         this.buildingState = new Idle();
+        this.buildingLevel = 0;
     }
 
     public Building(long constructionTime, int buildingLevel, BuildingState buildingState) {
