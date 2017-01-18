@@ -3,14 +3,16 @@
  */
 public class Building {
 
-    private long unitBuildTime = 10000;
-    private long constructionTime = 20000;
-    private int buildingLevel = 0;
-    private BuildingState buildingState;
+    protected long constructionTime;
+    protected int buildingLevel;
+    protected BuildingState buildingState;
+    protected int baseCost;
+    protected int buildingUpgradeCost;
 
 
     public Building() {
         this.buildingState = new Idle();
+        this.buildingLevel = 0;
     }
 
     public BuildingState getBuildingState() {
@@ -25,11 +27,4 @@ public class Building {
         this.buildingState.switchState(this);
     }
 
-    public long getUnitBuildTime() {
-        return unitBuildTime;
-    }
-
-    public void setUnitBuildTime(long unitBuildTime) {
-        this.unitBuildTime = unitBuildTime;
-    }
 }
