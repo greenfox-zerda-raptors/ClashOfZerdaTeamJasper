@@ -5,12 +5,12 @@ public class Townhall extends Building {
     protected int goldPerMinute = 10;
     protected int foodPerMinute = 10;
 
-    public Townhall(){
+    public Townhall() {
 
     }
-    public Townhall(long constructionTime, int buildingLevel, BuildingState buildingState){
-        super(constructionTime, buildingLevel, buildingState);
-    }
+//    public Townhall(long constructionTime, int buildingLevel, BuildingState buildingState){
+//        super(constructionTime, buildingLevel, buildingState);
+//    }
 
     public int getGoldPerMinute() {
         return goldPerMinute;

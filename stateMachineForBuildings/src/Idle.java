@@ -8,4 +8,5 @@ public class Idle implements BuildingState {
         System.out.println("Building in idle mode");
         building.setBuildingState(new ProductionInProgress());
     }
+
 }

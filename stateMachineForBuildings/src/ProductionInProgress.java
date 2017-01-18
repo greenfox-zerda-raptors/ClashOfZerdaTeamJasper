@@ -10,4 +10,5 @@ public class ProductionInProgress implements BuildingState {
         System.out.println("Building production started");
         building.setBuildingState(new Idle());
     }
+
 }

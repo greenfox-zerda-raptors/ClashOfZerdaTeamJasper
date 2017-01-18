@@ -31,6 +31,7 @@ public class Building {
         this.buildingState.switchState(this);
     }
 
+
     public long getConstructionTime() {
         return constructionTime;
     }
@@ -61,5 +62,9 @@ public class Building {
 
     public void setBuildingUpgradeCost(int buildingUpgradeCost) {
         this.buildingUpgradeCost = buildingUpgradeCost;
+    }
+
+    public String buildingToString() {
+        return String.format("building details: %d level", buildingLevel);
     }
 }

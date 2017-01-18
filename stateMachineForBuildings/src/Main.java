@@ -3,14 +3,10 @@
  */
 public class Main {
     public static void main(String[] args) {
-        Building barracks = new Building();
-        barracks.switchState();
-        barracks.switchState();
-        barracks.setBuildingState(new LevelUp());
-        barracks.switchState();
-        barracks.switchState();
-        barracks.switchState();
-
-
+        Building mine = new Mine();
+        System.out.println(mine.buildingToString());
+        mine.setBuildingState(new LevelUp());
+        mine.switchState();
+        System.out.println(mine.buildingToString());
     }
 }

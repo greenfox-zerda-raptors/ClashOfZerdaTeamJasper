@@ -11,7 +11,7 @@ public class LevelUp implements BuildingState {
         building.setBuildingState(new Idle());
     }
 
-    private void upgradeBuildingLevel(Building building) {
+    public void upgradeBuildingLevel(Building building) {
         building.setBuildingLevel(building.getBuildingLevel() + 1);
     }
 }
