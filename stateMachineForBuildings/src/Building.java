@@ -12,6 +12,7 @@ public class Building {
     protected int baseCost;
     protected int buildingUpgradeCost;
     protected long buildingUpgradeTime;
+    protected long endUpgradeTime;
 
 
     public Building() {
@@ -66,5 +67,21 @@ public class Building {
 
     public String buildingToString() {
         return String.format("building details: %d level", buildingLevel);
+    }
+
+    public long getBuildingUpgradeTime() {
+        return buildingUpgradeTime;
+    }
+
+    public void setBuildingUpgradeTime(long buildingUpgradeTime) {
+        this.buildingUpgradeTime = buildingUpgradeTime;
+    }
+
+    public long getEndUpgradeTime() {
+        return endUpgradeTime;
+    }
+
+    public void setEndUpgradeTime(long endUpgradeTime) {
+        this.endUpgradeTime = endUpgradeTime;
     }
 }

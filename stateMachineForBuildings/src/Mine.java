@@ -9,7 +9,7 @@ public class Mine extends Building {
         this.constructionTime = 15000;
         this.baseCost = 40;
         this.buildingUpgradeCost = 40;
-        this.buildingUpgradeTime = 150000;
+        this.buildingUpgradeTime = 10000;
 
     }
 
