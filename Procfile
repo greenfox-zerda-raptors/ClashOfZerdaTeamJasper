@@ -1,2 +1,1 @@
-default_process_types:
-    web: java -jar -Dport=$PORT build/libs/spring-boot.jar
+web: java -jar -Dport=$PORT build/libs/spring-boot.jar
