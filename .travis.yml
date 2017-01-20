@@ -13,6 +13,7 @@ install:
 
 branches:
   only:
+    - master
     - herokutest
 
 before_cache:
