@@ -1,1 +1,1 @@
-web: build\install\gradle-getting-started\bin\gradle-getting-started.bat
+web: sh src/main/java/com/greenfox/jasper/ProofOfConceptApplication
