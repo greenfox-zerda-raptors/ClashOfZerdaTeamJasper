@@ -1,1 +1,1 @@
-web: java -jar -Dport=$PORT build/libs/spring-boot.jar
+web: build\install\gradle-getting-started\bin\gradle-getting-started.bat
