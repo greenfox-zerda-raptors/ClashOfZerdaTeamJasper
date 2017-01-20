@@ -14,7 +14,7 @@ public class LevelUp implements BuildingState {
         if (currentTime > building.getEndUpgradeTime()) {
             upgradeBuildingLevel(building);
             System.out.println("Building has been updated");
-            building.setBuildingState(new Idle());
+//            building.setBuildingState(new Idle());
         }
         System.out.println("building has not been upgraded");
     }

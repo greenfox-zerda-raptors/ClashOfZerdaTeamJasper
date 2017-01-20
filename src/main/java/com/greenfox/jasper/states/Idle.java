@@ -10,7 +10,7 @@ public class Idle implements BuildingState {
     @Override
     public void executeState(Building building) {
         System.out.println("Building in idle mode");
-        building.setBuildingState(new ProductionInProgress());
+//        building.setBuildingState(new ProductionInProgress());
     }
 
 }

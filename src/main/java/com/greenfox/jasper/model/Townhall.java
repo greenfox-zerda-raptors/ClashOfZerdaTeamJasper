@@ -1,11 +1,16 @@
 package com.greenfox.jasper.model;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /**
  * Created by almasics on 2017.01.20..
  */
+@Entity
+@DiscriminatorValue("Townhall")
 public class Townhall extends Building {
-    protected int goldPerMinute = 10;
-    protected int foodPerMinute = 10;
+    protected int goldPerMinute = 10*buildingLevel;
+    protected int foodPerMinute = 10 * buildingLevel;
 
     public Townhall() {
 

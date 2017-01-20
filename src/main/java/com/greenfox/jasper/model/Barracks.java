@@ -1,8 +1,15 @@
 package com.greenfox.jasper.model;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /**
  * Created by almasics on 2017.01.20..
  */
+
+@Entity
+@DiscriminatorValue("Barracks")
+
 public class Barracks extends Building {
 
     private long unitBuildTime;

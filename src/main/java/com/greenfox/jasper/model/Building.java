@@ -1,38 +1,45 @@
 package com.greenfox.jasper.model;
 
-import com.greenfox.jasper.states.BuildingState;
-import com.greenfox.jasper.states.Idle;
+import javax.persistence.*;
 
 /**
  * Created by almasics on 2017.01.20..
  */
+@Entity
+@Table(name = "Buildings")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="DISC", discriminatorType= DiscriminatorType.STRING, length=20)
 public class Building {
-    BuildingState buildingState;
-    int buildingLevel;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long id;
+
+//    BuildingState buildingState;
+    int buildingLevel = 1;
 
     long constructionTime;
     int baseCost;
     int buildingUpgradeCost;
     long buildingUpgradeTime;
-    long endUpgradeTime;
+    long endUpgradeTime = buildingUpgradeTime + System.currentTimeMillis();
 
 
-    public Building() {
-        this.buildingState = new Idle();
-        this.buildingLevel = 1;
+    public Building(){
+
     }
 
-    public BuildingState getBuildingState() {
-        return buildingState;
-    }
 
-    public void setBuildingState(BuildingState buildingState) {
-        this.buildingState = buildingState;
-    }
-
-    public void switchState() {
-        this.buildingState.executeState(this);
-    }
+//    public BuildingState getBuildingState() {
+//        return buildingState;
+//    }
+//
+//    public void setBuildingState(BuildingState buildingState) {
+//        this.buildingState = buildingState;
+//    }
+//
+//    public void switchState() {
+//        this.buildingState.executeState(this);
+//    }
 
 
     public long getConstructionTime() {

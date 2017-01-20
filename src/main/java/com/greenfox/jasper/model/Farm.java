@@ -1,8 +1,14 @@
 package com.greenfox.jasper.model;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /**
  * Created by almasics on 2017.01.20..
  */
+@Entity
+@DiscriminatorValue("Farm")
+
 public class Farm extends Building {
     protected int foodPerMinute = 10 * buildingLevel;
 

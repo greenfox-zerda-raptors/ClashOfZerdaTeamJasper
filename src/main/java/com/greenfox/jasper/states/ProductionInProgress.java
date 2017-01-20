@@ -11,7 +11,7 @@ public class ProductionInProgress implements BuildingState {
     public void executeState(Building building) {
         long currenttime = System.currentTimeMillis();
         System.out.println("Building production started");
-        building.setBuildingState(new Idle());
+//        building.setBuildingState(new Idle());
     }
 
 }
