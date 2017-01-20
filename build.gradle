@@ -4,15 +4,18 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		mavenRepo name: 'Bintray Gradle Plugins', url: 'http://dl.bintray.com/vermeulen-mp/gradle-plugins'
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'heroku'
 
 jar {
 	baseName = 'proofofconcept'
@@ -25,6 +28,12 @@ repositories {
 	mavenCentral()
 }
 
+heroku {
+	appName = 'tranquil-river-19470'
+
+	//get this from heroku
+	apiKey = '6f1c449a-756b-4bc4-89fe-3a15ba5a2b43'
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
