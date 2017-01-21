@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "Buildings")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="DISC", discriminatorType= DiscriminatorType.STRING, length=20)
-public class Building {
+public abstract class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
