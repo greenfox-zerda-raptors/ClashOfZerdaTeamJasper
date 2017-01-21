@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String helloHeroku(){
-        return "heroku test one";
+        return "heroku test two, from branch <herokutest>";
     }
 }
