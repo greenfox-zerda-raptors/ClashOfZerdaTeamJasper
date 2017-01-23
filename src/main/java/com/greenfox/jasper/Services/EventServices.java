@@ -1,6 +1,6 @@
 package com.greenfox.jasper.Services;
 
-import com.greenfox.jasper.Models.GameEvent;
+import com.greenfox.jasper.Models.AvailableEvent;
 import com.greenfox.jasper.Models.GameItem.Building;
 import com.greenfox.jasper.Models.TimedEvent;
 import com.greenfox.jasper.Services.Repositories.BuildingRepository;
@@ -38,36 +38,33 @@ public class EventServices {
         log.info("the time after 60 sec is {}", currentTime+60000);
 
 //        List<TimedEvent> listedEvents =  timedEventRepo.findAllByExecutionTimeLessThanEqual(currentTime);
-        List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 5000), currentTime);
+        List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 7000), currentTime);
 
         if(listedEvents.size() != 0) {
             for (int i = 0; i < listedEvents.size(); i++) {
-                processEvent(listedEvents.get(i));
+                if(listedEvents.get(i).isWasExecuted() == false) {
+                    processEvent(listedEvents.get(i));
+                }
             }
-            for(int k = listedEvents.size() - 1; k >= 0; k--){
-                timedEventRepo.delete(listedEvents.get(k));
-            }
-        }
-//        int i = 0;
-//        if(listedEvents.size() != 1) {
-//            while (listedEvents.get(i).getExecutionTime() < currentTime) {
-//                processEvent(listedEvents.get(i));
-//                timedEventRepo.delete(listedEvents.get(i).getId());
-//                i++;
+//            if it need deletation
+//            for(int k = listedEvents.size() - 1; k >= 0; k--){
+//                timedEventRepo.delete(listedEvents.get(k));
 //            }
-//        }
+        }
 
     }
 
     private void processEvent(TimedEvent timedEvent) {
         executeEvent(timedEvent.getBuildingId(), timedEvent.getEvent());
+        timedEvent.setWasExecuted(true);
+        timedEventRepo.save(timedEvent);
     }
 
-    private void executeEvent(long buildingID, GameEvent events) {
+    private void executeEvent(long buildingID, AvailableEvent events) {
        Building tempBuilding = buildingRepository.findOne(buildingID);
 
 //        Creating troops should be handled in a different repository, still has to figure sth out
-//        Here is where Csaba's statemachine can come handy
+//        Here is where Csaba's statemachine could come handy
 
         System.out.println("Event read");
 

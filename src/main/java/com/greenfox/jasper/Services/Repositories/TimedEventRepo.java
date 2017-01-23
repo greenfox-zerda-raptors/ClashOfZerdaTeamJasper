@@ -16,5 +16,4 @@ public interface TimedEventRepo extends JpaRepository<TimedEvent, Long> {
     List<TimedEvent> findAllByExecutionTimeLessThanEqual(long currentTime);
 
     List<TimedEvent> findAllByExecutionTimeBetween(long previousCheckTime, long currentTime);
-
 }

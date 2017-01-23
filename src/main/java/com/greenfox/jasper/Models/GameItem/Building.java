@@ -8,13 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Buildings")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name="DISC", discriminatorType= DiscriminatorType.STRING, length=20)
 public abstract class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
-//    BuildingState buildingState;
     int buildingLevel = 1;
 
     long constructionTime;
@@ -27,12 +25,13 @@ public abstract class Building {
     public Building(){
 
     }
-    
+
 
 
     public void levelUp(){
         this.buildingLevel++;
     }
+
     public void demolish(){
         if(buildingLevel > 1) {
             this.buildingLevel--;

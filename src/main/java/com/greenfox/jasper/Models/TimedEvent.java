@@ -12,15 +12,16 @@ public class TimedEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long buildingId;
+    private boolean wasExecuted = false;
     private long executionTime;
 
-    private GameEvent event;
+    private AvailableEvent event;
 
     public TimedEvent(){
 
     }
 
-    public TimedEvent(long buildingId, long executionTime, GameEvent event){
+    public TimedEvent(long buildingId, long executionTime, AvailableEvent event){
         this.buildingId = buildingId;
         this.executionTime = executionTime;
         this.event = event;
@@ -50,12 +51,19 @@ public class TimedEvent {
         this.executionTime = executionTime;
     }
 
-    public GameEvent getEvent() {
+    public AvailableEvent getEvent() {
         return event;
     }
 
-    public void setEvent(GameEvent event) {
+    public void setEvent(AvailableEvent event) {
         this.event = event;
     }
 
+    public boolean isWasExecuted() {
+        return wasExecuted;
+    }
+
+    public void setWasExecuted(boolean wasExecuted) {
+        this.wasExecuted = wasExecuted;
+    }
 }
