@@ -1,8 +1,7 @@
 package com.greenfox.jasper.Services;
 
-import com.greenfox.jasper.Models.AvailableEvent;
-import com.greenfox.jasper.Models.GameItem.Building;
-import com.greenfox.jasper.Models.TimedEvent;
+import com.greenfox.jasper.Models.*;
+import com.greenfox.jasper.Models.GameItem.*;
 import com.greenfox.jasper.Services.Repositories.BuildingRepository;
 import com.greenfox.jasper.Services.Repositories.TimedEventRepo;
 import org.slf4j.Logger;
@@ -34,19 +33,20 @@ public class EventServices {
 
     @Scheduled(fixedRate = 5000)
     public void checkForEvents(){
+        Farm farmTest = new Farm();
         long currentTime = System.currentTimeMillis();
         log.info("the time after 60 sec is {}", currentTime+60000);
 
-//        List<TimedEvent> listedEvents =  timedEventRepo.findAllByExecutionTimeLessThanEqual(currentTime);
+//        2 sec is added to avoid events sneaking through
         List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 7000), currentTime);
 
         if(listedEvents.size() != 0) {
             for (int i = 0; i < listedEvents.size(); i++) {
-                if(listedEvents.get(i).isWasExecuted() == false) {
+                if(!listedEvents.get(i).isWasExecuted()) {
                     processEvent(listedEvents.get(i));
                 }
             }
-//            if it need deletation
+//            if it needs to be deleted
 //            for(int k = listedEvents.size() - 1; k >= 0; k--){
 //                timedEventRepo.delete(listedEvents.get(k));
 //            }
@@ -60,7 +60,7 @@ public class EventServices {
         timedEventRepo.save(timedEvent);
     }
 
-    private void executeEvent(long buildingID, AvailableEvent events) {
+    private void executeEvent(long buildingID, GameEvent events) {
        Building tempBuilding = buildingRepository.findOne(buildingID);
 
 //        Creating troops should be handled in a different repository, still has to figure sth out

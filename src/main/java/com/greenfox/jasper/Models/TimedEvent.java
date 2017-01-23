@@ -15,13 +15,13 @@ public class TimedEvent {
     private boolean wasExecuted = false;
     private long executionTime;
 
-    private AvailableEvent event;
+    private GameEvent event;
 
     public TimedEvent(){
 
     }
 
-    public TimedEvent(long buildingId, long executionTime, AvailableEvent event){
+    public TimedEvent(long buildingId, long executionTime, GameEvent event){
         this.buildingId = buildingId;
         this.executionTime = executionTime;
         this.event = event;
@@ -51,11 +51,11 @@ public class TimedEvent {
         this.executionTime = executionTime;
     }
 
-    public AvailableEvent getEvent() {
+    public GameEvent getEvent() {
         return event;
     }
 
-    public void setEvent(AvailableEvent event) {
+    public void setEvent(GameEvent event) {
         this.event = event;
     }
 

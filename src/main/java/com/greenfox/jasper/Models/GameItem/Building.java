@@ -23,10 +23,7 @@ public abstract class Building {
 
 
     public Building(){
-
     }
-
-
 
     public void levelUp(){
         this.buildingLevel++;
