@@ -27,19 +27,7 @@ public abstract class Building {
     public Building(){
 
     }
-
-
-//    public BuildingState getBuildingState() {
-//        return buildingState;
-//    }
-//
-//    public void setBuildingState(BuildingState buildingState) {
-//        this.buildingState = buildingState;
-//    }
-//
-//    public void switchState() {
-//        this.buildingState.executeState(this);
-//    }
+    
 
 
     public void levelUp(){
