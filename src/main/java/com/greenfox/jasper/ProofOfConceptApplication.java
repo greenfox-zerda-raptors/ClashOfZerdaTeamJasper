@@ -23,5 +23,6 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 		userRepo.save(new User("user2"));
 		userRepo.save(new User("user3"));
 		userRepo.save(new User("user4"));
+		userRepo.save(new User("user5"));
 	}
 }
