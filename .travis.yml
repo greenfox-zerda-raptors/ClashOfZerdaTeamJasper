@@ -13,7 +13,6 @@ install:
   - ./gradlew check
   - ./gradlew assemble --stacktrace --debug
 
-
 branches:
   only:
     - master
