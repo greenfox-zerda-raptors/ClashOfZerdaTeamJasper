@@ -11,7 +11,7 @@ before_script:
 
 install:
   - ./gradlew check
-  - ./gradlew assemble --stracktrace
+  - ./gradlew assemble --stracktrace --debug
 
 
 branches:
