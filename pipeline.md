@@ -5,7 +5,7 @@ Register an account on the following websites:
 
 <a>https://github.com/</a> <br>
 <a>https://travis-ci.org/</a><br>
-<a>https://heroku.com/apps</a><br>
+<a>https://heroku.com/</a><br>
 
 - Link your repos to travis on the website (if you dont have any create a repository under your github account)
 
