@@ -16,6 +16,6 @@ public class MainController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public User helloHeroku(){
-        return userRepo.findOne((long)1);
+        return userRepo.findOne((long)2);
     }
 }
