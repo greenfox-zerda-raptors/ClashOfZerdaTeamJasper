@@ -1,4 +1,4 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -8,13 +8,13 @@ import javax.persistence.Entity;
  */
 
 @Entity
-@DiscriminatorValue("Barracks")
+@DiscriminatorValue("Barrack")
 
-public class Barracks extends Building {
+public class Barrack extends Building {
 
     private long unitBuildTime;
 
-    public Barracks() {
+    public Barrack() {
         super();
         this.constructionTime = 30000;
         this.baseCost = 100;

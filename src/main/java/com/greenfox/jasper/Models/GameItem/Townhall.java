@@ -1,4 +1,4 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -7,20 +7,22 @@ import javax.persistence.Entity;
  * Created by almasics on 2017.01.20..
  */
 @Entity
-@DiscriminatorValue("Farm")
-
-public class Farm extends Building {
+@DiscriminatorValue("Townhall")
+public class Townhall extends Building {
+    protected int goldPerMinute = 10*buildingLevel;
     protected int foodPerMinute = 10 * buildingLevel;
 
-    public Farm() {
-        super();
-        this.constructionTime = 15000;
-        this.baseCost = 30;
-        this.buildingUpgradeCost = 30;
-        this.buildingUpgradeTime = 100000;
+    public Townhall() {
 
     }
 
+    public int getGoldPerMinute() {
+        return goldPerMinute;
+    }
+
+    public void setGoldPerMinute(int goldPerMinute) {
+        this.goldPerMinute = goldPerMinute;
+    }
 
     public int getFoodPerMinute() {
         return foodPerMinute;

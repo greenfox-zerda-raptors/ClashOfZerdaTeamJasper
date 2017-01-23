@@ -1,6 +1,6 @@
 package com.greenfox.jasper.Services.Repositories;
 
-import com.greenfox.jasper.model.Farm;
+import com.greenfox.jasper.Models.GameItem.Farm;
 import org.springframework.data.repository.CrudRepository;
 
 /**

@@ -1,6 +1,6 @@
 package com.greenfox.jasper.Services.Repositories;
 
-import com.greenfox.jasper.model.Townhall;
+import com.greenfox.jasper.Models.GameItem.Townhall;
 import org.springframework.data.repository.CrudRepository;
 
 /**

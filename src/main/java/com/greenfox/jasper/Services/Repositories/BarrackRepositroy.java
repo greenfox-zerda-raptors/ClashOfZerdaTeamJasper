@@ -1,6 +1,6 @@
 package com.greenfox.jasper.Services.Repositories;
 
-import com.greenfox.jasper.model.Barracks;
+import com.greenfox.jasper.Models.GameItem.Barrack;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 
 
 
-public interface BarrackRepositroy extends CrudRepository<Barracks,Long > {
+public interface BarrackRepositroy extends CrudRepository<Barrack,Long > {
 
 }

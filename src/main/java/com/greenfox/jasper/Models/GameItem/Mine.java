@@ -1,4 +1,4 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
 
 import javax.persistence.*;
 

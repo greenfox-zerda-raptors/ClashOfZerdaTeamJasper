@@ -1,6 +1,6 @@
 package com.greenfox.jasper.Services.Repositories;
 
-import com.greenfox.jasper.model.Building;
+import com.greenfox.jasper.Models.GameItem.Building;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,4 +12,6 @@ import java.util.List;
 public interface BuildingRepository extends CrudRepository<Building,Long > {
 
     List<Building> findAll();
+
+    List<Building> findOneById(long id);
 }

@@ -1,4 +1,4 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
 
 import javax.persistence.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Buildings")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="DISC", discriminatorType= DiscriminatorType.STRING, length=20)
+//@DiscriminatorColumn(name="DISC", discriminatorType= DiscriminatorType.STRING, length=20)
 public abstract class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +41,20 @@ public abstract class Building {
 //        this.buildingState.executeState(this);
 //    }
 
+
+    public void levelUp(){
+        this.buildingLevel++;
+    }
+    public void demolish(){
+        if(buildingLevel > 1) {
+            this.buildingLevel--;
+        }
+    }
+
+
+    public long getId() {
+        return id;
+    }
 
     public long getConstructionTime() {
         return constructionTime;
