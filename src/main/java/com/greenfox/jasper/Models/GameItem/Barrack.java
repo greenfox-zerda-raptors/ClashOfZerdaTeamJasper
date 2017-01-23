@@ -2,6 +2,7 @@ package com.greenfox.jasper.Models.GameItem;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  * Created by almasics on 2017.01.20..
@@ -12,7 +13,8 @@ import javax.persistence.Entity;
 
 public class Barrack extends Building {
 
-    private long unitBuildTime;
+    @Transient
+    private long unitBuildTime = 60000 / buildingLevel;
 
     public Barrack() {
         super();

@@ -33,7 +33,12 @@ public class EventServices {
 
     @Scheduled(fixedRate = 5000)
     public void checkForEvents(){
-        Farm farmTest = new Farm();
+//        Farm ffff = new Farm();
+//        Barrack ffvfgbf = new Barrack();
+//        Mine ftrrtb = new Mine();
+//        buildingRepository.save(ffff);
+//        buildingRepository.save(ffvfgbf);
+//        buildingRepository.save(ftrrtb);
         long currentTime = System.currentTimeMillis();
         log.info("the time after 60 sec is {}", currentTime+60000);
 
@@ -80,11 +85,8 @@ public class EventServices {
                 buildingRepository.save(tempBuilding);
                 System.out.println("Demolished building");
                 break;
-            case UPGRADETROOPS:
-                System.out.println("Troops being upgraded");
-                break;
-            case TRAINTROOPS:
-                System.out.println("Troop has been trained");
+            case CONSTRUCT:
+
                 break;
             default:
                 System.out.println("error");

@@ -11,18 +11,25 @@ import javax.persistence.*;
 public abstract class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    protected long id;
 
-    int buildingLevel = 1;
+    protected long kingdomId = 1l;
+    protected int buildingLevel = 1;
 
-    long constructionTime;
-    int baseCost;
-    int buildingUpgradeCost;
-    long buildingUpgradeTime;
-    long endUpgradeTime = buildingUpgradeTime + System.currentTimeMillis();
+    @Transient
+    protected long constructionTime;
+    @Transient
+    protected int baseCost;
+    @Transient
+    protected int buildingUpgradeCost;
+    @Transient
+    protected long buildingUpgradeTime;
+    @Transient
+    protected long endUpgradeTime = buildingUpgradeTime + System.currentTimeMillis();
 
 
     public Building(){
+
     }
 
     public void levelUp(){
