@@ -24,6 +24,10 @@ public class MainServices {
         return userRepo.findOne((long) userId);
     }
 
+    public User findKingdom(String kingdomName){
+        return userRepo.findByKingdom(kingdomName);
+    }
+
     public Iterable<User> findAllUsers(){
         return userRepo.findAll();
     }

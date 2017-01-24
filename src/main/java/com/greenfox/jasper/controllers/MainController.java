@@ -16,11 +16,10 @@ public class MainController {
     @Autowired
     MainServices mainServices;
 
-    //@RequestMapping(value = "/kingdom/{userId}", method = RequestMethod.GET)
-    //public String getKingdom(@PathVariable int userId){
-    //    mainServices.findOneUser(userId);
-    //    return kingdomJson;
-    //}
+    @RequestMapping(value = "/kingdom/{kingdomName}", method = RequestMethod.GET)
+    public User getKingdom(@PathVariable String kingdomName){
+        return mainServices.findKingdom(kingdomName);
+    }
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public User getUser(@PathVariable int userId){
