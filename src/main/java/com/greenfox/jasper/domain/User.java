@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 
 @Entity
@@ -14,12 +14,12 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long user_id;
+    private long userId;
     private String name;
     private String kingdom;
     private int points;
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
-    private Set<Building> buildings;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<Building> buildings;
 
     public User() {
     }
@@ -30,20 +30,20 @@ public class User implements Serializable {
         this.points = 0;
     }
 
-    public Set<Building> getBuildings() {
+    public Collection<Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(Set<Building> buildings) {
+    public void setBuildings(Collection<Building> buildings) {
         this.buildings = buildings;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

@@ -18,24 +18,17 @@ public class Building implements Serializable {
     private int level;
     private int hp;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     public Building() {
     }
 
-    public Building(String type) {
-        this.type = type;
-        this.level = 0;
-        this.hp = 100;
-        this.user = getUser();
-    }
-
     public Building(String type, User user) {
-        this.user = user;
         this.type = type;
         this.level = 0;
         this.hp = 100;
+        this.user = user;
     }
 
     public User getUser() {
