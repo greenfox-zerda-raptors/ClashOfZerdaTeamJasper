@@ -3,24 +3,27 @@ package com.greenfox.jasper.domain;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
 @Component
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private String password;
+    private String kingdom;
+    private int points;
 
     public User() {
     }
 
-    public User(String name) {
+    public User(String name, String kingdom) {
         this.name = name;
-        this.password = "0000";
+        this.kingdom = kingdom;
+        this.points = 0;
     }
 
     public long getId() {
@@ -39,12 +42,20 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getKingdom() {
+        return kingdom;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setKingdom(String kingdom) {
+        this.kingdom = kingdom;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }
 

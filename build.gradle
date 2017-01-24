@@ -28,6 +28,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile group: 'org.lucee', name: 'postgresql', version: '8.3-606.jdbc4'
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
 	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.4.3.RELEASE'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

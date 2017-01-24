@@ -1,7 +1,9 @@
 package com.greenfox.jasper;
 
+import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.repos.UserRepo;
+import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProofOfConceptApplication implements CommandLineRunner {
 
 	@Autowired
-	UserRepo userRepo;
+	MainServices mainServices;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProofOfConceptApplication.class, args);
@@ -19,10 +21,8 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepo.save(new User("user"));
-		userRepo.save(new User("user2"));
-		userRepo.save(new User("user3"));
-		userRepo.save(new User("user4"));
-		userRepo.save(new User("user5"));
+		mainServices.saveOneUser(new User("sanya", "romania"));
+		mainServices.saveOneKingdom(new Kingdom((long)1));
+
 	}
 }
