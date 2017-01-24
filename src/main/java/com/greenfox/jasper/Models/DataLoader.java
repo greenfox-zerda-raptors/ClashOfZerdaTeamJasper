@@ -16,12 +16,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-//        timedEventRepo.deleteAll();
-        long currentTime = System.currentTimeMillis();
-            for(int kk =  0; kk < 1000000; kk++){
-                TimedEvent testEvents = new TimedEvent(7l, false, (currentTime+120000 + 100*kk), GameEvent.LEVELUP);
-                timedEventRepo.save(testEvents);
-            }
+//        long currentTime = System.currentTimeMillis();
+//            for(int kk =  0; kk < 50000; kk++){
+//                TimedEvent testEvents = new TimedEvent(7l, false, (currentTime+60000 + 50*kk), GameEvent.LEVELUP);
+//                timedEventRepo.save(testEvents);
+//            }
 
 
     }

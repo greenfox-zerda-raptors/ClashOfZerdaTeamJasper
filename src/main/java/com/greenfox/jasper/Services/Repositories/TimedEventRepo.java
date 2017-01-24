@@ -15,9 +15,9 @@ public interface TimedEventRepo extends JpaRepository<TimedEvent, Long> {
 
     List<TimedEvent> findAll();
 
-    List<TimedEvent> findAllByExecutionTimeLessThanEqual(long currentTime);
+    List<TimedEvent> findAllByExecutionTimeLessThanEqual(long currentTime);//is there any need for this?
 
-    List<TimedEvent> findAllByExecutionTimeBetween(long previousCheckTime, long currentTime);
+    List<TimedEvent> findAllByExecutionTimeBetween(long previousCheckTime, long currentTime);//same
 
     @Query("SELECT a FROM TimedEvent a where a.wasExecuted = false and a.executionTime < :currentTime ")
     List<TimedEvent> findAllWaitingForExecution(@Param ("currentTime") long currentTime);

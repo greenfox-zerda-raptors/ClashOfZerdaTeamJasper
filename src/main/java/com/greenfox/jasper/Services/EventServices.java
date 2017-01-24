@@ -25,8 +25,6 @@ public class EventServices {
 
     private final Logger log = LoggerFactory.getLogger(EventServices.class);
 
-//    private AtomicInteger counter = new AtomicInteger();
-
     @Autowired
     public EventServices(TimedEventRepo timedEventRepo, BuildingRepository buildingRepository){
         this.timedEventRepo = timedEventRepo;
@@ -36,19 +34,12 @@ public class EventServices {
     @Scheduled(fixedRate = 1000) // base principal is solid, execution time needs to be shortened for it to work, test for shorter time
     public void checkForEvents(){
         long currentTime = System.currentTimeMillis();
-//        2 sec is added to avoid events sneaking through
-//        List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 7000), currentTime);//custom query in the repo, way to resource needy
-
         List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
 
         for (TimedEvent listedEvent : listedEvents) {
             processEvent(listedEvent);
         }
 // needs to be simplified for performance reasons, current amount 1000/sec
-
-
-        Long endtime = System.currentTimeMillis();
-        log.info("Time ellapsed while running {}", (endtime - currentTime));
     }
 
     private void processEvent(TimedEvent timedEvent) {
@@ -59,18 +50,12 @@ public class EventServices {
 
     private void executeEvent(long buildingID, GameEvent events) {
        Building tempBuilding = buildingRepository.findOne(buildingID);
-
 //        Creating troops should be handled in a different repository, still has to figure sth out
-//        Here is where Csaba's statemachine could come handy
-
-//        System.out.println("Event read");
 
         switch (events){
             case LEVELUP:
-//                System.out.println("Reqistered lvlup command");
                 tempBuilding.levelUp();
                 buildingRepository.save(tempBuilding);
-//                System.out.println("Building is leveled up");
                 break;
             case DEMOLISH:
                 tempBuilding.demolish();
@@ -85,7 +70,6 @@ public class EventServices {
                 break;
             default:
                 System.out.println("error");
-
         }
     }
 }

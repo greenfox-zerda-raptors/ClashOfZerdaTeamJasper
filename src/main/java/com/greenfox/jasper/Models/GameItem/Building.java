@@ -17,9 +17,7 @@ public abstract class Building {
     protected int buildingLevel = 1;
 
 
-
 //    Not necessary for db, can be derived from level
-
 
     @Transient
     protected long constructionTime;
@@ -47,9 +45,6 @@ public abstract class Building {
             this.buildingLevel--;
         }
     }
-
-
-
 
 //    - - - - --  -Getter and Setter - - - - - - - -
     public long getId() {

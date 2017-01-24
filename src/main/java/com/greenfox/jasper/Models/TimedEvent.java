@@ -60,7 +60,7 @@ public class TimedEvent {
         this.event = event;
     }
 
-    public boolean isWasExecuted() {
+    public boolean getWasExecuted() {
         return wasExecuted;
     }
 
