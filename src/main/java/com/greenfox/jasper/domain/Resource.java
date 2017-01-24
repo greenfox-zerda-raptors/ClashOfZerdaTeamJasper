@@ -1,13 +1,13 @@
 package com.greenfox.jasper.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,11 @@ public class Resource implements Serializable {
     @Id
     private String type;
     private int amount;
-    private ArrayList<Building> buildings;
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
+    private Collection<Building> buildings;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     public Resource() {
     }
@@ -26,8 +30,19 @@ public class Resource implements Serializable {
     public Resource(String type) {
         this.type = type;
         this.amount = 1;
-        buildings = new ArrayList<>();
-        buildings.add(new Building("farm"));
+    }
+
+    public Resource(String type, User user) {
+        this.user = user;
+        this.type = type;
+        this.amount = 1;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getType() {
@@ -46,11 +61,11 @@ public class Resource implements Serializable {
         this.amount = amount;
     }
 
-    public ArrayList<Building> getBuildings() {
+    public Collection<Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(ArrayList<Building> buildings) {
+    public void setBuildings(Collection<Building> buildings) {
         this.buildings = buildings;
     }
 }

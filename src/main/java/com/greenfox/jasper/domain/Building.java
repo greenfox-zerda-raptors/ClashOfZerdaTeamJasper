@@ -1,6 +1,7 @@
 package com.greenfox.jasper.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,7 +19,11 @@ public class Building implements Serializable {
     private int level;
     private int hp;
     @ManyToOne
+    @JsonIgnore
     private User user;
+    @ManyToOne
+    @JsonIgnore
+    private Resource resource;
 
     public Building() {
     }
@@ -29,11 +34,20 @@ public class Building implements Serializable {
         this.hp = 100;
     }
 
-    public Building(String type, User user) {
+    public Building(String type, User user, Resource resource) {
         this.type = type;
         this.level = 0;
         this.hp = 100;
         this.user = user;
+        this.resource = resource;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public User getUser() {

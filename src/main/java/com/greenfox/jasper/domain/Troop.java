@@ -1,6 +1,7 @@
 package com.greenfox.jasper.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -18,12 +19,31 @@ public class Troop implements Serializable {
     private int hp;
     private int attack;
     private int defense;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     public Troop() {
         this.level = 0;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;
+    }
+
+    public Troop(User user) {
+        this.level = 0;
+        this.hp = 20;
+        this.attack = 10;
+        this.defense = 5;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getTroopId() {

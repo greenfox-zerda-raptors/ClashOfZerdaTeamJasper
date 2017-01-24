@@ -20,6 +20,10 @@ public class User implements Serializable {
     private int points;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<Troop> troops;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<Resource> resources;
 
     public User() {
     }
@@ -28,6 +32,22 @@ public class User implements Serializable {
         this.name = name;
         this.kingdom = kingdom;
         this.points = 0;
+    }
+
+    public Collection<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(Collection<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public Collection<Troop> getTroops() {
+        return troops;
+    }
+
+    public void setTroops(Collection<Troop> troops) {
+        this.troops = troops;
     }
 
     public Collection<Building> getBuildings() {

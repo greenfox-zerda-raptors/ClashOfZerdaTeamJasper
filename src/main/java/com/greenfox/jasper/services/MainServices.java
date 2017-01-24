@@ -44,6 +44,10 @@ public class MainServices {
         return troopRepo.findAll();
     }
 
+    public Resource findOneResource(String resourceName){
+        return resourceRepo.findOne(resourceName);
+    }
+
     public Iterable<Resource> findAllResources(){
         return resourceRepo.findAll();
     }
@@ -54,5 +58,13 @@ public class MainServices {
 
     public void saveOneBuilding(Building building){
         buildingRepo.save(building);
+    }
+
+    public void saveOneTroop(Troop troop){
+        troopRepo.save(troop);
+    }
+
+    public void saveOneResource(Resource resource){
+        resourceRepo.save(resource);
     }
 }
