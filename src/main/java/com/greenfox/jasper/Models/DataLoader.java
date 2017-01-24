@@ -18,7 +18,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 //        long currentTime = System.currentTimeMillis();
 //            for(int kk =  0; kk < 50000; kk++){
-//                TimedEvent testEvents = new TimedEvent(7l, false, (currentTime+60000 + 50*kk), GameEvent.LEVELUP);
+//                TimedEvent testEvents = new TimedEvent(7l, (currentTime+60000 + 50*kk), GameEvent.LEVELUP);
 //                timedEventRepo.save(testEvents);
 //            }
 

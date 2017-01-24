@@ -1,5 +1,6 @@
 package com.greenfox.jasper.Services;
 
+import com.greenfox.jasper.Models.GameItem.Building;
 import com.greenfox.jasper.Services.Repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,5 +17,9 @@ public class BuildingServices{
     @Autowired
     public BuildingServices(BuildingRepository buildingRepository){
         this.buildingRepository = buildingRepository;
+    }
+
+    public Building findOne(long id){
+        return buildingRepository.findOne(id);
     }
 }

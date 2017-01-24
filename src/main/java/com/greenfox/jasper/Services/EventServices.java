@@ -48,7 +48,7 @@ public class EventServices {
         timedEventRepo.save(timedEvent);
     }
 
-    private void executeEvent(long buildingID, GameEvent events) {
+    public void executeEvent(long buildingID, GameEvent events) {
        Building tempBuilding = buildingRepository.findOne(buildingID);
 //        Creating troops should be handled in a different repository, still has to figure sth out
 
@@ -71,5 +71,14 @@ public class EventServices {
             default:
                 System.out.println("error");
         }
+    }
+
+    public void addNewLevelUpEvent(long buildingID){
+        TimedEvent timedEvent = new TimedEvent(buildingID, (System.currentTimeMillis() + 30000), GameEvent.LEVELUP );
+        timedEventRepo.save(timedEvent);
+    }
+
+    public TimedEvent findOne(long id){
+        return timedEventRepo.findOne(id);
     }
 }

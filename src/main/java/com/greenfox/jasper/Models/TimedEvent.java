@@ -21,9 +21,8 @@ public class TimedEvent {
 
     }
 
-    public TimedEvent(long buildingId, boolean wasExecuted, long executionTime, GameEvent event) {
+    public TimedEvent(long buildingId, long executionTime, GameEvent event) {
         this.buildingId = buildingId;
-        this.wasExecuted = wasExecuted;
         this.executionTime = executionTime;
         this.event = event;
     }

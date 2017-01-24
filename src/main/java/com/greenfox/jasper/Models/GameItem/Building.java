@@ -8,14 +8,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Buildings")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Building {
+public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
 
-    protected long kingdomId = 1l;
     protected int buildingLevel = 1;
-
 
 //    Not necessary for db, can be derived from level
 
@@ -34,6 +32,7 @@ public abstract class Building {
 
 
     public Building(){
+
     }
 
     public void levelUp(){
