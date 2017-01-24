@@ -16,10 +16,17 @@ public abstract class Building {
     protected long kingdomId = 1l;
     protected int buildingLevel = 1;
 
+
+
+//    Not necessary for db, can be derived from level
+
+
     @Transient
     protected long constructionTime;
     @Transient
-    protected int baseCost;
+    protected int baseCost = 50;
+    @Transient
+    protected int currentCost;
     @Transient
     protected int buildingUpgradeCost;
     @Transient
@@ -29,7 +36,6 @@ public abstract class Building {
 
 
     public Building(){
-
     }
 
     public void levelUp(){
@@ -43,6 +49,9 @@ public abstract class Building {
     }
 
 
+
+
+//    - - - - --  -Getter and Setter - - - - - - - -
     public long getId() {
         return id;
     }

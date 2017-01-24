@@ -1,7 +1,8 @@
 package com.greenfox.jasper.Services;
 
-import com.greenfox.jasper.Models.*;
-import com.greenfox.jasper.Models.GameItem.*;
+import com.greenfox.jasper.Models.GameEvent;
+import com.greenfox.jasper.Models.GameItem.Building;
+import com.greenfox.jasper.Models.TimedEvent;
 import com.greenfox.jasper.Services.Repositories.BuildingRepository;
 import com.greenfox.jasper.Services.Repositories.TimedEventRepo;
 import org.slf4j.Logger;
@@ -18,12 +19,13 @@ import java.util.List;
 @Service
 public class EventServices {
 
-    private TimedEventRepo timedEventRepo;
+
+    private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
     private BuildingRepository buildingRepository;
 
-    private  final Logger log = LoggerFactory.getLogger(EventServices.class);
+    private final Logger log = LoggerFactory.getLogger(EventServices.class);
 
-
+//    private AtomicInteger counter = new AtomicInteger();
 
     @Autowired
     public EventServices(TimedEventRepo timedEventRepo, BuildingRepository buildingRepository){
@@ -31,32 +33,22 @@ public class EventServices {
         this.buildingRepository = buildingRepository;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000) // base principal is solid, execution time needs to be shortened for it to work, test for shorter time
     public void checkForEvents(){
-//        Farm ffff = new Farm();
-//        Barrack ffvfgbf = new Barrack();
-//        Mine ftrrtb = new Mine();
-//        buildingRepository.save(ffff);
-//        buildingRepository.save(ffvfgbf);
-//        buildingRepository.save(ftrrtb);
         long currentTime = System.currentTimeMillis();
-        log.info("the time after 60 sec is {}", currentTime+60000);
-
 //        2 sec is added to avoid events sneaking through
-        List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 7000), currentTime);
+//        List<TimedEvent> listedEvents = timedEventRepo.findAllByExecutionTimeBetween((currentTime - 7000), currentTime);//custom query in the repo, way to resource needy
 
-        if(listedEvents.size() != 0) {
-            for (int i = 0; i < listedEvents.size(); i++) {
-                if(!listedEvents.get(i).isWasExecuted()) {
-                    processEvent(listedEvents.get(i));
-                }
-            }
-//            if it needs to be deleted
-//            for(int k = listedEvents.size() - 1; k >= 0; k--){
-//                timedEventRepo.delete(listedEvents.get(k));
-//            }
+        List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
+
+        for (TimedEvent listedEvent : listedEvents) {
+            processEvent(listedEvent);
         }
+// needs to be simplified for performance reasons, current amount 1000/sec
 
+
+        Long endtime = System.currentTimeMillis();
+        log.info("Time ellapsed while running {}", (endtime - currentTime));
     }
 
     private void processEvent(TimedEvent timedEvent) {
@@ -71,27 +63,28 @@ public class EventServices {
 //        Creating troops should be handled in a different repository, still has to figure sth out
 //        Here is where Csaba's statemachine could come handy
 
-        System.out.println("Event read");
+//        System.out.println("Event read");
 
         switch (events){
             case LEVELUP:
-                System.out.println("Reqistered lvlup command");
+//                System.out.println("Reqistered lvlup command");
                 tempBuilding.levelUp();
                 buildingRepository.save(tempBuilding);
-                System.out.println("Building is leveled up");
+//                System.out.println("Building is leveled up");
                 break;
             case DEMOLISH:
                 tempBuilding.demolish();
                 buildingRepository.save(tempBuilding);
                 System.out.println("Demolished building");
                 break;
-            case CONSTRUCT:
-
+            case UPGRADETROOPS:
+                System.out.println("Troops being upgraded");
+                break;
+            case TRAINTROOPS:
+                System.out.println("Troop has been trained");
                 break;
             default:
                 System.out.println("error");
-
-
 
         }
     }

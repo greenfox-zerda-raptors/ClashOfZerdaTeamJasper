@@ -14,4 +14,5 @@ public interface BuildingRepository extends CrudRepository<Building,Long > {
     List<Building> findAll();
 
     List<Building> findOneById(long id);
+
 }
