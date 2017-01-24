@@ -13,7 +13,7 @@ public class Troop implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long troopId;
     private int level;
     private int hp;
     private int attack;
@@ -26,12 +26,12 @@ public class Troop implements Serializable {
         this.defense = 5;
     }
 
-    public long getId() {
-        return id;
+    public long getTroopId() {
+        return troopId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setTroopId(long troopId) {
+        this.troopId = troopId;
     }
 
     public int getLevel() {

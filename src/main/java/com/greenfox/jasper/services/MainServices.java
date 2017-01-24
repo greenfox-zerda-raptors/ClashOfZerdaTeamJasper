@@ -12,9 +12,6 @@ import java.util.List;
 public class MainServices {
 
     @Autowired
-    KingdomRepo kingdomRepo;
-
-    @Autowired
     UserRepo userRepo;
 
     @Autowired
@@ -25,10 +22,6 @@ public class MainServices {
 
     @Autowired
     TroopRepo troopRepo;
-
-    public Kingdom findOneKingdom(int userId){
-        return kingdomRepo.findOne((long) userId);
-    }
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
@@ -56,10 +49,6 @@ public class MainServices {
 
     public Iterable<Resource> findAllResources(){
         return resourceRepo.findAll();
-    }
-
-    public void saveOneKingdom(Kingdom kingdom){
-        kingdomRepo.save(kingdom);
     }
 
     public void saveOneUser(User user){

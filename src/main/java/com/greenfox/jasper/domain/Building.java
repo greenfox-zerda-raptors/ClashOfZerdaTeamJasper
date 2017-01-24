@@ -13,10 +13,13 @@ public class Building implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long buildingId;
     private String type;
     private int level;
     private int hp;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Building() {
     }
@@ -25,14 +28,30 @@ public class Building implements Serializable {
         this.type = type;
         this.level = 0;
         this.hp = 100;
+        this.user = getUser();
     }
 
-    public long getId() {
-        return id;
+    public Building(String type, User user) {
+        this.user = user;
+        this.type = type;
+        this.level = 0;
+        this.hp = 100;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(long buildingId) {
+        this.buildingId = buildingId;
     }
 
     public String getType() {
