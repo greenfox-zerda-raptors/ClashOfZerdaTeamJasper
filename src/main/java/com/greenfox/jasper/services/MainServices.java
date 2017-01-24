@@ -5,9 +5,6 @@ import com.greenfox.jasper.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.List;
-
 @Service
 public class MainServices {
 
@@ -53,5 +50,9 @@ public class MainServices {
 
     public void saveOneUser(User user){
         userRepo.save(user);
+    }
+
+    public void saveOneBuilding(Building building){
+        buildingRepo.save(building);
     }
 }

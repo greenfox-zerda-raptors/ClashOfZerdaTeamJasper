@@ -18,10 +18,15 @@ public class Building implements Serializable {
     private int level;
     private int hp;
     @ManyToOne
-    @JoinColumn(name = "userId")
     private User user;
 
     public Building() {
+    }
+
+    public Building(String type) {
+        this.type = type;
+        this.level = 0;
+        this.hp = 100;
     }
 
     public Building(String type, User user) {
