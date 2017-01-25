@@ -6,10 +6,12 @@ jdk:
 before_install:
  - chmod +x gradlew
 
+before_script:
+   - psql -c 'create database travis_ci_test;' -U postgres
+
 install:
   - ./gradlew check
-  - ./gradlew assemble
-
+  - ./gradlew assemble --stacktrace --debug
 
 branches:
   only:
