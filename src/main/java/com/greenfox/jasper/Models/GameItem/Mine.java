@@ -1,9 +1,18 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  * Created by almasics on 2017.01.20..
  */
+
+@Entity
+@DiscriminatorValue("Mine")
 public class Mine extends Building {
+
+    @Transient
     protected int goldPerMinute = 10 * buildingLevel;
 
     public Mine() {
