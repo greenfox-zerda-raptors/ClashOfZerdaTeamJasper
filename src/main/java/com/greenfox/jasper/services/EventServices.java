@@ -46,7 +46,6 @@ public class EventServices {
 
     public void executeEvent(long buildingID, GameEvent events) {
        Building tempBuilding = buildingRepo.findOne(buildingID);
-        //TODO Creating troops should be handled in a different repository, still has to figure sth out
 
         switch (events){
             case LEVELUP:
