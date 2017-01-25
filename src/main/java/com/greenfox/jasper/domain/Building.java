@@ -2,7 +2,6 @@ package com.greenfox.jasper.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -42,7 +41,6 @@ public class Building implements Serializable {
         this.user = user;
         this.resource = resource;
     }
-
 
 
     public Resource getResource() {

@@ -15,25 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping (value = "/", method = RequestMethod.GET)
+@RequestMapping(value = "/", method = RequestMethod.GET)
 public class MainController {
-    
-  @Autowired
+
+    @Autowired
     MainServices mainServices;
 
-  @Autowired
+    @Autowired
     EventServices eventServices;
 
     @RequestMapping(value = "/kingdom/{kingdomName}", method = RequestMethod.GET)
-    public User getKingdom(@PathVariable String kingdomName){
+    public User getKingdom(@PathVariable String kingdomName) {
         return mainServices.findKingdom(kingdomName);
     }
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable int userId){
+    public User getUser(@PathVariable int userId) {
         return mainServices.findOneUser(userId);
     }
-
+    
     @RequestMapping(value = "/building/levelup/{buildingId}", method = RequestMethod.POST)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.executeEvent(buildingId, GameEvent.LEVELUP);
