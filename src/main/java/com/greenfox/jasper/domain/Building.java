@@ -2,7 +2,6 @@ package com.greenfox.jasper.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
