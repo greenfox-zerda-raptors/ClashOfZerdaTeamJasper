@@ -1,4 +1,4 @@
-package com.greenfox.jasper.Models;
+package com.greenfox.jasper.domain;
 
 /**
  * Created by Zoltán on 2017.01.22..

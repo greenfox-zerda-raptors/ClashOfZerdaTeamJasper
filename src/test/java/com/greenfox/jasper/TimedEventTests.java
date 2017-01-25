@@ -1,6 +1,6 @@
 package com.greenfox.jasper;
 
-import com.greenfox.jasper.Services.EventServices;
+import com.greenfox.jasper.services.EventServices;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class TimedEventTests {
     @Test
     public void testSampleService() {
         assertEquals(
-                "class com.greenfox.jasper.Services.EventServices",
+                "class com.greenfox.jasper.services.EventServices",
         this.eventServices.getClass().toString());
     }
 

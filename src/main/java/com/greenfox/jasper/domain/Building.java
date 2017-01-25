@@ -2,6 +2,7 @@ package com.greenfox.jasper.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -41,6 +42,8 @@ public class Building implements Serializable {
         this.user = user;
         this.resource = resource;
     }
+
+
 
     public Resource getResource() {
         return resource;
@@ -88,5 +91,14 @@ public class Building implements Serializable {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public void levelUp() {
+        this.level++;
+    }
+
+    public void decreaseLvl() {
+        this.level--;
+        //TODO resolve if under 0
     }
 }

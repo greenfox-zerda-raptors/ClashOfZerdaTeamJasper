@@ -1,10 +1,7 @@
-package com.greenfox.jasper.Models;
+package com.greenfox.jasper.domain;
 
 import javax.persistence.*;
 
-/**
- * Created by Zoltán on 2017.01.22..
- */
 @Entity
 @Table(name = "TimedEvents")
 public class TimedEvent {

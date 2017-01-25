@@ -1,6 +1,6 @@
-package com.greenfox.jasper.Services.Repositories;
+package com.greenfox.jasper.repos;
 
-import com.greenfox.jasper.Models.TimedEvent;
+import com.greenfox.jasper.domain.TimedEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
