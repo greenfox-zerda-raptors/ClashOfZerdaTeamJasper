@@ -1,39 +1,54 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
 
-import com.greenfox.jasper.states.BuildingState;
-import com.greenfox.jasper.states.Idle;
+import javax.persistence.*;
 
 /**
  * Created by almasics on 2017.01.20..
  */
+@Entity
+@Table(name = "Buildings")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Building {
-    BuildingState buildingState;
-    int buildingLevel;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
 
-    long constructionTime;
-    int baseCost;
-    int buildingUpgradeCost;
-    long buildingUpgradeTime;
-    long endUpgradeTime;
+    protected int buildingLevel = 1;
+
+//    Not necessary for db, can be derived from level
+
+    @Transient
+    protected long constructionTime;
+    @Transient
+    protected int baseCost = 50;
+    @Transient
+    protected int currentCost;
+    @Transient
+    protected int buildingUpgradeCost;
+    @Transient
+    protected long buildingUpgradeTime;
+    @Transient
+    protected long endUpgradeTime = buildingUpgradeTime + System.currentTimeMillis();
 
 
-    public Building() {
-        this.buildingState = new Idle();
-        this.buildingLevel = 1;
+    public Building(){
+
     }
 
-    public BuildingState getBuildingState() {
-        return buildingState;
+    public void levelUp(){
+        this.buildingLevel++;
     }
 
-    public void setBuildingState(BuildingState buildingState) {
-        this.buildingState = buildingState;
+    public void demolish(){
+        if(buildingLevel > 1) {
+            this.buildingLevel--;
+        }
     }
 
-    public void switchState() {
-        this.buildingState.executeState(this);
+//    - - - - --  -Getter and Setter - - - - - - - -
+    public long getId() {
+        return id;
     }
-
 
     public long getConstructionTime() {
         return constructionTime;

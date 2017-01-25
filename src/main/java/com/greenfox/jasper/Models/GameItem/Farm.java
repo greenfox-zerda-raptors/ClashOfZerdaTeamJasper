@@ -1,9 +1,17 @@
-package com.greenfox.jasper.model;
+package com.greenfox.jasper.Models.GameItem;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  * Created by almasics on 2017.01.20..
  */
+@Entity
+@DiscriminatorValue("Farm")
+
 public class Farm extends Building {
+    @Transient
     protected int foodPerMinute = 10 * buildingLevel;
 
     public Farm() {
@@ -14,8 +22,6 @@ public class Farm extends Building {
         this.buildingUpgradeTime = 100000;
 
     }
-
-
     public int getFoodPerMinute() {
         return foodPerMinute;
     }
