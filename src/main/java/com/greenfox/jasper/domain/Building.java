@@ -99,5 +99,6 @@ public class Building implements Serializable {
 
     public void decreaseLvl() {
         this.level--;
+        //TODO resolve if under 0
     }
 }
