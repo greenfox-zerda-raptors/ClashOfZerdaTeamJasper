@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class ProofOfConceptApplication implements CommandLineRunner {
 
 	@Autowired
@@ -28,6 +30,5 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 		mainServices.saveOneBuilding(new Building("farm", mainServices.findOneUser(1), mainServices.findOneResource("food")));
 		mainServices.saveOneBuilding(new Building("barrack", mainServices.findOneUser(1), mainServices.findOneResource("food")));
 		mainServices.saveOneTroop(new Troop(mainServices.findOneUser(1)));
-
 	}
 }
