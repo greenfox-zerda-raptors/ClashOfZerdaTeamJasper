@@ -31,7 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.lucee', name: 'postgresql', version: '8.3-606.jdbc4'
 	compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
-	runtime('org.springframework.boot:spring-boot-devtools'))
+	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
