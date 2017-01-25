@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping (value = "/", method = RequestMethod.GET)
 public class MainController {
-
-    @Autowired
+    
+  @Autowired
     MainServices mainServices;
 
     @RequestMapping(value = "/kingdom/{kingdomName}", method = RequestMethod.GET)
@@ -26,5 +26,3 @@ public class MainController {
         return mainServices.findOneUser(userId);
     }
 }
-
-
