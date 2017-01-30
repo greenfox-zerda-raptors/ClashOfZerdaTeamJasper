@@ -10,6 +10,7 @@ public class TimedEvent {
     private long id;
 
     // TODO rearrange fields for battle => troops/army id & defender id is needed to resolve who will fight against who with what => some further work on troop/army is required
+    // TODO unit upgrade needs an additional troop ID (can be solved with the todo above);
     private long buildingId;
     private boolean wasExecuted = false;
     private long executionTime;
