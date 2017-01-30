@@ -9,7 +9,7 @@ public class TimedEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // TODO rearrange fields for battle (troops id & defender id is needed)
+    // TODO rearrange fields for battle => troops/army id & defender id is needed to resolve who will fight against who with what => some further work on troop/army is required
     private long buildingId;
     private boolean wasExecuted = false;
     private long executionTime;

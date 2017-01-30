@@ -18,5 +18,5 @@ public interface TimedEventRepo extends JpaRepository<TimedEvent, Long> {
     @Query("SELECT a FROM TimedEvent a WHERE a.wasExecuted = false and a.executionTime < :currentTime ")
     List<TimedEvent> findAllWaitingForExecution(@Param ("currentTime") long currentTime);
 
-    List<TimedEvent> findAllByBuildingIdOrderByExecutionTime(long buildingID);
+    List<TimedEvent> findAllByBuildingIdOrderByExecutionTimeDesc(long buildingID);
 }
