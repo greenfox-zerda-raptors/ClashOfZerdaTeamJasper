@@ -8,21 +8,30 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "buildings")
+@Table(name = "building_table")
 @Component
 public class Building implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "building_id")
     private long buildingId;
+
+    @Column(name = "building_type")
     private String type;
+
+    @Column(name = "building_level")
     private int level;
+
+    @Transient
     private int hp;
+
     @ManyToOne
     @JsonIgnore
     private Kingdom kingdom;
     @ManyToOne
     @JsonIgnore
+    @Transient
     private Resource resource;
 
     public Building() {

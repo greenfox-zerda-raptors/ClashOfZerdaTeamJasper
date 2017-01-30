@@ -9,17 +9,23 @@ import java.util.Collection;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_table")
 @Component
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private long userId;
+
+    @Column(name = "user_name")
     private String name;
+
     @JsonBackReference
     @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
+
+    @Column(name = "points")
     private int points;
 
     public User() {

@@ -11,21 +11,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "kingdoms")
+@Table(name = "kingdom_table")
 @Component
 public class Kingdom implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "kingdom_id")
     private long kingdomId;
+
+    @Column(name = "kingdom_name")
     private String name;
+
     @JsonManagedReference
     @OneToOne
     private User user;
+
+    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
+
+    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Troop> troops;
+
+    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Resource> resources;
 
