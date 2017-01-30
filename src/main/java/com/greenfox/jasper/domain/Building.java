@@ -20,7 +20,7 @@ public class Building implements Serializable {
     private int hp;
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Kingdom kingdom;
     @ManyToOne
     @JsonIgnore
     private Resource resource;
@@ -34,11 +34,11 @@ public class Building implements Serializable {
         this.hp = 100;
     }
 
-    public Building(String type, User user, Resource resource) {
+    public Building(String type, Kingdom kingdom, Resource resource) {
         this.type = type;
         this.level = 0;
         this.hp = 100;
-        this.user = user;
+        this.kingdom = kingdom;
         this.resource = resource;
     }
 
@@ -51,12 +51,12 @@ public class Building implements Serializable {
         this.resource = resource;
     }
 
-    public User getUser() {
-        return user;
+    public Kingdom getKingdom() {
+        return kingdom;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
     }
 
     public long getBuildingId() {

@@ -21,7 +21,7 @@ public class Troop implements Serializable {
     private int defense;
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Kingdom kingdom;
 
     public Troop() {
         this.level = 0;
@@ -30,20 +30,20 @@ public class Troop implements Serializable {
         this.defense = 5;
     }
 
-    public Troop(User user) {
+    public Troop(Kingdom kingdom) {
         this.level = 0;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;
-        this.user = user;
+        this.kingdom = kingdom;
     }
 
-    public User getUser() {
-        return user;
+    public Kingdom getKingdom() {
+        return kingdom;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
     }
 
     public long getTroopId() {

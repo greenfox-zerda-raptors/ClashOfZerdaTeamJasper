@@ -9,23 +9,26 @@ import org.springframework.stereotype.Service;
 public class MainServices {
 
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
 
     @Autowired
-    BuildingRepo buildingRepo;
+    private BuildingRepo buildingRepo;
 
     @Autowired
-    ResourceRepo resourceRepo;
+    private ResourceRepo resourceRepo;
 
     @Autowired
-    TroopRepo troopRepo;
+    private TroopRepo troopRepo;
+
+    @Autowired
+    private KingdomRepo kingdomRepo;
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
     }
 
-    public User findKingdom(String kingdomName){
-        return userRepo.findByKingdom(kingdomName);
+    public Kingdom findOneKingdom(String kingdomName){
+        return kingdomRepo.findByName(kingdomName);
     }
 
     public Iterable<User> findAllUsers(){
@@ -54,6 +57,10 @@ public class MainServices {
 
     public Iterable<Resource> findAllResources(){
         return resourceRepo.findAll();
+    }
+
+    public void saveOneKingdom(Kingdom kingdom){
+        kingdomRepo.save(kingdom);
     }
 
     public void saveOneUser(User user){

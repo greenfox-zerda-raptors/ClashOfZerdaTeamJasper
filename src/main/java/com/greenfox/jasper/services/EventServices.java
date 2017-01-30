@@ -18,6 +18,7 @@ public class EventServices {
 
 
     private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
+
     private BuildingRepo buildingRepo;
 
     private final Logger log = LoggerFactory.getLogger(EventServices.class);

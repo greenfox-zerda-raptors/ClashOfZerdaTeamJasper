@@ -2,7 +2,6 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.GameEvent;
-import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,33 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/", method = RequestMethod.GET)
-public class MainController {
+@RequestMapping(value = "/building", method = RequestMethod.GET)
+public class BuildingController {
 
     @Autowired
-    MainServices mainServices;
+    private MainServices mainServices;
 
     @Autowired
-    EventServices eventServices;
+    private EventServices eventServices;
 
-    @RequestMapping(value = "/kingdom/{kingdomName}", method = RequestMethod.GET)
-    public User getKingdom(@PathVariable String kingdomName) {
-        return mainServices.findKingdom(kingdomName);
+    @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
+    public Building getBuilding(@PathVariable int buildingId) {
+        return mainServices.findOneBuilding(buildingId);
     }
 
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable int userId) {
-        return mainServices.findOneUser(userId);
-    }
-    
-    @RequestMapping(value = "/building/levelup/{buildingId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.POST)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.executeEvent(buildingId, GameEvent.LEVELUP);
         response.sendRedirect(String.format("/building/%d", buildingId));
-    }
-
-    @RequestMapping(value = "/building/{buildingId}", method = RequestMethod.GET)
-    public Building getBuilding(@PathVariable int buildingId) {
-        return mainServices.findOneBuilding(buildingId);
     }
 }
