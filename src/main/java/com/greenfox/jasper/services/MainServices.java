@@ -27,8 +27,12 @@ public class MainServices {
         return userRepo.findOne((long) userId);
     }
 
-    public Kingdom findOneKingdom(String kingdomName){
-        return kingdomRepo.findByName(kingdomName);
+    public Kingdom findOneKingdom(long kingdomId){
+        return kingdomRepo.findOne(kingdomId);
+    }
+
+    public Kingdom findKingdomByName(String kingdom){
+        return kingdomRepo.findByName(kingdom);
     }
 
     public Iterable<User> findAllUsers(){
@@ -41,6 +45,10 @@ public class MainServices {
 
     public Iterable<Building> findAllBuildings(){
         return buildingRepo.findAll();
+    }
+
+    public Iterable<Building> findAllBuildingsByKingdomId(long kingdomId){
+        return buildingRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 
     public Troop findOneTroop(int troopId){
@@ -57,6 +65,10 @@ public class MainServices {
 
     public Iterable<Resource> findAllResources(){
         return resourceRepo.findAll();
+    }
+
+    public Iterable<Troop> findAllTroopsByKingdomId(long kingdomId) {
+        return troopRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 
     public void saveOneKingdom(Kingdom kingdom){
@@ -77,5 +89,9 @@ public class MainServices {
 
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
+    }
+
+    public Iterable<Resource> findAllResourcesByKingdomId(long kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 }

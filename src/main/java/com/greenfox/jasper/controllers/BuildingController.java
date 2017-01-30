@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/building", method = RequestMethod.GET)
+@RequestMapping(value = "/kingdom/{userId}/buildings", method = RequestMethod.GET)
 public class BuildingController {
 
     @Autowired
@@ -23,10 +23,16 @@ public class BuildingController {
     @Autowired
     private EventServices eventServices;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public Iterable<Building> getBuildings(@PathVariable int userId) {
+        return mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId());
+    }
+
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public Building getBuilding(@PathVariable int buildingId) {
+    public Building getOneBuilding(@PathVariable int buildingId) {
         return mainServices.findOneBuilding(buildingId);
     }
+
 
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.POST)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
