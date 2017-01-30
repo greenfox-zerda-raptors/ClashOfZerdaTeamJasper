@@ -52,10 +52,8 @@ public class EventServices {
     public void executeEvent(long buildingID, GameEvent events) {
         Building tempBuilding = buildingRepo.findOne(buildingID);
         User tempUser = tempBuilding.getUser();
-        
+
         //TODO Battle event
-
-
 
 //        Added log.info to display what is happening;            to be removed
 
@@ -103,7 +101,7 @@ public class EventServices {
            TimedEvent tempTimedEvent = allEventForABuilding.get(allEventForABuilding.size() - 1);
            queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
-        // TODO add building occupation status;  handle time formula for building level;
+        // TODO add building-occupation-status;  handle time formula for building level;
         TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 30000), GameEvent.TRAINTROOPS);
         timedEventRepo.save(timedEvent);
     }
