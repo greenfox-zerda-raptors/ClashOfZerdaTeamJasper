@@ -44,4 +44,10 @@ public class MainController {
     public Building getBuilding(@PathVariable int buildingId) {
         return mainServices.findOneBuilding(buildingId);
     }
+
+    @RequestMapping(value = "/lvlup/{buildingId}", method = RequestMethod.POST)
+    public void addNewEvent(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
+        eventServices.addNewLevelUpEvent((long) buildingId);
+        response.sendRedirect(String.format("/building/%d", buildingId));
+    }
 }

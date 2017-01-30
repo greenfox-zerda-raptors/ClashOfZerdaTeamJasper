@@ -17,7 +17,7 @@ import java.util.List;
 public class EventServices {
 
 
-    private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
+    private TimedEventRepo timedEventRepo;
     private BuildingRepo buildingRepo;
 
     private final Logger log = LoggerFactory.getLogger(EventServices.class);
@@ -46,17 +46,23 @@ public class EventServices {
 
     public void executeEvent(long buildingID, GameEvent events) {
        Building tempBuilding = buildingRepo.findOne(buildingID);
-        //TODO Creating troops should be handled in a different repository, still has to figure sth out
+
+        //TODO Creating troops should be handled in a different repository (eg.: TroopRepo @Autowired)
+
+        //TODO Battle event
+
+//        Added log.info to display what is happening;            to be removed
 
         switch (events){
             case LEVELUP:
                 tempBuilding.levelUp();
                 buildingRepo.save(tempBuilding);
+                log.info("Leveled up building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
-            case DEMOLISH:
+            case DELEVEL:
                 tempBuilding.decreaseLvl();
                 buildingRepo.save(tempBuilding);
-                System.out.println("Demolished building");
+                log.info("Deleveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case UPGRADETROOPS:
                 System.out.println("Troops being upgraded");
@@ -70,6 +76,8 @@ public class EventServices {
     }
 
     public void addNewLevelUpEvent(long buildingID){
+//        Building temporaryBuilding = buildingRepo.findOne(buildingID);
+        // TODO formula for building level up times
         TimedEvent timedEvent = new TimedEvent(buildingID, (System.currentTimeMillis() + 30000), GameEvent.LEVELUP );
         timedEventRepo.save(timedEvent);
     }
