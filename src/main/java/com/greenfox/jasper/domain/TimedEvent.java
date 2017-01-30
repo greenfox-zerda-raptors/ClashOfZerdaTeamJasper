@@ -8,6 +8,8 @@ public class TimedEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    // TODO rename (!); rearrange fields
     private long buildingId;
     private boolean wasExecuted = false;
     private long executionTime;

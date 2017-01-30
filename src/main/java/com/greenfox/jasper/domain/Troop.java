@@ -24,14 +24,14 @@ public class Troop implements Serializable {
     private User user;
 
     public Troop() {
-        this.level = 0;
+        this.level = 1;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;
     }
 
     public Troop(User user) {
-        this.level = 0;
+        this.level = 1;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;

@@ -50,4 +50,13 @@ public class MainController {
         eventServices.addNewLevelUpEvent((long) buildingId);
         response.sendRedirect(String.format("/building/%d", buildingId));
     }
+
+    @RequestMapping(value = "/traintroop/{buildingId}", method = RequestMethod.POST)
+    public void addNewCreateTroopEvent(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
+        eventServices.addNewCreateTroopEvent((long) buildingId);
+        response.sendRedirect(String.format("/building/%d", buildingId));
+    }
+
+
+
 }

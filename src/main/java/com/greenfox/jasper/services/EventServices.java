@@ -1,10 +1,10 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.GameEvent;
-import com.greenfox.jasper.domain.TimedEvent;
+import com.greenfox.jasper.domain.*;
 import com.greenfox.jasper.repos.BuildingRepo;
 import com.greenfox.jasper.repos.TimedEventRepo;
+import com.greenfox.jasper.repos.TroopRepo;
+import com.greenfox.jasper.repos.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,20 @@ import java.util.List;
 public class EventServices {
 
 
+    private UserRepo userRepo;
     private TimedEventRepo timedEventRepo;
     private BuildingRepo buildingRepo;
+    private TroopRepo troopRepo;
 
     private final Logger log = LoggerFactory.getLogger(EventServices.class);
 
     @Autowired
-    public EventServices(TimedEventRepo timedEventRepo, BuildingRepo buildingRepo){
+    public EventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo){
+        this.userRepo = userRepo;
+        this.troopRepo = troopRepo;
         this.timedEventRepo = timedEventRepo;
         this.buildingRepo = buildingRepo;
+
     }
 
     @Scheduled(fixedRate = 1000)
@@ -45,11 +50,13 @@ public class EventServices {
     }
 
     public void executeEvent(long buildingID, GameEvent events) {
-       Building tempBuilding = buildingRepo.findOne(buildingID);
-
+        Building tempBuilding = buildingRepo.findOne(buildingID);
+        User tempUser = tempBuilding.getUser();
         //TODO Creating troops should be handled in a different repository (eg.: TroopRepo @Autowired)
 
         //TODO Battle event
+
+
 
 //        Added log.info to display what is happening;            to be removed
 
@@ -62,17 +69,25 @@ public class EventServices {
             case DELEVEL:
                 tempBuilding.decreaseLvl();
                 buildingRepo.save(tempBuilding);
-                log.info("Deleveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
+                log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case UPGRADETROOPS:
+                // TODO level up the selected troop
                 System.out.println("Troops being upgraded");
                 break;
             case TRAINTROOPS:
-                System.out.println("Troop has been trained");
+                // TODO add create a new troop for the kingdom/user
+                Troop tempTroop = new Troop(tempUser);
+                troopRepo.save(tempTroop);
+                log.info("Troop with id {} and userid {} has been trained by building with ID {}", tempTroop.getTroopId(), tempUser.getUserId(), tempBuilding.getBuildingId());
                 break;
             default:
-                System.out.println("error");
+                System.out.println("Error, no such event found");
         }
+    }
+
+    public void cancelEvent(long eventID){
+        timedEventRepo.delete(eventID);
     }
 
     public void addNewLevelUpEvent(long buildingID){
@@ -82,7 +97,16 @@ public class EventServices {
         timedEventRepo.save(timedEvent);
     }
 
-    public TimedEvent findOne(long id){
-        return timedEventRepo.findOne(id);
+    public void addNewCreateTroopEvent(long buildingId){
+        long queueTime = 0;
+       List<TimedEvent> allEventForABuilding =  timedEventRepo.findAllByBuildingIdOrderByExecutionTime(buildingId);
+        if(allEventForABuilding.size() > 0){
+           TimedEvent tempTimedEvent = allEventForABuilding.get(allEventForABuilding.size() - 1);
+           queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
+        }
+        // TODO add building occupation status;  handle time formula for building level;
+        TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 30000), GameEvent.TRAINTROOPS);
+        timedEventRepo.save(timedEvent);
     }
+
 }
