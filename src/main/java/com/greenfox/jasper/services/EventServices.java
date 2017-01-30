@@ -52,8 +52,7 @@ public class EventServices {
     public void executeEvent(long buildingID, GameEvent events) {
         Building tempBuilding = buildingRepo.findOne(buildingID);
         User tempUser = tempBuilding.getUser();
-        //TODO Creating troops should be handled in a different repository (eg.: TroopRepo @Autowired)
-
+        
         //TODO Battle event
 
 
