@@ -72,7 +72,7 @@ public class EventServices {
                 log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case UPGRADETROOPS:
-                // TODO level up the selected troop
+                // TODO level up the selected troop - problems will occur
                 System.out.println("Troops being upgraded");
                 break;
             case TRAINTROOPS:
