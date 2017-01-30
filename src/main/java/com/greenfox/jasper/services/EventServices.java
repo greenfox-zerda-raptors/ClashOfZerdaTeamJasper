@@ -55,7 +55,7 @@ public class EventServices {
 
         //TODO Battle event
 
-//        Added log.info to display what is happening;            to be removed
+//        Added log.info to display what is happening; - to be removed
 
         switch (events){
             case LEVELUP:
@@ -68,15 +68,15 @@ public class EventServices {
                 buildingRepo.save(tempBuilding);
                 log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
-            case UPGRADETROOPS:
-                // TODO level up the selected troop - problems will occur
-                System.out.println("Troops being upgraded");
-                break;
             case TRAINTROOPS:
                 // TODO add create a new troop for the kingdom/user
                 Troop tempTroop = new Troop(tempUser);
                 troopRepo.save(tempTroop);
                 log.info("Troop with id {} and userid {} has been trained by building with ID {}", tempTroop.getTroopId(), tempUser.getUserId(), tempBuilding.getBuildingId());
+                break;
+            case UPGRADETROOPS:
+                // TODO level up the selected troop - problems will occur
+                System.out.println("Troops being upgraded");
                 break;
             default:
                 System.out.println("Error, no such event found");

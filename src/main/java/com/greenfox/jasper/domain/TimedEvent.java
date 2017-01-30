@@ -9,7 +9,7 @@ public class TimedEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // TODO rename (!); rearrange fields for battle (troops id & defender id is needed)
+    // TODO rearrange fields for battle (troops id & defender id is needed)
     private long buildingId;
     private boolean wasExecuted = false;
     private long executionTime;
@@ -42,6 +42,14 @@ public class TimedEvent {
         this.buildingId = buildingId;
     }
 
+    public boolean wasExecuted() {
+        return wasExecuted;
+    }
+
+    public void setWasExecuted(boolean wasExecuted) {
+        this.wasExecuted = wasExecuted;
+    }
+
     public long getExecutionTime() {
         return executionTime;
     }
@@ -56,13 +64,5 @@ public class TimedEvent {
 
     public void setEvent(GameEvent event) {
         this.event = event;
-    }
-
-    public boolean getWasExecuted() {
-        return wasExecuted;
-    }
-
-    public void setWasExecuted(boolean wasExecuted) {
-        this.wasExecuted = wasExecuted;
     }
 }
