@@ -1,4 +1,4 @@
-package com.greenfox.jasper;
+/*package com.greenfox.jasper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,4 +13,4 @@ public class ProofOfConceptApplicationTests {
 	public void contextLoads() {
 	}
 
-}
+}*/
