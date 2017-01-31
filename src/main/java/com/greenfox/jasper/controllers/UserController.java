@@ -2,7 +2,6 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.services.MainServices;
-import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
