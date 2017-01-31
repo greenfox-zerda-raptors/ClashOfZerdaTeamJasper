@@ -8,16 +8,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "troops")
+@Table(name = "troop_table")
 @Component
 public class Troop implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "troop_id")
     private long troopId;
+    @Column(name = "troop_level")
     private int level;
+    @Transient
     private int hp;
+    @Transient
     private int attack;
+    @Transient
     private int defense;
     @ManyToOne
     @JsonIgnore

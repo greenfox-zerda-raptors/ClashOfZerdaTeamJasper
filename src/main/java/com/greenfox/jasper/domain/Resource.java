@@ -11,15 +11,21 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "resources")
+@Table(name = "resource_table")
 @Component
 public class Resource implements Serializable {
 
     @Id
+    @Column(name = "resource_type")
     private String type;
+
+    @Column(name = "amount")
     private int amount;
+
+    @Transient
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
+
     @ManyToOne
     @JsonIgnore
     private Kingdom kingdom;
