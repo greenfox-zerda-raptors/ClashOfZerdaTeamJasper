@@ -1,7 +1,6 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.GameEvent;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class BuildingController {
 
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.POST)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
-        eventServices.executeEvent(buildingId, GameEvent.LEVELUP);
+        eventServices.addNewLevelUpEvent(buildingId);
         response.sendRedirect(String.format("/building/%d", buildingId));
     }
 }
