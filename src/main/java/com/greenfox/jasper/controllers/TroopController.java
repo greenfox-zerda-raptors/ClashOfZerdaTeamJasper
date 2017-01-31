@@ -29,5 +29,9 @@ public class TroopController {
         return mainServices.findOneTroop(troopId);
     }
 
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public void trainNewTroop() {
+        mainServices.saveOneTroop(new Troop());
+    }
 
 }
