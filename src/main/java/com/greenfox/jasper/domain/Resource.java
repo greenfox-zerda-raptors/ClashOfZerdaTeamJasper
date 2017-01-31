@@ -46,7 +46,7 @@ public class Resource implements Serializable {
     public Kingdom getKingdom() {
         return kingdom;
     }
-
+ 
     public void setKingdom(Kingdom kingdom) {
         this.kingdom = kingdom;
     }
