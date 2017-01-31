@@ -20,6 +20,7 @@ public class MainServices {
     @Autowired
     TroopRepo troopRepo;
 
+
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
     }
