@@ -22,7 +22,6 @@ public class Resource implements Serializable {
     @Column(name = "amount")
     private int amount;
 
-    @Transient
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
 
