@@ -23,6 +23,7 @@ public class MainServices {
     @Autowired
     private KingdomRepo kingdomRepo;
 
+
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
     }
