@@ -17,13 +17,8 @@ import java.util.List;
 public class EventServices {
 
 
-<<<<<<< HEAD
-    private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
-
-=======
     private UserRepo userRepo;
     private TimedEventRepo timedEventRepo;
->>>>>>> 7bc8f43c39a8c70d8aec5727077b6cccd837345e
     private BuildingRepo buildingRepo;
     private TroopRepo troopRepo;
 
@@ -56,7 +51,7 @@ public class EventServices {
 
     public void executeEvent(long buildingID, GameEvent events) {
         Building tempBuilding = buildingRepo.findOne(buildingID);
-        User tempUser = tempBuilding.getUser();
+        Kingdom tempKingdom = tempBuilding.getKingdom();
 
         //TODO Battle event - see TimedEvent class for further info
 
@@ -74,9 +69,9 @@ public class EventServices {
                 log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case TRAINTROOPS:
-                Troop tempTroop = new Troop(tempUser);
+                Troop tempTroop = new Troop(tempKingdom);
                 troopRepo.save(tempTroop);
-                log.info("Troop with id {} and userid {} has been trained by building with ID {}", tempTroop.getTroopId(), tempUser.getUserId(), tempBuilding.getBuildingId());
+                log.info("Troop with id {} and kingdom {} has been trained by building with ID {}", tempTroop.getTroopId(), tempKingdom.getKingdomId(), tempBuilding.getBuildingId());
                 break;
             case UPGRADETROOPS:
                 // TODO level up the selected troop - see timed event TODO for further info
