@@ -1,10 +1,10 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.GameEvent;
-import com.greenfox.jasper.domain.TimedEvent;
+import com.greenfox.jasper.domain.*;
 import com.greenfox.jasper.repos.BuildingRepo;
 import com.greenfox.jasper.repos.TimedEventRepo;
+import com.greenfox.jasper.repos.TroopRepo;
+import com.greenfox.jasper.repos.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,25 @@ import java.util.List;
 public class EventServices {
 
 
+<<<<<<< HEAD
     private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
 
+=======
+    private UserRepo userRepo;
+    private TimedEventRepo timedEventRepo;
+>>>>>>> 7bc8f43c39a8c70d8aec5727077b6cccd837345e
     private BuildingRepo buildingRepo;
+    private TroopRepo troopRepo;
 
     private final Logger log = LoggerFactory.getLogger(EventServices.class);
 
     @Autowired
-    public EventServices(TimedEventRepo timedEventRepo, BuildingRepo buildingRepo){
+    public EventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo){
+        this.userRepo = userRepo;
+        this.troopRepo = troopRepo;
         this.timedEventRepo = timedEventRepo;
         this.buildingRepo = buildingRepo;
+
     }
 
     @Scheduled(fixedRate = 1000)
@@ -46,36 +55,78 @@ public class EventServices {
     }
 
     public void executeEvent(long buildingID, GameEvent events) {
-       Building tempBuilding = buildingRepo.findOne(buildingID);
-        //TODO Creating troops should be handled in a different repository, still has to figure sth out
+        Building tempBuilding = buildingRepo.findOne(buildingID);
+        User tempUser = tempBuilding.getUser();
+
+        //TODO Battle event - see TimedEvent class for further info
+
+//        Added log.info to display what is happening; - to be removed
 
         switch (events){
             case LEVELUP:
                 tempBuilding.levelUp();
                 buildingRepo.save(tempBuilding);
+                log.info("Leveled up building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
-            case DEMOLISH:
+            case DELEVEL:
                 tempBuilding.decreaseLvl();
                 buildingRepo.save(tempBuilding);
-                System.out.println("Demolished building");
-                break;
-            case UPGRADETROOPS:
-                System.out.println("Troops being upgraded");
+                log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case TRAINTROOPS:
-                System.out.println("Troop has been trained");
+                Troop tempTroop = new Troop(tempUser);
+                troopRepo.save(tempTroop);
+                log.info("Troop with id {} and userid {} has been trained by building with ID {}", tempTroop.getTroopId(), tempUser.getUserId(), tempBuilding.getBuildingId());
+                break;
+            case UPGRADETROOPS:
+                // TODO level up the selected troop - see timed event TODO for further info
+                System.out.println("Troops being upgraded");
                 break;
             default:
-                System.out.println("error");
+                System.out.println("Error, no such event found");
         }
     }
 
+    public void cancelEvent(long eventID){
+        timedEventRepo.delete(eventID);
+    }
+
     public void addNewLevelUpEvent(long buildingID){
-        TimedEvent timedEvent = new TimedEvent(buildingID, (System.currentTimeMillis() + 30000), GameEvent.LEVELUP );
+
+        Building temporaryBuilding = buildingRepo.findOne(buildingID);
+
+        TimedEvent timedEvent = new TimedEvent(
+                buildingID, (System.currentTimeMillis()
+                + (60000 * calculateBuildingTimeRatio(temporaryBuilding.getLevel()))),
+                GameEvent.LEVELUP );
+
         timedEventRepo.save(timedEvent);
     }
 
-    public TimedEvent findOne(long id){
-        return timedEventRepo.findOne(id);
+    public void addNewCreateTroopEvent(long buildingId){
+        long queueTime = 0;
+       List<TimedEvent> allEventForABuilding =  timedEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(buildingId);
+        if(allEventForABuilding.size() > 0){
+           TimedEvent tempTimedEvent = allEventForABuilding.get(0);
+           queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
+        }
+        // TODO add building-occupation-status;  handle time formula for troop & building level;
+        TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 60000), GameEvent.TRAINTROOPS);
+        timedEventRepo.save(timedEvent);
     }
+
+    private long calculateBuildingTimeRatio(int level){
+        return calculateTotalCost(level)/250;
+    }
+
+    private int calculateTotalCost(int n) {
+        int i = 0;
+        int result = 0;
+        while (i < n) {
+            result += i * 100;
+            i++;
+        }
+        return result + 250;
+    }
+
 }
