@@ -88,11 +88,12 @@ public class EventServices {
 
     public void addNewLevelUpEvent(long buildingID){
 
-        Building temporaryBuilding = buildingRepo.findOne(buildingID);
+        Building temporaryBuilding = buildingRepo.findOne( buildingID);
 
         TimedEvent timedEvent = new TimedEvent(
                 buildingID, (System.currentTimeMillis()
-                + (60000 * calculateBuildingTimeRatio(temporaryBuilding.getLevel()))),
+                + (60000
+                * calculateBuildingTimeRatio(temporaryBuilding.getLevel()))),
                 GameEvent.LEVELUP );
 
         timedEventRepo.save(timedEvent);
@@ -105,7 +106,7 @@ public class EventServices {
            TimedEvent tempTimedEvent = allEventForABuilding.get(0);
            queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
-        // TODO add building-occupation-status;  handle time formula for troop & building level;
+        // TODO add building-occupation-status;  handle time formula for troop;
         TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 60000), GameEvent.TRAINTROOPS);
         timedEventRepo.save(timedEvent);
     }

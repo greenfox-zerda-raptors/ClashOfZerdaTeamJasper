@@ -29,7 +29,7 @@ public class TroopController {
         return mainServices.findOneTroop(troopId);
     }
 
-    @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
     public void trainNewTroop(@PathVariable int barrackId) {
         eventServices.addNewCreateTroopEvent((long) barrackId);
     }

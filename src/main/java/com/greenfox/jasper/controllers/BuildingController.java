@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/kingdom/{userId}/buildings", method = RequestMethod.GET)
+@RequestMapping(value = "/kingdom/{userId}/buildings")
 public class BuildingController {
 
     @Autowired
@@ -32,10 +32,14 @@ public class BuildingController {
         return mainServices.findOneBuilding(buildingId);
     }
 
-
-    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
-        eventServices.addNewLevelUpEvent(buildingId);
-        response.sendRedirect(String.format("/building/%d", buildingId));
+        eventServices.addNewLevelUpEvent((long) buildingId);
+//        response.sendRedirect("/kingdom/1/buildings");
+    }
+    @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
+    public void addNewBuilding(@PathVariable int userId , @PathVariable String type, HttpServletResponse response) throws IOException{
+        mainServices.addNewBuilding(userId, type);
     }
 }
+
