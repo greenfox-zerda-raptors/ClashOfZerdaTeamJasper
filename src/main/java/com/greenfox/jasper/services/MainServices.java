@@ -9,23 +9,31 @@ import org.springframework.stereotype.Service;
 public class MainServices {
 
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
 
     @Autowired
-    BuildingRepo buildingRepo;
+    private BuildingRepo buildingRepo;
 
     @Autowired
-    ResourceRepo resourceRepo;
+    private ResourceRepo resourceRepo;
 
     @Autowired
-    TroopRepo troopRepo;
+    private TroopRepo troopRepo;
+
+    @Autowired
+    private KingdomRepo kingdomRepo;
+
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
     }
 
-    public User findKingdom(String kingdomName){
-        return userRepo.findByKingdom(kingdomName);
+    public Kingdom findOneKingdom(long kingdomId){
+        return kingdomRepo.findOne(kingdomId);
+    }
+
+    public Kingdom findKingdomByName(String kingdom){
+        return kingdomRepo.findByName(kingdom);
     }
 
     public Iterable<User> findAllUsers(){
@@ -38,6 +46,10 @@ public class MainServices {
 
     public Iterable<Building> findAllBuildings(){
         return buildingRepo.findAll();
+    }
+
+    public Iterable<Building> findAllBuildingsByKingdomId(long kingdomId){
+        return buildingRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 
     public Troop findOneTroop(int troopId){
@@ -56,6 +68,14 @@ public class MainServices {
         return resourceRepo.findAll();
     }
 
+    public Iterable<Troop> findAllTroopsByKingdomId(long kingdomId) {
+        return troopRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
+    }
+
+    public void saveOneKingdom(Kingdom kingdom){
+        kingdomRepo.save(kingdom);
+    }
+
     public void saveOneUser(User user){
         userRepo.save(user);
     }
@@ -70,5 +90,9 @@ public class MainServices {
 
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
+    }
+
+    public Iterable<Resource> findAllResourcesByKingdomId(long kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 }

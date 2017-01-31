@@ -8,21 +8,30 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "buildings")
+@Table(name = "building_table")
 @Component
 public class Building implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "building_id")
     private long buildingId;
+
+    @Column(name = "building_type")
     private String type;
+
+    @Column(name = "building_level")
     private int level;
+
+    @Transient
     private int hp;
+
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Kingdom kingdom;
     @ManyToOne
     @JsonIgnore
+    @Transient
     private Resource resource;
 
     public Building() {
@@ -34,11 +43,11 @@ public class Building implements Serializable {
         this.hp = 100;
     }
 
-    public Building(String type, User user, Resource resource) {
+    public Building(String type, Kingdom kingdom, Resource resource) {
         this.type = type;
         this.level = 0;
         this.hp = 100;
-        this.user = user;
+        this.kingdom = kingdom;
         this.resource = resource;
     }
 
@@ -51,12 +60,12 @@ public class Building implements Serializable {
         this.resource = resource;
     }
 
-    public User getUser() {
-        return user;
+    public Kingdom getKingdom() {
+        return kingdom;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
     }
 
     public long getBuildingId() {
@@ -92,11 +101,14 @@ public class Building implements Serializable {
     }
 
     public void levelUp() {
+//        TODO formula for stat changes due to lvl
         this.level++;
     }
 
     public void decreaseLvl() {
-        this.level--;
-        //TODO resolve if under 0
+        if(level > 1) {
+            this.level--;
+        }
     }
+
 }
