@@ -18,11 +18,8 @@ public class Troop implements Serializable {
     private long troopId;
     @Column(name = "troop_level")
     private int level;
-    @Transient
     private int hp;
-    @Transient
     private int attack;
-    @Transient
     private int defense;
     @ManyToOne
     @JsonIgnore
