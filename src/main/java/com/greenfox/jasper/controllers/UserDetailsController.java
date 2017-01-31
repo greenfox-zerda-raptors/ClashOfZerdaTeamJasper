@@ -24,7 +24,6 @@ public class UserDetailsController {
 
     @RequestMapping(value = "/userdetails", produces = MediaType.APPLICATION_JSON_VALUE)
     public AccountInfo info(HttpServletRequest req) {
-        // must be logged in to get here per Spring Security config
         Account account = accountResolver.getAccount(req);
 
         return new AccountInfo(account.getEmail(), account.getFullName(), account.getHref());
