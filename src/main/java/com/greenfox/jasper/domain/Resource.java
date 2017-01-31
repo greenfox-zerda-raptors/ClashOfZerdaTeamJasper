@@ -11,18 +11,24 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "resources")
+@Table(name = "resource_table")
 @Component
 public class Resource implements Serializable {
 
     @Id
+    @Column(name = "resource_type")
     private String type;
+
+    @Column(name = "amount")
     private int amount;
+
+    @Transient
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
+
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private Kingdom kingdom;
 
     public Resource() {
     }
@@ -32,17 +38,18 @@ public class Resource implements Serializable {
         this.amount = 1;
     }
 
-    public Resource(String type, User user) {
-        this.user = user;
+    public Resource(String type, Kingdom kingdom) {
+        this.kingdom = kingdom;
         this.type = type;
         this.amount = 1;
     }
-    public User getUser() {
-        return user;
+
+    public Kingdom getKingdom() {
+        return kingdom;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
     }
 
     public String getType() {

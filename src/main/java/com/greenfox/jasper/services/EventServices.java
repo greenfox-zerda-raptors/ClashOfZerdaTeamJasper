@@ -17,8 +17,13 @@ import java.util.List;
 public class EventServices {
 
 
+<<<<<<< HEAD
+    private TimedEventRepo timedEventRepo; // think about time handling being simplified, 2 second delay
+
+=======
     private UserRepo userRepo;
     private TimedEventRepo timedEventRepo;
+>>>>>>> 7bc8f43c39a8c70d8aec5727077b6cccd837345e
     private BuildingRepo buildingRepo;
     private TroopRepo troopRepo;
 
