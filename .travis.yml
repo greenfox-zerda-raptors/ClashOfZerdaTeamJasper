@@ -30,4 +30,3 @@ deploy:
   api_key:
     secure: 6f1c449a-756b-4bc4-89fe-3a15ba5a2b43
     app:  mysterious-fortress-27630
-    
