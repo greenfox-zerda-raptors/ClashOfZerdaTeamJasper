@@ -23,6 +23,9 @@ public class MainServices {
     @Autowired
     private KingdomRepo kingdomRepo;
 
+    @Autowired
+    private EventServices eventServices;
+
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
@@ -94,5 +97,11 @@ public class MainServices {
 
     public Iterable<Resource> findAllResourcesByKingdomId(long kingdomId) {
         return resourceRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
+    }
+
+    public void addNewBuilding(int userId, String type) {
+       Building newBuilding =  new Building(type, userRepo.findOne((long) userId).getKingdom());
+        buildingRepo.save(newBuilding);
+        eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
     }
 }
