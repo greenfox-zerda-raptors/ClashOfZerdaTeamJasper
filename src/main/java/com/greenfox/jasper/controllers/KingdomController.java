@@ -1,7 +1,6 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Kingdom;
-import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +14,6 @@ public class KingdomController {
 
     @Autowired
     private MainServices mainServices;
-
-    @Autowired
-    private EventServices eventServices;
 
     @RequestMapping(value = "/{kingdomName}", method = RequestMethod.GET)
     public Kingdom getKingdom(@PathVariable String kingdomName) {

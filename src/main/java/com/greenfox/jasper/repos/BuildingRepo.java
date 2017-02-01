@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface BuildingRepo extends CrudRepository<Building, Long>{
     public Iterable<Building> findAllByKingdom(Kingdom kingdom);
+
 }

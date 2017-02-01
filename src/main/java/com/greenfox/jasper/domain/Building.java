@@ -40,30 +40,13 @@ public class Building implements Serializable {
         this.hp = 100;
     }
 
-    public Building(String type, Kingdom kingdom, Resource resource) {
+    public Building(String type, Kingdom kingdom) {
         this.type = type;
         this.level = 0;
         this.hp = 100;
         this.kingdom = kingdom;
-        this.resource = resource;
     }
 
-
-    public Resource getResource() {
-        return resource;
-    }
-
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
-    public Kingdom getKingdom() {
-        return kingdom;
-    }
-
-    public void setKingdom(Kingdom kingdom) {
-        this.kingdom = kingdom;
-    }
 
     public long getBuildingId() {
         return buildingId;
@@ -95,6 +78,22 @@ public class Building implements Serializable {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public Kingdom getKingdom() {
+        return kingdom;
+    }
+
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public void levelUp() {
