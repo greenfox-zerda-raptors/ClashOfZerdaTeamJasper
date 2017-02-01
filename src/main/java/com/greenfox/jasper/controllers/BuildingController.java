@@ -24,12 +24,10 @@ public class BuildingController {
     @Autowired
     private EventServices eventServices;
 
-    @Autowired
-    private BuildingResponse buildingResponse;
-
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<Building> getBuildings(@PathVariable int userId) {
-        return  buildingResponse.getBuildings(mainServices.findOneUser(userId).getKingdom().getKingdomId());
+    public BuildingResponse getBuildings(@PathVariable int userId) {
+        BuildingResponse response = new BuildingResponse();
+        return response;
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)

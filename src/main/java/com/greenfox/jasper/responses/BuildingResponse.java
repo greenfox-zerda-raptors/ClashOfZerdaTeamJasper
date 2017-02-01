@@ -8,22 +8,9 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Component
-public class BuildingResponse implements Serializable {
+public class BuildingResponse{
 
-    @Autowired
-    MainServices mainServices;
+    private ArrayList<Building> buildings = new ArrayList<>();
 
-    private ArrayList<Building> buildings;
-
-    public ArrayList<Building> getBuildings(long kingdomId){
-
-        buildings = new ArrayList ();
-
-        for(Building building : mainServices.findAllBuildingsByKingdomId(kingdomId)){
-            buildings.add(building);
-        }
-        return buildings;
-    }
 
 }
