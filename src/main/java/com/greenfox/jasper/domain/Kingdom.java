@@ -27,15 +27,12 @@ public class Kingdom implements Serializable {
     @OneToOne
     private User user;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Building> buildings;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Troop> troops;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private Collection<Resource> resources;
 

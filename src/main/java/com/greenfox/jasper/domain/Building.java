@@ -22,8 +22,6 @@ public class Building implements Serializable {
 
     @Column(name = "building_level")
     private int level;
-
-    @Transient
     private int hp;
 
     @ManyToOne
@@ -31,7 +29,6 @@ public class Building implements Serializable {
     private Kingdom kingdom;
     @ManyToOne
     @JsonIgnore
-    @Transient
     private Resource resource;
 
     public Building() {
