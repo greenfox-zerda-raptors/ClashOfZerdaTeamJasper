@@ -1,6 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.responses.BuildingResponse;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.io.IOException;
 
 @RestController
@@ -22,9 +24,12 @@ public class BuildingController {
     @Autowired
     private EventServices eventServices;
 
+    @Autowired
+    private BuildingResponse buildingResponse;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Building> getBuildings(@PathVariable int userId) {
-        return mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId());
+        return  buildingResponse.getBuildings(mainServices.findOneUser(userId).getKingdom().getKingdomId());
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
@@ -35,11 +40,12 @@ public class BuildingController {
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.addNewLevelUpEvent((long) buildingId);
-//        response.sendRedirect("/kingdom/1/buildings");
+        response.sendRedirect("/kingdom/1/buildings");
     }
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
     public void addNewBuilding(@PathVariable int userId , @PathVariable String type, HttpServletResponse response) throws IOException{
         mainServices.addNewBuilding(userId, type);
+        response.sendRedirect("/kingdom/1/buildings");
     }
 }
 
