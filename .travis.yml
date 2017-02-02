@@ -18,6 +18,8 @@ branches:
     - master
     - zoltan-writtingtests
     - bncbodrogi
+    - adam-db
+    - adam-zoltan-DTO
 
 
 before_cache:

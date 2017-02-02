@@ -31,6 +31,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.7'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '1.4.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '1.4.3.RELEASE'
     runtime('org.springframework.boot:spring-boot-devtools')
