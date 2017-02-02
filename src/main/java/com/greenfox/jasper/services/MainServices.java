@@ -66,8 +66,8 @@ public class MainServices {
         return troopRepo.findAll();
     }
 
-    public Resource findOneResource(long resourceId){
-        return resourceRepo.findOne(resourceId);
+    public Resource findOneResource(int resourceId){
+        return resourceRepo.findOneById(resourceId);
     }
 
 
@@ -99,14 +99,21 @@ public class MainServices {
         resourceRepo.save(resource);
     }
 
-    public List<Resource> findAllResourcesByKingdomId(long kingdomId) {
-        return resourceRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
+    public List<Resource> findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
+        return resourceRepo.findAllByKingdomAndType(findOneKingdom(kingdomId), type);
     }
 
-    public void addNewBuilding(int userId, String type) {
-       Building newBuilding =  new Building(type, userRepo.findOne((long) userId).getKingdom());
+    public void addNewBuilding(int kingdomId, String type) {
+       Building newBuilding =  new Building(type, kingdomRepo.findOne((long) kingdomId));
         buildingRepo.save(newBuilding);
         eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
     }
 
+    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String type) {
+       return buildingRepo.findAllBuildingByKingdomAndType(findOneKingdom((long) kingdomId), type);
+    }
+
+    public List<Resource> findAllResourcesByKingdomId(int kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomRepo.findOne((long) kingdomId));
+    }
 }

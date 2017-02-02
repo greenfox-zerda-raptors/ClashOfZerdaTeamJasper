@@ -1,6 +1,6 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.DTO.KingdomDto;
+import com.greenfox.jasper.dto.KingdomDto;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.MainServices;

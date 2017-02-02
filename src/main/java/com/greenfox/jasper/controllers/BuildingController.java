@@ -1,7 +1,7 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.DTO.BuildingDto;
-import com.greenfox.jasper.DTO.BuildingResponse;
+import com.greenfox.jasper.dto.BuildingDto;
+import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;
@@ -57,13 +57,13 @@ public class BuildingController {
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.addNewLevelUpEvent((long) buildingId);
-        response.sendRedirect("/kingdom/{kingdomId}/buildings");
+        response.sendRedirect("/kingdom/2/buildings");
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-    public void addNewBuilding(@PathVariable int userId , @PathVariable String type, HttpServletResponse response) throws IOException{
-        mainServices.addNewBuilding(userId, type);
-        response.sendRedirect("/kingdom/{kingdomId}/buildings");
+    public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
+        mainServices.addNewBuilding(kingdomId, type);
+        response.sendRedirect("/kingdom/2/buildings");
     }
 }
 

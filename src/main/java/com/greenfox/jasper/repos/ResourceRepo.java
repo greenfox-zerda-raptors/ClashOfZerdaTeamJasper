@@ -8,4 +8,9 @@ import java.util.List;
 
 public interface ResourceRepo extends CrudRepository<Resource, Long> {
      List<Resource> findAllByKingdom(Kingdom kingdom);
+
+    Resource findOneById(long resourceId);
+
+    List<Resource> findAllByKingdomAndType(Kingdom kingdom, String type);
+
 }

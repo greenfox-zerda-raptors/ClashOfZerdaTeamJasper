@@ -76,4 +76,12 @@ public class Resource implements Serializable {
     public void setKingdom(Kingdom kingdom) {
         this.kingdom = kingdom;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

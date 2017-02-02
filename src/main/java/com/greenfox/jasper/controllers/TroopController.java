@@ -1,6 +1,6 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.DTO.TroopResponse;
+import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;

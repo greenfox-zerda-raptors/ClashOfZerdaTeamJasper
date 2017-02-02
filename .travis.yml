@@ -19,7 +19,7 @@ branches:
     - zoltan-writtingtests
     - bncbodrogi
     - adam-db
-    - adam-zoltan-DTO
+    - adam-zoltan-dto
 
 
 before_cache:

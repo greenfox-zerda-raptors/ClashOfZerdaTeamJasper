@@ -1,6 +1,6 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.DTO.*;
+import com.greenfox.jasper.dto.*;
 import com.greenfox.jasper.domain.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +54,7 @@ public class DTOServices {
 
     public ResourceDto convertResourcesToDTO(Resource resource) {
         ResourceDto result = new ResourceDto();
+        result.setId(resource.getId());
         result.setType(resource.getType());
         result.setAmount(resource.getAmount());
         result.setBuildings(convertBuildingListToDTO(resource.getBuildings()));
@@ -62,6 +63,7 @@ public class DTOServices {
 
     public ResourceDto convertResourceWithBuildingsDto(Resource resource, List<Building> buildings){
         ResourceDto result = new ResourceDto();
+        result.setId(result.getId());
         result.setType(resource.getType());
         result.setAmount(resource.getAmount());
         result.setBuildings(convertBuildingListToDTO(buildings));

@@ -1,11 +1,20 @@
-package com.greenfox.jasper.DTO;
+package com.greenfox.jasper.dto;
 
 import java.util.List;
 
 public class ResourceDto {
+    private long id;
     private String type;
     private int amount;
     private List<BuildingDto> buildings;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public List<BuildingDto> getBuildings() {
         return buildings;

@@ -1,4 +1,4 @@
-package com.greenfox.jasper.DTO;
+package com.greenfox.jasper.dto;
 
 public class UserDto {
 
