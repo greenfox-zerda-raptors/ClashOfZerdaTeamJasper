@@ -26,11 +26,9 @@ public class KingdomController {
     public ResponseEntity<Object> getKingdom(@PathVariable String kingdomName) {
         Kingdom kingdom = mainServices.findKingdomByName(kingdomName);
 
-        if(kingdom == null){
+        if(kingdom == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("userId not found");
         }
-
-        // TODO convert to KingdomDTO;
 
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
 
