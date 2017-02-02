@@ -25,12 +25,15 @@ public class DTOServices {
         return kingdomDto;
     }
 
-    public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingIterable){
+    public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingList){
         List<BuildingDto> result = new ArrayList<>();
-        for(int i = 0; i <buildingIterable.size(); i++){
-            result.add(modelMapper.map(buildingIterable.get(i), BuildingDto.class));
+        for(int i = 0; i <buildingList.size(); i++){
+            result.add(convertBuildingToDTO(buildingList.get(i)));
         }
         return result;
+    }
+    public BuildingDto convertBuildingToDTO(Building building){
+        return modelMapper.map(building, BuildingDto.class);
     }
 
     public UserDto convertUserToDto(User user){
@@ -47,8 +50,16 @@ public class DTOServices {
     public List<ResourceDto> convertResourcesListToDTO(List<Resource> resourcesList){
         List<ResourceDto> result = new ArrayList<>();
         for(int i = 0; i <resourcesList.size(); i++){
-            result.add(modelMapper.map(resourcesList.get(i), ResourceDto.class));
+            result.add(convertResourcesToDTO(resourcesList.get(i)));
         }
+        return result;
+    }
+
+    public ResourceDto convertResourcesToDTO(Resource resource) {
+        ResourceDto result = new ResourceDto();
+        result.setType(resource.getType());
+        result.setAmount(resource.getAmount());
+        result.setBuildings(convertBuildingListToDTO(resource.getBuildings()));
         return result;
     }
 

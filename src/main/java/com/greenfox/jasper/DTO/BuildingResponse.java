@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 // TODO: rename/ delete it
 public class BuildingResponse{
+
     public BuildingResponse() {
     }
 
