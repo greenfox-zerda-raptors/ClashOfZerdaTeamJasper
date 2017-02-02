@@ -33,7 +33,7 @@ public class EventServicesTest {
         Building testBuildingBefore = mainServices.findOneBuilding(9);
         eventServices.executeEvent(9, GameEvent.LEVELUP);
         Building testBuildingAfter = mainServices.findOneBuilding(9);
-        assertEquals(testBuildingBefore.getLevel(),testBuildingAfter.getLevel() );
+        assertEquals(testBuildingBefore.getLevel()+1,testBuildingAfter.getLevel() );
 
     }
 
