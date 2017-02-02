@@ -14,6 +14,10 @@ import java.util.List;
 public class Resource implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "resource_id")
+    private long id;
+
     @Column(name = "resource_type")
     private String type;
 

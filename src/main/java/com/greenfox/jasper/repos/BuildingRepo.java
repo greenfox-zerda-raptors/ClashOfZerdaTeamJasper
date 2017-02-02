@@ -11,4 +11,5 @@ public interface BuildingRepo extends CrudRepository<Building, Long>{
 
     List<Building> findAllBuildingByKingdomName(String kingdomName);
 
+    List<Building> findAllBuildingByKingdomIdAndByType(int resourceId, String type);
 }

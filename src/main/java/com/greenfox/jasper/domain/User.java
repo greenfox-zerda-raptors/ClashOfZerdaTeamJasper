@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -28,6 +29,7 @@ public class User implements Serializable {
     private Kingdom kingdom;
 
     @Column(name = "points")
+    @NotNull
     private int points;
 
     public User() {

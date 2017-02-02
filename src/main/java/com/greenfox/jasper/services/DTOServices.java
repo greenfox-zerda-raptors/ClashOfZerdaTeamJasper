@@ -60,4 +60,12 @@ public class DTOServices {
         return result;
     }
 
+    public ResourceDto convertResourceWithBuildingsDto(Resource resource, List<Building> buildings){
+        ResourceDto result = new ResourceDto();
+        result.setType(resource.getType());
+        result.setAmount(resource.getAmount());
+        result.setBuildings(convertBuildingListToDTO(buildings));
+        return result;
+    }
+
 }
