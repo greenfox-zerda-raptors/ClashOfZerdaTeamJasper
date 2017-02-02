@@ -67,7 +67,8 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
 
-    @Column(name = "points")
+    @Column(name = "POINTS")
+    @NotNull
     private int points;
 
     public User() {
