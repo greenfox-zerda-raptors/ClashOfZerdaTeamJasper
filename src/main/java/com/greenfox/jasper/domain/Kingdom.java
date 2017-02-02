@@ -1,7 +1,6 @@
 package com.greenfox.jasper.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
