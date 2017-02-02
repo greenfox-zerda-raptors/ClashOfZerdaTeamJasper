@@ -19,12 +19,12 @@ public class DTOServices {
 
 
     public KingdomDto convertKingdomToDTO(Kingdom kingdom){
-        KingdomDto kgdto = new KingdomDto();
-        kgdto.setUser(convertUserToDto(kingdom.getUser()));
-        kgdto.setBuildings(convertBuildingListToDTO(kingdom.getBuildings()));
-        kgdto.setResources(convertResourcesListToDTO(kingdom.getResources()));
-        kgdto.setTroops(convertTroopListToDTO(kingdom.getTroops()));
-        return kgdto;
+        KingdomDto kingdomDto = new KingdomDto();
+        kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
+        kingdomDto.setBuildings(convertBuildingListToDTO(kingdom.getBuildings()));
+        kingdomDto.setResources(convertResourcesListToDTO(kingdom.getResources()));
+        kingdomDto.setTroops(convertTroopListToDTO(kingdom.getTroops()));
+        return kingdomDto;
     }
 
     public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingIterable){
