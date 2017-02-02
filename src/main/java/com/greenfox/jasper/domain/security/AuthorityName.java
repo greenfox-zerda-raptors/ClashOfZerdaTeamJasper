@@ -1,4 +1,4 @@
-package com.greenfox.jasper.domain;
+package com.greenfox.jasper.domain.security;
 
 /**
  * Created by almasics on 2017.02.02..

@@ -1,6 +1,7 @@
 package com.greenfox.jasper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.greenfox.jasper.domain.security.Authority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;

@@ -1,4 +1,6 @@
-package com.greenfox.jasper.domain;
+package com.greenfox.jasper.domain.security;
+
+import com.greenfox.jasper.domain.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

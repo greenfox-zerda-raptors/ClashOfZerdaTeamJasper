@@ -1,6 +1,6 @@
 package com.greenfox.jasper.security;
 
-import com.greenfox.jasper.domain.Authority;
+import com.greenfox.jasper.domain.security.Authority;
 import com.greenfox.jasper.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
