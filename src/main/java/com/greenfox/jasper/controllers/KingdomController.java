@@ -1,7 +1,8 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.DTO.*;
+import com.greenfox.jasper.DTO.KingdomDto;
 import com.greenfox.jasper.domain.Kingdom;
+import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping(value = "/kingdom", method = RequestMethod.GET)
 public class KingdomController {
@@ -20,19 +19,28 @@ public class KingdomController {
     @Autowired
     private MainServices mainServices;
 
+    @Autowired
+    private DTOServices dtoServices;
+
     @RequestMapping(value = "/{kingdomName}", method = RequestMethod.GET)
     public ResponseEntity<Object> getKingdom(@PathVariable String kingdomName) {
-        Kingdom kd = mainServices.findKingdomByName(kingdomName);
+        Kingdom kingdom = mainServices.findKingdomByName(kingdomName);
 
-        if(kd == null){
+        if(kingdom == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("userId not found");
         }
 
-        KingdomDto result = new KingdomDto();
-        result.setUser(new UserDto()); // fetch from the user service and map User to UserDto
-        result.setBuildings(new ArrayList<BuildingDto>()); // fetch from building service and map Buildings to BuildingDto
-        result.setTroops(new ArrayList<TroopDto>()); // fetch from troop service, map
-        result.setResources(new ArrayList<ResourceDto>()); // fetch from resource service, map
+        // TODO convert to KingdomDTO;
+
+        KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
+
+
+
+//        KingdomDto result = new KingdomDto();
+//        result.setUser(modelMapper.map(kingdom.getUser(), UserDto.class));
+//        result.setBuildings(modelMapper.map(mainServices.findAllBuildingsByKingdomId(kingdom.getKingdomId())), BuildingResponse.class); // fetch from building service and map Buildings to BuildingDto
+//        result.setTroops(new ArrayList<TroopDto>()); // fetch from troop service, map
+//        result.setResources(new ArrayList<ResourceDto>()); // fetch from resource service, map
 
         return new ResponseEntity<Object>(result, HttpStatus.OK);
 

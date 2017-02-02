@@ -2,9 +2,6 @@ package com.greenfox.jasper.DTO;
 
 import java.util.List;
 
-/**
- * Created by 8560w on 2017.02.02..
- */
 public class KingdomDto {
     private UserDto user;
     private List<BuildingDto> buildings;

@@ -1,7 +1,7 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.DTO.BuildingResponse;
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.responses.BuildingResponse;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
 import java.io.IOException;
 
 @RestController

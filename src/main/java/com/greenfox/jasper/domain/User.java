@@ -20,6 +20,9 @@ public class User implements Serializable {
     @Column(name = "user_name")
     private String name;
 
+
+
+    // TODO do we need this?
     @JsonBackReference
     @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
