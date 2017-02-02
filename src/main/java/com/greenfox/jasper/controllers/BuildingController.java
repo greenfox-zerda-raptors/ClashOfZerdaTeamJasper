@@ -1,6 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.responses.BuildingResponse;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,12 @@ public class BuildingController {
     private EventServices eventServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<Building> getBuildings(@PathVariable int userId) {
-        return mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId());
+    public BuildingResponse getBuildings(@PathVariable int userId) {
+        BuildingResponse response = new BuildingResponse();
+        for(Building building : mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId())) {
+            response.getBuildings().add(building);
+        }
+        return response;
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
