@@ -34,15 +34,7 @@ public class KingdomController {
 
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
 
-
-
-//        KingdomDto result = new KingdomDto();
-//        result.setUser(modelMapper.map(kingdom.getUser(), UserDto.class));
-//        result.setBuildings(modelMapper.map(mainServices.findAllBuildingsByKingdomId(kingdom.getKingdomId())), BuildingResponse.class); // fetch from building service and map Buildings to BuildingDto
-//        result.setTroops(new ArrayList<TroopDto>()); // fetch from troop service, map
-//        result.setResources(new ArrayList<ResourceDto>()); // fetch from resource service, map
-
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 }

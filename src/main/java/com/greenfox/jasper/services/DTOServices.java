@@ -5,8 +5,8 @@ import com.greenfox.jasper.domain.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Zoltán on 2017.02.02..
@@ -26,11 +26,7 @@ public class DTOServices {
     }
 
     public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingList){
-        List<BuildingDto> result = new ArrayList<>();
-        for(int i = 0; i <buildingList.size(); i++){
-            result.add(convertBuildingToDTO(buildingList.get(i)));
-        }
-        return result;
+        return buildingList.stream().map(this::convertBuildingToDTO).collect(Collectors.toList());
     }
     public BuildingDto convertBuildingToDTO(Building building){
         return modelMapper.map(building, BuildingDto.class);
@@ -41,18 +37,14 @@ public class DTOServices {
     }
 
     public List<TroopDto> convertTroopListToDTO(List<Troop> troopList){
-        List<TroopDto> result = new ArrayList<>();
-        for(int i = 0; i <troopList.size(); i++){
-            result.add(modelMapper.map(troopList.get(i), TroopDto.class));
-        }
-        return result;
+        return troopList.stream().map(this::convertTRoopToDTO).collect(Collectors.toList());
     }
+    public TroopDto convertTRoopToDTO(Troop troop){
+        return modelMapper.map(troop, TroopDto.class);
+    }
+
     public List<ResourceDto> convertResourcesListToDTO(List<Resource> resourcesList){
-        List<ResourceDto> result = new ArrayList<>();
-        for(int i = 0; i <resourcesList.size(); i++){
-            result.add(convertResourcesToDTO(resourcesList.get(i)));
-        }
-        return result;
+        return resourcesList.stream().map(this::convertResourcesToDTO).collect(Collectors.toList());
     }
 
     public ResourceDto convertResourcesToDTO(Resource resource) {
