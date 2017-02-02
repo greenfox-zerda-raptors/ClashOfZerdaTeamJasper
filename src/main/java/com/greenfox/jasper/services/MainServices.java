@@ -75,7 +75,7 @@ public class MainServices {
         return resourceRepo.findAll();
     }
 
-    public Iterable<Troop> findAllTroopsByKingdomId(long kingdomId) {
+    public List<Troop> findAllTroopsByKingdomId(long kingdomId) {
         return troopRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 
