@@ -27,6 +27,10 @@ public class BuildingController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public BuildingResponse getBuildings(@PathVariable int userId) {
         BuildingResponse response = new BuildingResponse();
+        for(Building building : mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId())) {
+            response.getBuildings().add(building);
+        }
+
         return response;
     }
 
