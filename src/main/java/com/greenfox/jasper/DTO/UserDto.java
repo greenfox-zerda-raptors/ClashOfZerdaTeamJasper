@@ -6,6 +6,8 @@ public class UserDto {
 
     private String name;
 
+    // TODO add kingdom name
+
     private int points;
 
     public String getName() {

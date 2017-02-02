@@ -3,12 +3,21 @@ package com.greenfox.jasper.DTO;
 
 public class BuildingDto {
 
+    private int id;
     private String type;
     private int level;
     private int hp;
 
     public String getType() {
         return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setType(String type) {

@@ -16,8 +16,6 @@ public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 
-
-
     public KingdomDto convertKingdomToDTO(Kingdom kingdom){
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));

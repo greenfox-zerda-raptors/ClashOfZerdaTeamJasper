@@ -2,10 +2,19 @@ package com.greenfox.jasper.DTO;
 
 public class TroopDto {
 
+    private int id;
     private int level;
     private int hp;
     private int attack;
     private int defense;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getLevel() {
         return level;

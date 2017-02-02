@@ -4,6 +4,18 @@ public class ResourceDto {
     private String type;
     private int amount;
 
+    //TODO add buildings that produce this resource
+//    private List<BuildingDto> buildings;
+
+
+//    public List<BuildingDto> getBuildings() {
+//        return buildings;
+//    }
+//
+//    public void setBuildings(List<BuildingDto> buildings) {
+//        this.buildings = buildings;
+//    }
+
     public String getType() {
         return type;
     }
