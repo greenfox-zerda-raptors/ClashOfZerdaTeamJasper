@@ -5,6 +5,8 @@ import com.greenfox.jasper.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MainServices {
 
@@ -51,9 +53,10 @@ public class MainServices {
         return buildingRepo.findAll();
     }
 
-    public Iterable<Building> findAllBuildingsByKingdomId(long kingdomId){
+    public List<Building> findAllBuildingsByKingdomId(long kingdomId){
         return buildingRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
+
 
     public Troop findOneTroop(int troopId){
         return troopRepo.findOne((long) troopId);

@@ -4,7 +4,11 @@ import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface BuildingRepo extends CrudRepository<Building, Long>{
-    public Iterable<Building> findAllByKingdom(Kingdom kingdom);
+    List<Building> findAllByKingdom(Kingdom kingdom);
+
+    List<Building> findAllBuildingByKingdomName(String kingdomName);
 
 }

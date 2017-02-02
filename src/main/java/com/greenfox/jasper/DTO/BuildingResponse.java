@@ -1,22 +1,26 @@
 package com.greenfox.jasper.DTO;
 
-import com.greenfox.jasper.domain.Building;
-
 import java.util.ArrayList;
+import java.util.List;
 
 // TODO: rename/ delete it
 public class BuildingResponse{
 
+    private List<BuildingDto> buildings = new ArrayList<>();
+
     public BuildingResponse() {
     }
 
-    private ArrayList<Building> buildings = new ArrayList<>();
+    public BuildingResponse(List<BuildingDto> buildings) {
+        this.buildings = buildings;
+    }
 
-    public ArrayList<Building> getBuildings() {
+    public List<BuildingDto> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(ArrayList<Building> buildings) {
+    public void setBuildings(List<BuildingDto> buildings) {
         this.buildings = buildings;
     }
+
 }

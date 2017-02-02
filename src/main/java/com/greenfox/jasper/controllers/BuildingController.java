@@ -2,6 +2,7 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.DTO.BuildingResponse;
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/kingdom/{userId}/buildings")
+@RequestMapping(value = "/kingdom/{kingdomId/buildings")
 public class BuildingController {
 
     @Autowired
@@ -23,9 +24,15 @@ public class BuildingController {
     @Autowired
     private EventServices eventServices;
 
+    @Autowired
+    private DTOServices dtoServices;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public BuildingResponse getBuildings(@PathVariable int userId) {
-        BuildingResponse response = new BuildingResponse();
+    public BuildingResponse getBuildings(@PathVariable int kingdomId) {
+        BuildingResponse response =
+                new BuildingResponse(
+                        dtoServices.convertBuildingListToDTO(mainServices.findAllBuildingsByKingdomId(kingdomId)));
+
         return response;
     }
 

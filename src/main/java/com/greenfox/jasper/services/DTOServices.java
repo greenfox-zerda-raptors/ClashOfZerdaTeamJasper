@@ -3,6 +3,7 @@ package com.greenfox.jasper.services;
 import com.greenfox.jasper.DTO.*;
 import com.greenfox.jasper.domain.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 
+    @Autowired
+    MainServices mainServices;
+
     public KingdomDto convertKingdomToDTO(Kingdom kingdom){
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
@@ -28,6 +32,7 @@ public class DTOServices {
     public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingList){
         return buildingList.stream().map(this::convertBuildingToDTO).collect(Collectors.toList());
     }
+
     public BuildingDto convertBuildingToDTO(Building building){
         return modelMapper.map(building, BuildingDto.class);
     }
