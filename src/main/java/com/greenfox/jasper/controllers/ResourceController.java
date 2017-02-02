@@ -1,7 +1,6 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.DTO.ResourceResponse;
-import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.MainServices;
@@ -36,19 +35,20 @@ public class ResourceController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{resourceId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getOneResource(@PathVariable int kingdomId, @PathVariable int resourceId) {
-        Resource resource = mainServices.findOneResource(resourceId);
-        List<Building> buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, resource.getType());
-
-        if(resource.getType() == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
-        }
-        ResourceResponse result = new ResourceResponse(
-                dtoServices.convertResourceWithBuildingsDto(resource, buildingList));
-
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
-    }
+    // TODO resolve error with custom query
+//    @RequestMapping(value = "/{resourceId}", method = RequestMethod.GET)
+//    public ResponseEntity<Object> getOneResource(@PathVariable int kingdomId, @PathVariable int resourceId) {
+//        Resource resource = mainServices.findOneResource(resourceId);
+//        List<Building> buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, resource.getType());
+//
+//        if(resource.getType() == null){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
+//        }
+//        ResourceResponse result = new ResourceResponse(
+//                dtoServices.convertResourceWithBuildingsDto(resource, buildingList));
+//
+//        return new ResponseEntity<Object>(result, HttpStatus.OK);
+//    }
 
 
 }

@@ -109,7 +109,4 @@ public class MainServices {
         eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
     }
 
-    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String type) {
-        return buildingRepo.findAllBuildingByKingdomIdAndByType(kingdomId, type);
-    }
 }
