@@ -22,9 +22,9 @@ public class KingdomController {
     @Autowired
     private DTOServices dtoServices;
 
-    @RequestMapping(value = "/{kingdomName}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getKingdom(@PathVariable String kingdomName) {
-        Kingdom kingdom = mainServices.findKingdomByName(kingdomName);
+    @RequestMapping(value = "/{kingdomId}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getKingdom(@PathVariable int kingdomId) {
+        Kingdom kingdom = mainServices.findOneKingdom(kingdomId);
 
         if(kingdom == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("userId not found");

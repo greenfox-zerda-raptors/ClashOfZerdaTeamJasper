@@ -3,7 +3,6 @@ package com.greenfox.jasper.DTO;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: rename/ delete it
 public class BuildingResponse{
 
     private List<BuildingDto> buildings = new ArrayList<>();
