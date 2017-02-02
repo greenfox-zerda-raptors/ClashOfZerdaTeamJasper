@@ -54,6 +54,8 @@ public class BuildingController {
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
+
+    // TODO this should (probably) not redirect
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.addNewLevelUpEvent((long) buildingId);
