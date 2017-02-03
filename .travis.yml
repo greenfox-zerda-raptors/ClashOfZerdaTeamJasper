@@ -9,6 +9,9 @@ before_install:
 before_script:
    - psql -c 'create database travis_ci_test;' -U postgres
 
+script:
+  -
+
 install:
   - ./gradlew check
   - ./gradlew assemble --stacktrace --debug
@@ -16,11 +19,10 @@ install:
 branches:
   only:
     - master
-    - zoltan-writtingtests
     - bncbodrogi
-    - adam-db
     - adam-zoltan-dto
-
+    - zoltan-writtingtests
+    - adam-db
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
