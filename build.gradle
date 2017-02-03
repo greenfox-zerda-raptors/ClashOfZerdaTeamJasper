@@ -31,12 +31,35 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
+<<<<<<< HEAD
+<<<<<<< HEAD
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.3'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.4.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.4.0'
+=======
+
+=======
+    
+>>>>>>> db61b9f4da6e958195b3ca0404f5b5ffbade0afc
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('io.jsonwebtoken:jjwt:0.7.0')
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1206-jdbc42'
+    compile group: 'org.springframework.mobile', name: 'spring-mobile-device', version: '1.1.5.RELEASE'
+
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/almasics-token_auth_update
+=======
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.3'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.4.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.4.0'
+>>>>>>> db61b9f4da6e958195b3ca0404f5b5ffbade0afc
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '1.4.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '1.4.3.RELEASE'
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.7'
+
 
 }
 

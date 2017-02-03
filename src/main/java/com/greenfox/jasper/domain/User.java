@@ -2,8 +2,8 @@ package com.greenfox.jasper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -20,11 +20,13 @@ public class User implements Serializable {
     @Column(name = "user_name")
     private String name;
 
+    // TODO do we need this?
     @JsonBackReference
-    @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
 
-    @Column(name = "points")
+    @Column(name = "POINTS")
+    @NotNull
     private int points;
 
     public User() {

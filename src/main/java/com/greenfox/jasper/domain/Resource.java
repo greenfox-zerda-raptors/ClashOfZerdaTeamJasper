@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -16,6 +14,10 @@ import java.util.List;
 public class Resource implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "resource_id")
+    private long id;
+
     @Column(name = "resource_type")
     private String type;
 
@@ -23,7 +25,7 @@ public class Resource implements Serializable {
     private int amount;
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<Building> buildings;
+    private List<Building> buildings;
 
     @ManyToOne
     @JsonIgnore
@@ -43,14 +45,6 @@ public class Resource implements Serializable {
         this.amount = 1;
     }
 
-    public Kingdom getKingdom() {
-        return kingdom;
-    }
-
-    public void setKingdom(Kingdom kingdom) {
-        this.kingdom = kingdom;
-    }
-
     public String getType() {
         return type;
     }
@@ -67,11 +61,27 @@ public class Resource implements Serializable {
         this.amount = amount;
     }
 
-    public Collection<Building> getBuildings() {
+    public List<Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(Collection<Building> buildings) {
+    public void setBuildings(List<Building> buildings) {
         this.buildings = buildings;
+    }
+
+    public Kingdom getKingdom() {
+        return kingdom;
+    }
+
+    public void setKingdom(Kingdom kingdom) {
+        this.kingdom = kingdom;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
