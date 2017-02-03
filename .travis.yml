@@ -16,9 +16,10 @@ install:
 branches:
   only:
     - master
-    - zoltan-writtingtests
     - bncbodrogi
-
+    - adam-zoltan-dto
+    - zoltan-writtingtests
+    - adam-db
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

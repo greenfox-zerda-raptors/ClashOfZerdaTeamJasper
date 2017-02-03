@@ -1,14 +1,13 @@
 package com.greenfox.jasper.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "kingdom_table")
@@ -28,13 +27,13 @@ public class Kingdom implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
-    private Collection<Building> buildings;
+    private List<Building> buildings;
 
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
-    private Collection<Troop> troops;
+    private List<Troop> troops;
 
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
-    private Collection<Resource> resources;
+    private List<Resource> resources;
 
     public Kingdom() {
         this.name = "";
@@ -51,20 +50,20 @@ public class Kingdom implements Serializable {
         this.troops = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public long getKingdomId() {
         return kingdomId;
     }
 
     public void setKingdomId(long kingdomId) {
         this.kingdomId = kingdomId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public User getUser() {
@@ -75,27 +74,27 @@ public class Kingdom implements Serializable {
         this.user = user;
     }
 
-    public Collection<Building> getBuildings() {
+    public List<Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(Collection<Building> buildings) {
+    public void setBuildings(List<Building> buildings) {
         this.buildings = buildings;
     }
 
-    public Collection<Troop> getTroops() {
+    public List<Troop> getTroops() {
         return troops;
     }
 
-    public void setTroops(Collection<Troop> troops) {
+    public void setTroops(List<Troop> troops) {
         this.troops = troops;
     }
 
-    public Collection<Resource> getResources() {
+    public List<Resource> getResources() {
         return resources;
     }
 
-    public void setResources(Collection<Resource> resources) {
+    public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
 }
