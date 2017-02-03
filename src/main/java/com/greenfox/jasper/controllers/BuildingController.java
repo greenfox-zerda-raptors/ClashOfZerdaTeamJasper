@@ -30,7 +30,6 @@ public class BuildingController {
         for(Building building : mainServices.findAllBuildingsByKingdomId(mainServices.findOneUser(userId).getKingdom().getKingdomId())) {
             response.getBuildings().add(building);
         }
-
         return response;
     }
 
