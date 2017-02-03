@@ -4,6 +4,13 @@ import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.Resource;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ResourceRepo extends CrudRepository<Resource, String> {
-    public Iterable<Resource> findAllByKingdom(Kingdom kingdom);
+import java.util.List;
+
+public interface ResourceRepo extends CrudRepository<Resource, Long> {
+     List<Resource> findAllByKingdom(Kingdom kingdom);
+
+    Resource findOneById(long resourceId);
+
+    List<Resource> findAllByKingdomAndType(Kingdom kingdom, String type);
+
 }

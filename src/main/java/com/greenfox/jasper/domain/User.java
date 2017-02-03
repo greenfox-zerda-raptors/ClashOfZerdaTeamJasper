@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+<<<<<<< HEAD
 import javax.validation.constraints.Size;
+=======
+>>>>>>> master
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -64,11 +67,18 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 
+
+
+    // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
 
+<<<<<<< HEAD
     @Column(name = "POINTS")
+=======
+    @Column(name = "points")
+>>>>>>> master
     @NotNull
     private int points;
 
