@@ -43,7 +43,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public BuildingDto getOneBuilding(@PathVariable int buildingId, HttpServletResponse response) {
+    public BuildingDto getOneBuilding(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(mainServices.findOneBuilding(buildingId));
         if(result == null){
