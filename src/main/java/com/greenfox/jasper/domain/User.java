@@ -65,7 +65,6 @@ public class User implements Serializable {
     private List<Authority> authorities;
 
 
-
     // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
