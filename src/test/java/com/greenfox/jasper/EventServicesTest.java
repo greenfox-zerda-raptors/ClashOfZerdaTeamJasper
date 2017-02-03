@@ -30,11 +30,10 @@ public class EventServicesTest {
 
     @Test
     public void testEventServiceExecuteEventMethod(){
-        Building testBuildingBefore = mainServices.findOneBuilding(9);
-        eventServices.executeEvent(9, GameEvent.LEVELUP);
-        Building testBuildingAfter = mainServices.findOneBuilding(9);
+        Building testBuildingBefore = mainServices.findOneBuilding(11);
+        eventServices.executeEvent(11, GameEvent.LEVELUP);
+        Building testBuildingAfter = mainServices.findOneBuilding(11);
         assertEquals(testBuildingBefore.getLevel()+1,testBuildingAfter.getLevel() );
-
     }
 
 }

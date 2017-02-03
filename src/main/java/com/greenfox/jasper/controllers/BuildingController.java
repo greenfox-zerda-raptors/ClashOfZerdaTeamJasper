@@ -1,14 +1,12 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
-import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,26 +30,26 @@ public class BuildingController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Object> getBuildings(@PathVariable int kingdomId) {
+    public BuildingResponse getBuildingsList(@PathVariable int kingdomId, HttpServletResponse response) throws IOException {
         List<Building> buildingList = mainServices.findAllBuildingsByKingdomId(kingdomId);
 
         if(buildingList == null){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no buildings in this kingdom");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND, "No buildings available");
         }
 
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return result;
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getOneBuilding(@PathVariable int buildingId) {
+    public BuildingDto getOneBuilding(@PathVariable int buildingId, HttpServletResponse response) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(mainServices.findOneBuilding(buildingId));
         if(result == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No building with this ID in this kingdom exists");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND, "No such building");
         }
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return result;
     }
 
 
