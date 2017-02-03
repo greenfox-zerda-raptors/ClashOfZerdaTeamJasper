@@ -12,5 +12,4 @@ public class ProofOfConceptApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
 }
