@@ -25,7 +25,7 @@ public class EventServices {
     private final Logger log = LoggerFactory.getLogger(EventServices.class);
 
     @Autowired
-    public EventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo){
+    public EventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo) {
         this.userRepo = userRepo;
         this.troopRepo = troopRepo;
         this.timedEventRepo = timedEventRepo;
@@ -34,7 +34,7 @@ public class EventServices {
     }
 
     @Scheduled(fixedRate = 1000)
-    public void checkForEvents(){
+    public void checkForEvents() {
         long currentTime = System.currentTimeMillis();
         List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
 
@@ -55,7 +55,7 @@ public class EventServices {
 
         //TODO Battle event - see TimedEvent class for further info
 
-        switch (events){
+        switch (events) {
             case LEVELUP:
                 tempBuilding.levelUp();
                 buildingRepo.save(tempBuilding);
@@ -80,37 +80,37 @@ public class EventServices {
         }
     }
 
-    public void cancelEvent(long eventID){
+    public void cancelEvent(long eventID) {
         timedEventRepo.delete(eventID);
     }
 
-    public void addNewLevelUpEvent(long buildingID){
+    public void addNewLevelUpEvent(long buildingID) {
 
-        Building temporaryBuilding = buildingRepo.findOne( buildingID);
+        Building temporaryBuilding = buildingRepo.findOne(buildingID);
 
         TimedEvent timedEvent = new TimedEvent(
                 buildingID, (System.currentTimeMillis()
                 + (60000
                 * calculateBuildingTimeRatio(temporaryBuilding.getLevel()))),
-                GameEvent.LEVELUP );
+                GameEvent.LEVELUP);
 
         timedEventRepo.save(timedEvent);
     }
 
-    public void addNewCreateTroopEvent(long buildingId){
+    public void addNewCreateTroopEvent(long buildingId) {
         long queueTime = 0;
-       List<TimedEvent> allEventForABuilding =  timedEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(buildingId);
-        if(allEventForABuilding.size() > 0){
-           TimedEvent tempTimedEvent = allEventForABuilding.get(0);
-           queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
+        List<TimedEvent> allEventForABuilding = timedEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(buildingId);
+        if (allEventForABuilding.size() > 0) {
+            TimedEvent tempTimedEvent = allEventForABuilding.get(0);
+            queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
         // TODO add building-occupation-status;  handle time formula for troop;
         TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 60000), GameEvent.TRAINTROOPS);
         timedEventRepo.save(timedEvent);
     }
 
-    private long calculateBuildingTimeRatio(int level){
-        return calculateTotalCost(level)/250;
+    private long calculateBuildingTimeRatio(int level) {
+        return calculateTotalCost(level) / 250;
     }
 
     private int calculateTotalCost(int n) {
