@@ -3,13 +3,9 @@ package com.greenfox.jasper.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfox.jasper.domain.security.Authority;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-<<<<<<< HEAD
-=======
 import javax.validation.constraints.Size;
->>>>>>> refs/remotes/origin/almasics-token_auth_update
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -68,17 +64,11 @@ public class User implements Serializable {
     private List<Authority> authorities;
 
 
-
     // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
-
-<<<<<<< HEAD
-    @Column(name = "points")
-=======
     @Column(name = "POINTS")
->>>>>>> refs/remotes/origin/almasics-token_auth_update
     @NotNull
     private int points;
 
