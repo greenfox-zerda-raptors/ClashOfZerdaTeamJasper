@@ -1,14 +1,19 @@
 package com.greenfox.jasper;
 
+import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.Resource;
+import com.greenfox.jasper.domain.Troop;
+import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class ProofOfConceptApplication {
+public class ProofOfConceptApplication implements CommandLineRunner{
 
     @Autowired
     MainServices mainServices;
@@ -17,8 +22,6 @@ public class ProofOfConceptApplication {
         SpringApplication.run(ProofOfConceptApplication.class, args);
     }
 
-<<<<<<< HEAD
-=======
 	@Override
 	public void run(String... args) throws Exception {
 		mainServices.saveOneUser(new User("romania", "sanya"));
@@ -40,5 +43,4 @@ public class ProofOfConceptApplication {
 		mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("deutchland")));
 
 	}
->>>>>>> master
 }
