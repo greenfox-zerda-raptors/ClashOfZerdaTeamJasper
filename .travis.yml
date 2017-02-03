@@ -20,6 +20,7 @@ branches:
   only:
     - master
     - bncbodrogi
+    - adam-zoltan-dto
     - zoltan-writtingtests
     - adam-db
 

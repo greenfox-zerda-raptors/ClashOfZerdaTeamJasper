@@ -26,6 +26,7 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 		mainServices.saveOneUser(new User("deutchland", "hanzi"));
 		mainServices.saveOneUser(new User("mexico", "jesus"));
 		mainServices.saveOneResource(new Resource("food", mainServices.findKingdomByName("romania")));
+		mainServices.saveOneResource(new Resource("gold", mainServices.findKingdomByName("romania")));
 		mainServices.saveOneBuilding(new Building("mine", mainServices.findKingdomByName("romania")));
 		mainServices.saveOneBuilding(new Building("farm", mainServices.findKingdomByName("romania")));
 		mainServices.saveOneBuilding(new Building("barrack", mainServices.findKingdomByName("romania")));

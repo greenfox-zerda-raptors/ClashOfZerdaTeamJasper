@@ -5,6 +5,8 @@ import com.greenfox.jasper.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MainServices {
 
@@ -51,9 +53,10 @@ public class MainServices {
         return buildingRepo.findAll();
     }
 
-    public Iterable<Building> findAllBuildingsByKingdomId(long kingdomId){
+    public List<Building> findAllBuildingsByKingdomId(long kingdomId){
         return buildingRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
+
 
     public Troop findOneTroop(int troopId){
         return troopRepo.findOne((long) troopId);
@@ -63,15 +66,16 @@ public class MainServices {
         return troopRepo.findAll();
     }
 
-    public Resource findOneResource(String resourceName){
-        return resourceRepo.findOne(resourceName);
+    public Resource findOneResource(int resourceId){
+        return resourceRepo.findOneById(resourceId);
     }
+
 
     public Iterable<Resource> findAllResources(){
         return resourceRepo.findAll();
     }
 
-    public Iterable<Troop> findAllTroopsByKingdomId(long kingdomId) {
+    public List<Troop> findAllTroopsByKingdomId(long kingdomId) {
         return troopRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
     }
 
@@ -95,13 +99,21 @@ public class MainServices {
         resourceRepo.save(resource);
     }
 
-    public Iterable<Resource> findAllResourcesByKingdomId(long kingdomId) {
-        return resourceRepo.findAllByKingdom(kingdomRepo.findOne(kingdomId));
+    public List<Resource> findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
+        return resourceRepo.findAllByKingdomAndType(findOneKingdom(kingdomId), type);
     }
 
-    public void addNewBuilding(int userId, String type) {
-       Building newBuilding =  new Building(type, userRepo.findOne((long) userId).getKingdom());
+    public void addNewBuilding(int kingdomId, String type) {
+       Building newBuilding =  new Building(type, kingdomRepo.findOne((long) kingdomId));
         buildingRepo.save(newBuilding);
         eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
+    }
+
+    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String type) {
+       return buildingRepo.findAllBuildingByKingdomAndType(findOneKingdom((long) kingdomId), type);
+    }
+
+    public List<Resource> findAllResourcesByKingdomId(int kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomRepo.findOne((long) kingdomId));
     }
 }
