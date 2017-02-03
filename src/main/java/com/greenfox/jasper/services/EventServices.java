@@ -55,8 +55,6 @@ public class EventServices {
 
         //TODO Battle event - see TimedEvent class for further info
 
-//        Added log.info to display what is happening; - to be removed
-
         switch (events){
             case LEVELUP:
                 tempBuilding.levelUp();
