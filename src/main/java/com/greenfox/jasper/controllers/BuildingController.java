@@ -7,6 +7,8 @@ import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,26 +32,25 @@ public class BuildingController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public BuildingResponse getBuildingsList(@PathVariable int kingdomId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
         List<Building> buildingList = mainServices.findAllBuildingsByKingdomId(kingdomId);
 
         if(buildingList == null){
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND, "No buildings available");
+            return  new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public BuildingDto getOneBuilding(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(mainServices.findOneBuilding(buildingId));
         if(result == null){
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND, "No such building");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
@@ -66,4 +67,3 @@ public class BuildingController {
         response.sendRedirect("/kingdom/2/buildings");
     }
 }
-

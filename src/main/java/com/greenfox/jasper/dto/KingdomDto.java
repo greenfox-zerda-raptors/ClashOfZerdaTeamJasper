@@ -3,6 +3,8 @@ package com.greenfox.jasper.dto;
 import java.util.List;
 
 public class KingdomDto {
+
+
     private UserDto user;
     private List<BuildingDto> buildings;
     private List<ResourceDto> resources;
