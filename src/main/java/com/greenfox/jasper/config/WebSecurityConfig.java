@@ -74,7 +74,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/swagger-ui.html#/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/configuration/**").permitAll()
+                .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
