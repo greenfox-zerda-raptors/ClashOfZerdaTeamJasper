@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,12 +16,13 @@ import java.util.List;
 @Entity
 @Table(name = "APPUSER")
 @Component
+@SequenceGenerator(name="user_seq", initialValue=4)
 public class User implements Serializable {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    //@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "USERNAME", length = 50, unique = true)
@@ -56,7 +59,7 @@ public class User implements Serializable {
     @NotNull
     private Date lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
@@ -78,10 +81,19 @@ public class User implements Serializable {
     public User(String kingdomName, String username) {
         this.kingdom = new Kingdom(kingdomName, this);
         this.username = username;
+        this.password = "password";
+        this.firstname = "jozsef";
+        this.lastname = "istvan";
+        this.email = "polgar@jeno.hu";
+        this.enabled = true;
+        this.lastPasswordResetDate = Calendar.getInstance().getTime();
+        this.authorities = new ArrayList<>();
+        this.authorities.add(new Authority());
+        this.kingdom = kingdom;
         this.points = 0;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

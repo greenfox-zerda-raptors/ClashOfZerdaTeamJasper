@@ -4,6 +4,7 @@ import com.greenfox.jasper.domain.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,12 +12,13 @@ import java.util.List;
  */
 @Entity
 @Table(name = "AUTHORITY")
+@SequenceGenerator(name="authority_seq", initialValue=100)
 public class Authority {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
+    //@SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "NAME", length = 50)
@@ -26,6 +28,11 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
+
+    public Authority() {
+        this.name = AuthorityName.ROLE_USER;
+        this.users = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
