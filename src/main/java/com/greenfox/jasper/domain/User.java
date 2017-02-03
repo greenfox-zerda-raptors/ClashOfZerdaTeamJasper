@@ -1,60 +1,102 @@
 package com.greenfox.jasper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.greenfox.jasper.domain.security.Authority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "APPUSER")
 @Component
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private long userId;
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    private Long id;
 
-    @Column(name = "user_name")
-    private String name;
+    @Column(name = "USERNAME", length = 50, unique = true)
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String username;
 
+    @Column(name = "PASSWORD", length = 100)
+    @NotNull
+    @Size(min = 4, max = 100)
+    private String password;
+
+    @Column(name = "FIRSTNAME", length = 50)
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String firstname;
+
+    @Column(name = "LASTNAME", length = 50)
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String lastname;
+
+    @Column(name = "EMAIL", length = 50)
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String email;
+
+    @Column(name = "ENABLED")
+    @NotNull
+    private Boolean enabled;
+
+    @Column(name = "LASTPASSWORDRESETDATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date lastPasswordResetDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "USER_AUTHORITY",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+    private List<Authority> authorities;
 
 
     // TODO do we need this?
     @JsonBackReference
-    @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
 
-    @Column(name = "points")
+    @Column(name = "POINTS")
     @NotNull
     private int points;
 
     public User() {
     }
 
-    public User(String kingdomName, String name) {
+    public User(String kingdomName, String username) {
         this.kingdom = new Kingdom(kingdomName, this);
-        this.name = name;
+        this.username = username;
         this.points = 0;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Kingdom getKingdom() {
@@ -71,6 +113,62 @@ public class User implements Serializable {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
 
