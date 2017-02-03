@@ -23,7 +23,7 @@ public class KingdomController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "/{kingdomId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getKingdom(@PathVariable int kingdomId) {
+    public Object getKingdom(@PathVariable int kingdomId) {
         Kingdom kingdom = mainServices.findOneKingdom(kingdomId);
 
         if(kingdom == null) {
