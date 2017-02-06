@@ -47,6 +47,10 @@ public class Building implements Serializable {
         this.kingdom = kingdom;
     }
 
+    public Building(String type, Kingdom kingdom, int level) {
+        this(type, kingdom);
+        this.level = level;
+    }
 
     public long getBuildingId() {
         return buildingId;

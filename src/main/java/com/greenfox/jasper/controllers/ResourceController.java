@@ -4,7 +4,7 @@ import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
 import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.MainServices;
+import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,30 +21,32 @@ import java.util.List;
 public class ResourceController {
 
     @Autowired
-    private MainServices mainServices;
+    private ResourceServices resourceServices;
 
     @Autowired
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResources(@PathVariable int kingdomId) {
-        List<Resource> resourceList = mainServices.findAllResourcesByKingdomId(kingdomId);
+        resourceServices.calculateResource(kingdomId);
+        List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if(resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                dtoServices.convertResourcesListToDTO(mainServices.findAllResourcesByKingdomId(kingdomId)));
+                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingFarm(@PathVariable int kingdomId, @PathVariable String type){
-        List<Resource> resourceList = mainServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
+    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable int kingdomId, @PathVariable String type){
+        resourceServices.calculateResource(kingdomId);
+        Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
         if(type.equals("food")) {
-            buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
         }else if(type.equals("gold")){
-            buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
         }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -52,7 +54,7 @@ public class ResourceController {
         if(resourceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList.get(0), buildingList));
+        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

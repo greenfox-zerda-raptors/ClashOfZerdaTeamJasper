@@ -4,7 +4,7 @@ import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.domain.User;
-import com.greenfox.jasper.services.MainServices;
+import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class ProofOfConceptApplication implements CommandLineRunner {
 
     @Autowired
-    MainServices mainServices;
+    KingdomServices kingdomServices;
+    @Autowired
+    ResourceServices resourceServices;
+    @Autowired
+    BuildingServices buildingServices;
+    @Autowired
+    TroopServices troopServices;
+    @Autowired
+    UserServices userServices;
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(ProofOfConceptApplication.class, args);

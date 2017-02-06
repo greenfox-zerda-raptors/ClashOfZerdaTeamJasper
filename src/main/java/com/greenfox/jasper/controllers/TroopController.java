@@ -1,10 +1,11 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.EventServices;
-import com.greenfox.jasper.services.MainServices;
+import com.greenfox.jasper.services.TimedEventServices;
+import com.greenfox.jasper.services.TroopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,34 +22,32 @@ import java.util.List;
 public class TroopController {
 
     @Autowired
-    private MainServices mainServices;
+    private TroopServices troopServices;
 
     @Autowired
-    private EventServices eventServices;
+    private TimedEventServices timedEventServices;
 
     @Autowired
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<TroopResponse> getTroops(@PathVariable int kingdomId, HttpServletResponse response) {
-        List<Troop> troopList = mainServices.findAllTroopsByKingdomId(kingdomId);
-
-        if(troopList==null){
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND, "No such troop");
+        List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
+        if(troopList == null){
+            return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
         }
-
         TroopResponse result = new TroopResponse(dtoServices.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{troopId}", method = RequestMethod.GET)
     public Troop getOneTroop(@PathVariable int troopId) {
-        return mainServices.findOneTroop(troopId);
+        return troopServices.findOneTroop(troopId);
     }
 
     @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
     public void trainNewTroop(@PathVariable int barrackId) {
-        eventServices.addNewCreateTroopEvent((long) barrackId);
+        timedEventServices.addNewCreateTroopEvent((long) barrackId);
     }
 
 }

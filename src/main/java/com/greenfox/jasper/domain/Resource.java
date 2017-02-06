@@ -45,6 +45,22 @@ public class Resource implements Serializable {
         this.amount = 1;
     }
 
+    public Resource(String type, Kingdom kingdom, int amount) {
+      this(type, kingdom);
+        this.amount = amount;
+    }
+
+    public void addResource(int amountOfResourceAdded){
+        this.amount +=  amountOfResourceAdded;
+    }
+
+    public void subtractResource(int amountOfResourceSubstracted){
+        int result = amount - amountOfResourceSubstracted;
+        if(result > 0){
+            this.amount = result;
+        }
+    }
+
     public String getType() {
         return type;
     }

@@ -1,0 +1,1 @@
+ALTER TABLE kingdom_table ADD last_update_time BIGINT;
