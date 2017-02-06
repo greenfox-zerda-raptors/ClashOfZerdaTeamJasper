@@ -2,6 +2,9 @@ package com.greenfox.jasper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfox.jasper.domain.security.Authority;
+import com.greenfox.jasper.domain.security.AuthorityName;
+import com.greenfox.jasper.repos.UserAuthorityRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -66,7 +69,6 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 
-
     // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -78,18 +80,16 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String kingdomName, String username) {
+    public User(String kingdomName, String username, String password, String firstname, String lastname, String email) {
         this.kingdom = new Kingdom(kingdomName, this);
         this.username = username;
-        this.password = "password";
-        this.firstname = "jozsef";
-        this.lastname = "istvan";
-        this.email = "polgar@jeno.hu";
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
         this.enabled = true;
         this.lastPasswordResetDate = Calendar.getInstance().getTime();
         this.authorities = new ArrayList<>();
-        this.authorities.add(new Authority());
-        this.kingdom = kingdom;
         this.points = 0;
     }
 

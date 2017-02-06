@@ -71,4 +71,8 @@ public class DTOServices {
         return result;
     }
 
+    public void takeRegisterDTO(){
+
+    }
+
 }

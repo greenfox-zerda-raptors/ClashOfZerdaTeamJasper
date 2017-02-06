@@ -24,22 +24,5 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        mainServices.saveOneUser(new User("romania", "sanya"));
-        mainServices.saveOneUser(new User("hungary", "feri"));
-        mainServices.saveOneUser(new User("deutchland", "hanzi"));
-        mainServices.saveOneUser(new User("mexico", "jesus"));
-        mainServices.saveOneResource(new Resource("food", mainServices.findKingdomByName("romania")));
-        mainServices.saveOneResource(new Resource("gold", mainServices.findKingdomByName("romania")));
-        mainServices.saveOneBuilding(new Building("mine", mainServices.findKingdomByName("romania")));
-        mainServices.saveOneBuilding(new Building("farm", mainServices.findKingdomByName("romania")));
-        mainServices.saveOneBuilding(new Building("barrack", mainServices.findKingdomByName("romania")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("romania")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("romania")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("romania")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("hungary")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("hungary")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("mexico")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("deutchland")));
-        mainServices.saveOneTroop(new Troop(mainServices.findKingdomByName("deutchland")));
     }
 }

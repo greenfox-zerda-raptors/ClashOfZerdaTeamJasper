@@ -28,6 +28,8 @@ public class MainServices {
     @Autowired
     private EventServices eventServices;
 
+    @Autowired
+    private UserAuthorityRepo userAuthorityRepo;
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
