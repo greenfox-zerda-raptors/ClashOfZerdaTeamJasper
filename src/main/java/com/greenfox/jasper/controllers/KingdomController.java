@@ -28,7 +28,7 @@ public class KingdomController {
         if(kingdom == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
+      
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
