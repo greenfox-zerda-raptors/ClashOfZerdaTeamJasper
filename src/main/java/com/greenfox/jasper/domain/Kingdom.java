@@ -35,11 +35,16 @@ public class Kingdom implements Serializable {
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private List<Resource> resources;
 
+    @Column(name="last_update_time")
+    private long updateTime;
+
+
     public Kingdom() {
         this.name = "";
         this.buildings = new ArrayList<>();
         this.resources = new ArrayList<>();
         this.troops = new ArrayList<>();
+        this.updateTime = System.currentTimeMillis();
     }
 
     public Kingdom(String name, User user) {
@@ -48,6 +53,7 @@ public class Kingdom implements Serializable {
         this.buildings = new ArrayList<>();
         this.resources = new ArrayList<>();
         this.troops = new ArrayList<>();
+        this.updateTime = System.currentTimeMillis();
     }
 
     public long getKingdomId() {
@@ -96,5 +102,13 @@ public class Kingdom implements Serializable {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 }

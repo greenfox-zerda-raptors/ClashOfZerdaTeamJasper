@@ -40,25 +40,24 @@ public class ResourceServices {
         Building townhallBuilding = buildingServices.findTownHallByKingdom(kingdom);
         List<Troop> troops = troopServices.findAllTroopsByKingdomId(kingdomId);
 
-        long dummyTimeForTesting = System.currentTimeMillis() - 60000L;
-        //TODO add a real timestamp (eg add a field to kingdom to save the last time someone asked for its resources)
+        long kingdomLastUpdateTime = kingdom.getUpdateTime();
 
         int changeInFood = changeInResources(
                 foodProductionPerMinute(
                         farmBuildings,
                         townhallBuilding,
                         troops),
-                dummyTimeForTesting);
+                kingdomLastUpdateTime);
         int changeInGold = changeInResources(
                 goldProductionPerMinute(
                         mineBuildings,
                         townhallBuilding),
-                dummyTimeForTesting);
+                kingdomLastUpdateTime);
 
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
-
-        // TODO a method which updates the timestamp in kingdom, when the last time its resources were calculated
+        kingdom.setUpdateTime(System.currentTimeMillis());
+        kingdomServices.saveOneKingdom(kingdom);
     }
 
     private int changeInResources(int productionPerMinute, long lastTimeUpdated){
