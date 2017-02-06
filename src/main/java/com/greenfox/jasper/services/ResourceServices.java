@@ -42,30 +42,32 @@ public class ResourceServices {
 
         long kingdomLastUpdateTime = kingdom.getUpdateTime();
 
-        int changeInFood = changeInResources(
+        double changeInFood = changeInResources(
                 foodProductionPerMinute(
                         farmBuildings,
                         townhallBuilding,
                         troops),
                 kingdomLastUpdateTime);
-        int changeInGold = changeInResources(
+        double changeInGold = changeInResources(
                 goldProductionPerMinute(
                         mineBuildings,
                         townhallBuilding),
                 kingdomLastUpdateTime);
-        
-        if(changeInFood < 1 && changeInGold < 1) {
+
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
+
+        System.out.println(changeInFood);
+        System.out.println(changeInGold);
         kingdom.setUpdateTime(System.currentTimeMillis());
-            kingdomServices.saveOneKingdom(kingdom);
-        }
+        kingdomServices.saveOneKingdom(kingdom);
+
     }
 
-    private int changeInResources(int productionPerMinute, long lastTimeUpdated){
+    private float changeInResources(int productionPerMinute, long lastTimeUpdated){
         long ellapsedTime = System.currentTimeMillis()-lastTimeUpdated;
-        long ellapsedTimeInMinutes = ellapsedTime/60000L;
-        return Math.round(productionPerMinute*ellapsedTimeInMinutes);
+        float ellapsedTimeInMinutes = ellapsedTime/60000f;
+        return productionPerMinute*ellapsedTimeInMinutes;
     }
 
     private int foodProductionPerMinute(List<Building> farms, Building townHall, List<Troop> troops){
@@ -87,7 +89,7 @@ public class ResourceServices {
         return sumBuildingLevel;
     }
 
-    public void addResource(Resource resource, int amount){
+    public void addResource(Resource resource, double amount){
         resource.addResource(amount);
         resourceRepo.save(resource);
     }
