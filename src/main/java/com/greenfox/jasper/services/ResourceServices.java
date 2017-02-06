@@ -53,11 +53,13 @@ public class ResourceServices {
                         mineBuildings,
                         townhallBuilding),
                 kingdomLastUpdateTime);
-
+        
+        if(changeInFood < 1 && changeInGold < 1) {
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
         kingdom.setUpdateTime(System.currentTimeMillis());
-        kingdomServices.saveOneKingdom(kingdom);
+            kingdomServices.saveOneKingdom(kingdom);
+        }
     }
 
     private int changeInResources(int productionPerMinute, long lastTimeUpdated){
