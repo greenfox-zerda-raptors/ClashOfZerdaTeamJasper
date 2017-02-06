@@ -95,11 +95,9 @@ public class ResourceServices {
         return resourceRepo.findOneById(resourceId);
     }
 
-
     public Iterable<Resource> findAllResources() {
         return resourceRepo.findAll();
     }
-
 
     public Resource findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
         return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
