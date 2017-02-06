@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value = "/kingdom/{kingdomId}/resources", method = RequestMethod.GET)
 public class ResourceController {
@@ -26,33 +27,33 @@ public class ResourceController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Object> getResources(@PathVariable int kingdomId) {
+    public ResponseEntity<ResourceResponse> getResources(@PathVariable int kingdomId) {
         List<Resource> resourceList = mainServices.findAllResourcesByKingdomId(kingdomId);
         if(resourceList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resources not found for this kingdom");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-            ResourceResponse result = new ResourceResponse(
-                    dtoServices.convertResourcesListToDTO(mainServices.findAllResourcesByKingdomId(kingdomId)));
+        ResourceResponse result = new ResourceResponse(
+                dtoServices.convertResourcesListToDTO(mainServices.findAllResourcesByKingdomId(kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getResourceBuildingFarm(@PathVariable int kingdomId, @PathVariable String type){
+    public ResponseEntity<ResourceResponse> getResourceBuildingFarm(@PathVariable int kingdomId, @PathVariable String type){
         List<Resource> resourceList = mainServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
-       List<Building> buildingList;
+        List<Building> buildingList;
         if(type.equals("food")) {
             buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
         }else if(type.equals("gold")){
             buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such resource");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
         if(resourceList == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such kingdom or resource");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList.get(0), buildingList));
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
-import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.EventServices;
 import com.greenfox.jasper.services.MainServices;
@@ -32,25 +32,25 @@ public class BuildingController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Object> getBuildings(@PathVariable int kingdomId) {
+    public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
         List<Building> buildingList = mainServices.findAllBuildingsByKingdomId(kingdomId);
 
         if(buildingList == null){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no buildings in this kingdom");
+            return  new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getOneBuilding(@PathVariable int buildingId) {
+    public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(mainServices.findOneBuilding(buildingId));
         if(result == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No building with this ID in this kingdom exists");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
@@ -67,4 +67,3 @@ public class BuildingController {
         response.sendRedirect("/kingdom/2/buildings");
     }
 }
-
