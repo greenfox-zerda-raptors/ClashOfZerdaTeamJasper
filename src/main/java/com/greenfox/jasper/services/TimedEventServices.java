@@ -4,7 +4,6 @@ import com.greenfox.jasper.domain.*;
 import com.greenfox.jasper.repos.BuildingRepo;
 import com.greenfox.jasper.repos.TimedEventRepo;
 import com.greenfox.jasper.repos.TroopRepo;
-import com.greenfox.jasper.repos.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +16,17 @@ import java.util.List;
 public class TimedEventServices {
 
 
-    private UserRepo userRepo;
+    @Autowired
     private TimedEventRepo timedEventRepo;
+    @Autowired
     private BuildingRepo buildingRepo;
+    @Autowired
     private TroopRepo troopRepo;
+    @Autowired
+    private ResourceServices resourceServices;
 
     private final Logger log = LoggerFactory.getLogger(TimedEventServices.class);
 
-    @Autowired
-    public TimedEventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo) {
-        this.userRepo = userRepo;
-        this.troopRepo = troopRepo;
-        this.timedEventRepo = timedEventRepo;
-        this.buildingRepo = buildingRepo;
-
-    }
 
     @Scheduled(fixedRate = 1000)
     public void checkForEvents() {
@@ -54,15 +49,18 @@ public class TimedEventServices {
         Kingdom tempKingdom = tempBuilding.getKingdom();
 
         //TODO Battle event - see TimedEvent class for further info
+        //TODO Examine possibilities/limits of inheritance via superclass method instead of switch
 
         switch (events) {
             case LEVELUP:
                 tempBuilding.levelUp();
+                resourceServices.calculateResource((int) tempKingdom.getKingdomId());
                 buildingRepo.save(tempBuilding);
                 log.info("Leveled up building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
             case DELEVEL:
                 tempBuilding.decreaseLvl();
+                resourceServices.calculateResource((int) tempKingdom.getKingdomId());
                 buildingRepo.save(tempBuilding);
                 log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
                 break;
