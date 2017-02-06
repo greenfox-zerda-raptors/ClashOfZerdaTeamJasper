@@ -3,10 +3,7 @@ package com.greenfox.jasper.services;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.Resource;
-import com.greenfox.jasper.repos.BuildingRepo;
-import com.greenfox.jasper.repos.KingdomRepo;
 import com.greenfox.jasper.repos.ResourceRepo;
-import com.greenfox.jasper.repos.TroopRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,42 +16,31 @@ import java.util.List;
 @Service
 public class ResourceServices {
 
-    BuildingRepo buildingRepo;
-
+    @Autowired
     ResourceRepo resourceRepo;
 
-    KingdomRepo kingdomRepo;
-
-    TroopRepo troopRepo;
-
-    MainServices mainServices;
-
-
     @Autowired
-    public ResourceServices(MainServices mainServices, BuildingRepo buildingRepo, ResourceRepo resourceRepo, KingdomRepo kingdomRepo, TroopRepo troopRepo) {
-        this.mainServices = mainServices;
-        this.buildingRepo = buildingRepo;
-        this.resourceRepo = resourceRepo;
-        this.kingdomRepo = kingdomRepo;
-        this.troopRepo = troopRepo;
-    }
-
+    BuildingServices buildingServices;
+    @Autowired
+    KingdomServices kingdomServices;
+    @Autowired
+    TroopServices troopServices;
 
 
     // TODO refactor!!!!
-    public void calculateResource(long kingdomId){
+    public void calculateResource(int kingdomId) {
 
-        Kingdom kingdom = kingdomRepo.findOne(kingdomId);
+        Kingdom kingdom = kingdomServices.findOneById(kingdomId);
 
         Resource foodResource = resourceRepo.findOneByKingdomAndType(kingdom, "food");
 
         Resource goldResource = resourceRepo.findOneByKingdomAndType(kingdom, "gold");
 
-        List<Building> farmBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "farm");
+        List<Building> farmBuildings = buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
 
-        List<Building> mineBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "mine");
+        List<Building> mineBuildings = buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
 
-        Building townhallBuilding = mainServices.findTownHallByKingdom(kingdom);
+        Building townhallBuilding = buildingServices.findTownHallByKingdom(kingdom);
 
         long dummyTimeForTesting = System.currentTimeMillis() - 60000L;
         int changeInFood = calulateResourcesToBeAdded(sumBuildingLevelFromAList(farmBuildings) + townhallBuilding.getLevel(), dummyTimeForTesting);
@@ -68,7 +54,7 @@ public class ResourceServices {
 
     }
 
-    private int sumBuildingLevelFromAList(List<Building> buildingList){
+    private int sumBuildingLevelFromAList(List<Building> buildingList) {
         int sumBuildingLevel = 0;
         for (Building buildingEntity : buildingList) {
             sumBuildingLevel += buildingEntity.getLevel();
@@ -76,12 +62,36 @@ public class ResourceServices {
         return sumBuildingLevel;
     }
 
-    private int calulateResourcesToBeAdded(int production, long lastTimeOfRequest){
+    private int calulateResourcesToBeAdded(int production, long lastTimeOfRequest) {
         long ellapsedTime = System.currentTimeMillis() - lastTimeOfRequest;
         long ellapsedTimeinMinutes = ellapsedTime / 60000L;
-        return Math.round(ellapsedTimeinMinutes*production);
+        return Math.round(ellapsedTimeinMinutes * production);
     }
 
 
+    public Resource findOneResource(int resourceId) {
+        return resourceRepo.findOneById(resourceId);
+    }
 
+
+    public Iterable<Resource> findAllResources() {
+        return resourceRepo.findAll();
+    }
+
+
+    public Resource findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
+        return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
+    }
+
+    public List<Resource> findAllResourcesByKingdomId(int kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomServices.findOneById((long) kingdomId));
+    }
+
+    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String mine) {
+        return buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, mine);
+    }
+
+    public void saveOneResource(Resource resource){
+        resourceRepo.save(resource);
+    }
 }

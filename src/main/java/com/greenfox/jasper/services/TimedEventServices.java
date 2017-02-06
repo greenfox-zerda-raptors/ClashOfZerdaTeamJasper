@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EventServices {
+public class TimedEventServices {
 
 
     private UserRepo userRepo;
@@ -22,10 +22,10 @@ public class EventServices {
     private BuildingRepo buildingRepo;
     private TroopRepo troopRepo;
 
-    private final Logger log = LoggerFactory.getLogger(EventServices.class);
+    private final Logger log = LoggerFactory.getLogger(TimedEventServices.class);
 
     @Autowired
-    public EventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo) {
+    public TimedEventServices(UserRepo userRepo, TimedEventRepo timedEventRepo, BuildingRepo buildingRepo, TroopRepo troopRepo) {
         this.userRepo = userRepo;
         this.troopRepo = troopRepo;
         this.timedEventRepo = timedEventRepo;

@@ -4,7 +4,7 @@ import com.greenfox.jasper.domain.*;
 import com.greenfox.jasper.repos.BuildingRepo;
 import com.greenfox.jasper.repos.KingdomRepo;
 import com.greenfox.jasper.repos.TimedEventRepo;
-import com.greenfox.jasper.services.EventServices;
+import com.greenfox.jasper.services.TimedEventServices;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 public class MockitoTest {
 
     @Mock
-    private EventServices mockEventServices;
+    private TimedEventServices mockTimedEventServices;
 
     @Mock
     private TimedEventRepo mockTimedEventRepo;
@@ -56,7 +56,7 @@ public class MockitoTest {
     }
     @Test
     public void testMockCreation(){
-        assertNotNull(mockEventServices);
+        assertNotNull(mockTimedEventServices);
         assertNotNull(mockBuildingRepo);
         assertNotNull(mockTimedEventRepo);
     }
@@ -64,7 +64,7 @@ public class MockitoTest {
     @Test
     public void testTwoMockito() {
         when(mockBuildingRepo.findOne(1l)).thenReturn(new Building("mine", new Kingdom("foobar", new User())));
-        doCallRealMethod().when(mockEventServices).executeEvent(1l, GameEvent.LEVELUP);
+        doCallRealMethod().when(mockTimedEventServices).executeEvent(1l, GameEvent.LEVELUP);
         assertEquals(0, mockBuildingRepo.findOne(1l).getLevel());
     }
 

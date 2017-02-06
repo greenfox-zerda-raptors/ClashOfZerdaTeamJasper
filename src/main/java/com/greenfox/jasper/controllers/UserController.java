@@ -1,7 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.User;
-import com.greenfox.jasper.services.MainServices;
+import com.greenfox.jasper.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private MainServices mainServices;
+    private UserServices userServices;
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public User getUser(@PathVariable int userId) {
-        return mainServices.findOneUser(userId);
+        return userServices.findOneUser(userId);
     }
 }
