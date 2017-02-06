@@ -11,6 +11,6 @@ public interface ResourceRepo extends CrudRepository<Resource, Long> {
 
     Resource findOneById(long resourceId);
 
-    List<Resource> findAllByKingdomAndType(Kingdom kingdom, String type);
+    Resource findOneByKingdomAndType(Kingdom kingdom, String type);
 
 }
