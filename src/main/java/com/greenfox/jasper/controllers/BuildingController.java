@@ -1,6 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.services.BuildingServices;
@@ -36,7 +37,7 @@ public class BuildingController {
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
         if(buildingList == null){
-            return  new ResponseEntity(HttpStatus.NOT_FOUND);
+            return  new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 

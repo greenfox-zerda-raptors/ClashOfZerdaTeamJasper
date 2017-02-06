@@ -27,12 +27,7 @@ public class ResourceServices {
     @Autowired
     TroopServices troopServices;
 
-
-
-
-
-
-    // TODO refactor!!!!
+    // TODO refactor! + consider adding a production field into kingdom/resource entity to make this method execution faster
     public void calculateResource(int kingdomId) {
 
         Kingdom kingdom = kingdomServices.findOneById(kingdomId);
@@ -48,8 +43,17 @@ public class ResourceServices {
         long dummyTimeForTesting = System.currentTimeMillis() - 60000L;
         //TODO add a real timestamp (eg add a field to kingdom to save the last time someone asked for its resources)
 
-        int changeInFood = changeInResources(foodProductionPerMinute(farmBuildings, townhallBuilding, troops), dummyTimeForTesting);
-        int changeInGold = changeInResources(goldProductionPerMinute(mineBuildings, townhallBuilding), dummyTimeForTesting);
+        int changeInFood = changeInResources(
+                foodProductionPerMinute(
+                        farmBuildings,
+                        townhallBuilding,
+                        troops),
+                dummyTimeForTesting);
+        int changeInGold = changeInResources(
+                goldProductionPerMinute(
+                        mineBuildings,
+                        townhallBuilding),
+                dummyTimeForTesting);
 
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
@@ -64,11 +68,14 @@ public class ResourceServices {
     }
 
     private int foodProductionPerMinute(List<Building> farms, Building townHall, List<Troop> troops){
-        return 10*(sumBuildingLevelFromAList(farms) + townHall.getLevel() + troops.size());
+        return 10*(sumBuildingLevelFromAList(farms)
+                + townHall.getLevel() +
+                troops.size());
     }
 
-    private int goldProductionPerMinute(List<Building> mineBuildings, Building townhallBuilding) {
-        return 10*(sumBuildingLevelFromAList(mineBuildings) + townhallBuilding.getLevel());
+    private int goldProductionPerMinute(List<Building> mines, Building townhallBuilding) {
+        return 10*(sumBuildingLevelFromAList(mines)
+                + townhallBuilding.getLevel());
     }
 
     private int sumBuildingLevelFromAList(List<Building> buildingList) {

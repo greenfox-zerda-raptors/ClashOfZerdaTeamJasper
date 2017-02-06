@@ -1,5 +1,6 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.services.DTOServices;
@@ -32,7 +33,9 @@ public class TroopController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<TroopResponse> getTroops(@PathVariable int kingdomId, HttpServletResponse response) {
         List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
-
+        if(troopList == null){
+            return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
+        }
         TroopResponse result = new TroopResponse(dtoServices.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

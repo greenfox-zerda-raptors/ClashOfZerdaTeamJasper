@@ -40,6 +40,7 @@ public class ResourceController {
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable int kingdomId, @PathVariable String type){
+        resourceServices.calculateResource(kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
         if(type.equals("food")) {

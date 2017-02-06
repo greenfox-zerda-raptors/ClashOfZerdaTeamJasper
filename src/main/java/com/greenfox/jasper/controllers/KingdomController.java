@@ -31,9 +31,10 @@ public class KingdomController {
 
     @RequestMapping(value = "/{kingdomId}", method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@PathVariable int kingdomId, HttpServletResponse response) {
+        resourceServices.calculateResource(kingdomId);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if(kingdom == null) {
-            return new ResponseEntity(new CustomError("CustomError", 45l), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
         }
       
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
