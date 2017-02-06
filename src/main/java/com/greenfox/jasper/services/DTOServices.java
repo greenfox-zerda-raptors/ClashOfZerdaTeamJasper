@@ -31,6 +31,7 @@ public class DTOServices {
 
     public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingList) {
         return buildingList.stream().map(this::convertBuildingToDTO).collect(Collectors.toList());
+        // might not work with earlier versions of java
     }
 
     public BuildingDto convertBuildingToDTO(Building building) {

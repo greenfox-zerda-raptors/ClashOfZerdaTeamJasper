@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+//TODO clean up! divide into several smaller services
+
 @Service
 public class MainServices {
 
@@ -27,6 +30,7 @@ public class MainServices {
 
     @Autowired
     private EventServices eventServices;
+
 
 
     public User findOneUser(int userId){
@@ -99,8 +103,8 @@ public class MainServices {
         resourceRepo.save(resource);
     }
 
-    public List<Resource> findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
-        return resourceRepo.findAllByKingdomAndType(findOneKingdom(kingdomId), type);
+    public Resource findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
+        return resourceRepo.findOneByKingdomAndType(findOneKingdom(kingdomId), type);
     }
 
     public void addNewBuilding(int kingdomId, String type) {

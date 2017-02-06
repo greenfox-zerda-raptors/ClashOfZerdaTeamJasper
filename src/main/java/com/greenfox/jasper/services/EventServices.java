@@ -76,7 +76,7 @@ public class EventServices {
                 System.out.println("Troops being upgraded");
                 break;
             default:
-                System.out.println("Error, no such event found");
+                System.out.println("CustomError, no such event found");
         }
     }
 
@@ -91,7 +91,7 @@ public class EventServices {
         TimedEvent timedEvent = new TimedEvent(
                 buildingID, (System.currentTimeMillis()
                 + (60000
-                * calculateBuildingTimeRatio(temporaryBuilding.getLevel()))),
+                * calculateBuildingTime(temporaryBuilding.getLevel()))),
                 GameEvent.LEVELUP);
 
         timedEventRepo.save(timedEvent);
@@ -104,23 +104,23 @@ public class EventServices {
             TimedEvent tempTimedEvent = allEventForABuilding.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
-        // TODO add building-occupation-status;  handle time formula for troop;
+        // TODO add building-occupation-status(?);  handle time formula for troop;
         TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 60000), GameEvent.TRAINTROOPS);
         timedEventRepo.save(timedEvent);
     }
 
-    private long calculateBuildingTimeRatio(int level) {
-        return calculateTotalCost(level) / 250;
+    private long calculateBuildingTime(int buildingLevel) {
+        return calculateTotalCost(buildingLevel) / 250;
     }
 
-    private int calculateTotalCost(int n) {
+    private int calculateTotalCost(int buildingLevel) {
         int i = 0;
-        int result = 0;
-        while (i < n) {
-            result += i * 100;
+        int totalCostOfBuilding = 0;
+        while (i < buildingLevel) {
+            totalCostOfBuilding += i * 100;
             i++;
         }
-        return result + 250;
+        return totalCostOfBuilding + 250;
     }
 
 

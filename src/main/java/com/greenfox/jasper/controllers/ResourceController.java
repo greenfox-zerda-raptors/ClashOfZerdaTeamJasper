@@ -38,8 +38,8 @@ public class ResourceController {
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingFarm(@PathVariable int kingdomId, @PathVariable String type){
-        List<Resource> resourceList = mainServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
+    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable int kingdomId, @PathVariable String type){
+        Resource resourceList = mainServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
         if(type.equals("food")) {
             buildingList = mainServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
@@ -52,7 +52,7 @@ public class ResourceController {
         if(resourceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList.get(0), buildingList));
+        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
