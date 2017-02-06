@@ -5,6 +5,7 @@ import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.MainServices;
+import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,14 @@ public class ResourceController {
     private MainServices mainServices;
 
     @Autowired
+    private ResourceServices resourceServices;
+
+    @Autowired
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResources(@PathVariable int kingdomId) {
+        resourceServices.calculateResource(kingdomId);
         List<Resource> resourceList = mainServices.findAllResourcesByKingdomId(kingdomId);
         if(resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);

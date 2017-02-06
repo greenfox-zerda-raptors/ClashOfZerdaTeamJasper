@@ -35,38 +35,47 @@ public class ResourceServices {
         this.troopRepo = troopRepo;
     }
 
+
+
+    // TODO refactor!!!!
     public void calculateResource(long kingdomId){
 
         Kingdom kingdom = kingdomRepo.findOne(kingdomId);
 
-        Resource resource = resourceRepo.findOneByKingdomAndType(kingdom, "food");
+        Resource foodResource = resourceRepo.findOneByKingdomAndType(kingdom, "food");
 
-        List<Building> foodBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "food");
+        Resource goldResource = resourceRepo.findOneByKingdomAndType(kingdom, "gold");
 
-        List<Building> goldBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "food");
+        List<Building> farmBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "farm");
 
-        long dummyTimeForTesting = System.currentTimeMillis() - 60000;
-        int changeInFood =  calulateResourcesToBeAdded(sumBuildingLevelFromAList(foodBuildings), dummyTimeForTesting);
-        int changeInGold = calulateResourcesToBeAdded(sumBuildingLevelFromAList(goldBuildings), dummyTimeForTesting);
+        List<Building> mineBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "mine");
 
+        List<Building> townhallBuilding = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "townhall");
 
+        long dummyTimeForTesting = System.currentTimeMillis() - 60000L;
+        int changeInFood = calulateResourcesToBeAdded(sumBuildingLevelFromAList(farmBuildings) + townhallBuilding.get(0).getLevel(), dummyTimeForTesting);
+        int changeInGold = calulateResourcesToBeAdded(sumBuildingLevelFromAList(mineBuildings) + townhallBuilding.get(0).getLevel(), dummyTimeForTesting);
+
+        foodResource.addResource(changeInFood);
+        goldResource.addResource(changeInGold);
+
+        resourceRepo.save(foodResource);
+        resourceRepo.save(goldResource);
 
     }
 
     private int sumBuildingLevelFromAList(List<Building> buildingList){
         int sumBuildingLevel = 0;
-        for(int i = 0; i < buildingList.size(); i++){
-
+        for (Building buildingEntity : buildingList) {
+            sumBuildingLevel += buildingEntity.getLevel();
         }
         return sumBuildingLevel;
     }
 
     private int calulateResourcesToBeAdded(int production, long lastTimeOfRequest){
         long ellapsedTime = System.currentTimeMillis() - lastTimeOfRequest;
-
-        long ellapsedTimeInSeconds = ellapsedTime / 1000;
-
-        return Math.toIntExact(ellapsedTimeInSeconds*production);
+        long ellapsedTimeinMinutes = ellapsedTime / 60000L;
+        return Math.round(ellapsedTimeinMinutes*production);
     }
 
 

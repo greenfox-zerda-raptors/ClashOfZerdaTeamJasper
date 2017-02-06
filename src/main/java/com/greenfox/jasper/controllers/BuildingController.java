@@ -58,12 +58,12 @@ public class BuildingController {
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
         eventServices.addNewLevelUpEvent((long) buildingId);
-        response.sendRedirect("/kingdom/2/buildings");
+        response.sendRedirect("/kingdom/3/buildings");
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
     public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
         mainServices.addNewBuilding(kingdomId, type);
-        response.sendRedirect("/kingdom/2/buildings");
+        response.sendRedirect("/kingdom/3/buildings");
     }
 }
