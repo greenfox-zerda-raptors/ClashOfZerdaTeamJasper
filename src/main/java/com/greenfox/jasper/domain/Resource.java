@@ -22,7 +22,7 @@ public class Resource implements Serializable {
     private String type;
 
     @Column(name = "amount")
-    private int amount;
+    private float amount;
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private List<Building> buildings;
@@ -50,12 +50,12 @@ public class Resource implements Serializable {
         this.amount = amount;
     }
 
-    public void addResource(int amountOfResourceAdded){
+    public void addResource(double amountOfResourceAdded){
         this.amount +=  amountOfResourceAdded;
     }
 
     public void subtractResource(int amountOfResourceSubstracted){
-        int result = amount - amountOfResourceSubstracted;
+        float result = amount - amountOfResourceSubstracted;
         if(result > 0){
             this.amount = result;
         }
@@ -69,7 +69,7 @@ public class Resource implements Serializable {
         this.type = type;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 

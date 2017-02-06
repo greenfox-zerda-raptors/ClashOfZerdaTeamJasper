@@ -54,7 +54,7 @@ public class DTOServices {
         ResourceDto result = new ResourceDto();
         result.setId(resource.getId());
         result.setType(resource.getType());
-        result.setAmount(resource.getAmount());
+        result.setAmount((int) resource.getAmount());
         result.setBuildings(convertBuildingListToDTO(resource.getBuildings()));
         return result;
     }
@@ -63,7 +63,7 @@ public class DTOServices {
         ResourceDto result = new ResourceDto();
         result.setId(result.getId());
         result.setType(resource.getType());
-        result.setAmount(resource.getAmount());
+        result.setAmount((int) resource.getAmount());
         result.setBuildings(convertBuildingListToDTO(buildings));
         return result;
     }
