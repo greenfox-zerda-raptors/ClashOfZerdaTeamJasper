@@ -108,9 +108,14 @@ public class MainServices {
     }
 
     public void addNewBuilding(int kingdomId, String type) {
-       Building newBuilding =  new Building(type, kingdomRepo.findOne((long) kingdomId));
-        buildingRepo.save(newBuilding);
-        eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
+        if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
+            Building newBuilding = new Building(type, kingdomRepo.findOne((long) kingdomId));
+            buildingRepo.save(newBuilding);
+            eventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
+        }
+    }
+    public Building findTownHallByKingdom(Kingdom kingdom){
+       return buildingRepo.findAllBuildingByKingdomAndType(kingdom, "townhall").get(0);
     }
 
     public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String type) {

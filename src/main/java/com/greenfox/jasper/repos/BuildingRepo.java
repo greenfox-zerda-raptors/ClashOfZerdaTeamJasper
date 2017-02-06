@@ -15,4 +15,5 @@ public interface BuildingRepo extends CrudRepository<Building, Long>{
 
     @Query("SELECT a FROM Building a WHERE a.kingdom = :kingdom and a.type = :buildingtype")
     List<Building> findAllBuildingByKingdomAndType(@Param("kingdom") Kingdom kingdom, @Param("buildingtype") String type);
+
 }

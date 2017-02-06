@@ -27,8 +27,12 @@ public class ResourceServices {
 
     TroopRepo troopRepo;
 
+    MainServices mainServices;
+
+
     @Autowired
-    public ResourceServices(BuildingRepo buildingRepo, ResourceRepo resourceRepo, KingdomRepo kingdomRepo, TroopRepo troopRepo) {
+    public ResourceServices(MainServices mainServices, BuildingRepo buildingRepo, ResourceRepo resourceRepo, KingdomRepo kingdomRepo, TroopRepo troopRepo) {
+        this.mainServices = mainServices;
         this.buildingRepo = buildingRepo;
         this.resourceRepo = resourceRepo;
         this.kingdomRepo = kingdomRepo;
@@ -50,11 +54,11 @@ public class ResourceServices {
 
         List<Building> mineBuildings = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "mine");
 
-        List<Building> townhallBuilding = buildingRepo.findAllBuildingByKingdomAndType(kingdom, "townhall");
+        Building townhallBuilding = mainServices.findTownHallByKingdom(kingdom);
 
         long dummyTimeForTesting = System.currentTimeMillis() - 60000L;
-        int changeInFood = calulateResourcesToBeAdded(sumBuildingLevelFromAList(farmBuildings) + townhallBuilding.get(0).getLevel(), dummyTimeForTesting);
-        int changeInGold = calulateResourcesToBeAdded(sumBuildingLevelFromAList(mineBuildings) + townhallBuilding.get(0).getLevel(), dummyTimeForTesting);
+        int changeInFood = calulateResourcesToBeAdded(sumBuildingLevelFromAList(farmBuildings) + townhallBuilding.getLevel(), dummyTimeForTesting);
+        int changeInGold = calulateResourcesToBeAdded(sumBuildingLevelFromAList(mineBuildings) + townhallBuilding.getLevel(), dummyTimeForTesting);
 
         foodResource.addResource(changeInFood);
         goldResource.addResource(changeInGold);
