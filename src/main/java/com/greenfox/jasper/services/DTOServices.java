@@ -16,6 +16,8 @@ public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 
+    // TODO Battle
+
     public com.greenfox.jasper.dto.KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
