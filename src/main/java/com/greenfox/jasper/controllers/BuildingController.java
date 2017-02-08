@@ -2,11 +2,11 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
+import com.greenfox.jasper.services.MainEventServices;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.services.BuildingServices;
 import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.TimedEventServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class BuildingController {
     private BuildingServices buildingServices;
 
     @Autowired
-    private TimedEventServices timedEventServices;
+    private MainEventServices mainEventServices;
 
     @Autowired
     private DTOServices dtoServices;
@@ -58,13 +58,13 @@ public class BuildingController {
     // TODO this should (probably) not redirect
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
-        timedEventServices.addNewLevelUpEvent((long) buildingId);
-        response.sendRedirect("/kingdom/3/buildings");
+        mainEventServices.addNewLevelUpEvent((long) buildingId);
+        response.sendRedirect("/kingdom/2/buildings");
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
     public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
         buildingServices.addNewBuilding(kingdomId, type);
-        response.sendRedirect("/kingdom/3/buildings");
+        response.sendRedirect("/kingdom/2/buildings");
     }
 }

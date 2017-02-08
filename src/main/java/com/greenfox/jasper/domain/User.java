@@ -3,6 +3,7 @@ package com.greenfox.jasper.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfox.jasper.domain.security.Authority;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -72,7 +73,7 @@ public class User implements Serializable {
     private Kingdom kingdom;
     @Column(name = "POINTS")
     @NotNull
-    private int points;
+    private int points; // TODO method to calc. points, when to calc points? 2nd @scheduler?
 
     public User() {
     }
