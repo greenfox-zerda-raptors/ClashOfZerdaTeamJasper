@@ -3,6 +3,8 @@ package com.greenfox.jasper.dto;
 
 public class BuildingDto {
 
+
+    // TODO finish time?
     private int id;
     private String type;
     private int level;
