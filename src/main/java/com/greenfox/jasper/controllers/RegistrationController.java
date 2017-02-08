@@ -3,6 +3,7 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.UserDto;
+import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.RegistrationServices;
 import com.greenfox.jasper.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,16 @@ public class RegistrationController {
     @Autowired
     UserServices userServices;
 
+    @Autowired
+    KingdomServices kingdomServices;
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity registerNewUser (@RequestBody UserDto userDto){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (userServices.findeOneUserByName(userDto.getUsername()) == null
-                && userServices.findOneUserByKingdom(userDto.getKingdomname()) == null){
+                && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null){
 
             registrationServices.registerNewUser(new User(
                     userDto.getKingdomname(),
