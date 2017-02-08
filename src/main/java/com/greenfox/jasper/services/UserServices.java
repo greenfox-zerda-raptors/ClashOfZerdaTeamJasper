@@ -21,7 +21,13 @@ public class UserServices {
         return userRepo.findAll();
     }
 
+    public User findeOneUserByName(String username) {
+        return userRepo.findByUsername(username);
+    }
 
+    public User findOneUserByKingdom(String kingdom) {
+        return userRepo.findByKingdom(kingdom);
+    }
 
     public void saveOneUser(User user){
         userRepo.save(user);

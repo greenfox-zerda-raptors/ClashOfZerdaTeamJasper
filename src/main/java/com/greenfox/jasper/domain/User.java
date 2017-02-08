@@ -2,9 +2,6 @@ package com.greenfox.jasper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfox.jasper.domain.security.Authority;
-import com.greenfox.jasper.domain.security.AuthorityName;
-import com.greenfox.jasper.repos.UserAuthorityRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
