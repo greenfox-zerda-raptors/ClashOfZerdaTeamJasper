@@ -27,12 +27,24 @@ public class ProofOfConceptApplication implements CommandLineRunner {
     UserServices userServices;
 
 
-
     public static void main(String[] args) {
         SpringApplication.run(ProofOfConceptApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
+        userServices.saveOneUser(new User("romania", "aaaaa", "admin", "John", "Smith", "some@email.com"));
+        userServices.saveOneUser(new User("austria", "bbbbb", "admin", "John", "Smith", "another@email.com"));
+        resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("romania")));
+        resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("romania")));
+        buildingServices.saveOneBuilding(new Building("farm", kingdomServices.findKingdomByName("romania"), 60));
+        buildingServices.saveOneBuilding(new Building("mine", kingdomServices.findKingdomByName("romania"), 60));
+        buildingServices.saveOneBuilding(new Building("townhall", kingdomServices.findKingdomByName("romania"), 1));
+        buildingServices.saveOneBuilding(new Building("barrack", kingdomServices.findKingdomByName("romania")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("austria")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("austria")));
     }
 }

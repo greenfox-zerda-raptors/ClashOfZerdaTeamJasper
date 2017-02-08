@@ -3,6 +3,7 @@ package com.greenfox.jasper.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenfox.jasper.domain.security.Authority;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "APPUSER")
 @Component
-@SequenceGenerator(name="user_seq", initialValue=4)
+@SequenceGenerator(name = "user_seq", initialValue = 4)
 public class User implements Serializable {
 
     @Id
@@ -65,6 +66,10 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
+
+    @Transient
+    @OneToMany
+    private List<Troop> troops;
 
     // TODO do we need this?
     @JsonBackReference

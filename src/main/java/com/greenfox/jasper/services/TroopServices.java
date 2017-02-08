@@ -1,6 +1,6 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.domain.*;
+import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.repos.TroopRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class TroopServices {
     @Autowired
     KingdomServices kingdomServices;
 
-    public Troop findOneTroop(int troopId){
+    public Troop findOneTroop(int troopId) {
         return troopRepo.findOne((long) troopId);
     }
 
-    public Iterable<Troop> findAllTroops(){
+    public Iterable<Troop> findAllTroops() {
         return troopRepo.findAll();
     }
 
@@ -28,7 +28,11 @@ public class TroopServices {
         return troopRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
     }
 
-    public void saveOneTroop(Troop troop){
+    public List<Troop> findAllTroopsByKingdomName(String name) {
+        return troopRepo.findAllByKingdom(kingdomServices.findKingdomByName(name));
+    }
+
+    public void saveOneTroop(Troop troop) {
         troopRepo.save(troop);
     }
 
