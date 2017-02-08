@@ -44,9 +44,10 @@ public class MainEventServices {
         long currentTime = System.currentTimeMillis();
 
         List<MainEvent> listedEvents = mainEventRepo.findAllWaitingForExecution(currentTime);
-
-        for (MainEvent listedEvent : listedEvents) {
-            processEventTest(listedEvent);
+        if(listedEvents.size() != 0) {
+            for (MainEvent listedEvent : listedEvents) {
+                processEventTest(listedEvent);
+            }
         }
         System.out.println("I finished processing the events in: " + (System.currentTimeMillis() - currentTime));
     }
@@ -109,9 +110,8 @@ public class MainEventServices {
     public void addNewLevelUpEvent(long buildingID) {
          Building temporaryBuilding = buildingServices.findOneBuilding((int) buildingID);
          MainEvent levelUpEvent = new LevelUpEvent(
-                buildingID, (System.currentTimeMillis()
-                + (60000
-                * calculateBuildingTime(temporaryBuilding.getLevel()))));
+               (System.currentTimeMillis() + calculateBuildingTime(temporaryBuilding)),  buildingID
+                 );
         mainEventRepo.save(levelUpEvent);
     }
 
@@ -123,12 +123,12 @@ public class MainEventServices {
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
         // TODO add building-occupation-status(?);  handle time formula for troop;
-        MainEvent timedEvent = new TrainTroopEvent(barrackId, (System.currentTimeMillis() + queueTime + 60000));
+        MainEvent timedEvent = new TrainTroopEvent((System.currentTimeMillis() + queueTime + 60000), barrackId);
         mainEventRepo.save(timedEvent);
     }
 
-    private long calculateBuildingTime(int buildingLevel) {
-        return calculateTotalCost(buildingLevel) / 250;
+    private long calculateBuildingTime(Building building) {
+        return 60000* calculateTotalCost(building.getLevel()) / 250;
     }
 
     private int calculateTotalCost(int buildingLevel) {
