@@ -91,7 +91,7 @@ public class MainEventServices {
         System.out.println("Upgraded your troop");
     }
 
-// TODO create controller
+    // TODO create controller
     public void cancelEvent(long eventID) {
         mainEventRepo.delete(eventID);
     }
