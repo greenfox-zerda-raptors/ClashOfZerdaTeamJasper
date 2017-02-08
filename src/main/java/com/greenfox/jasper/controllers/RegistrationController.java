@@ -35,7 +35,8 @@ public class RegistrationController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (userServices.findeOneUserByName(userDto.getUsername()) == null
-                && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null){
+                && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null
+                && userServices.findOneUserByEmail(userDto.getEmail()) == null){
 
             registrationServices.registerNewUser(new User(
                     userDto.getKingdomname(),
@@ -50,6 +51,9 @@ public class RegistrationController {
         }else if (userServices.findeOneUserByName(userDto.getUsername()) != null){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate username");
+        }else if (userServices.findOneUserByEmail(userDto.getEmail()) != null){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body("Duplicate email address");
         }else{
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate kingdom");

@@ -25,6 +25,10 @@ public class UserServices {
         return userRepo.findByUsername(username);
     }
 
+    public User findOneUserByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
     public User findOneUserByKingdom(String kingdom) {
         return userRepo.findByKingdom(kingdom);
     }
