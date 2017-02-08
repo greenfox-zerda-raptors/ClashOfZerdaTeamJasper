@@ -42,13 +42,13 @@ public class ResourceServices {
 
         long kingdomLastUpdateTime = kingdom.getUpdateTime();
 
-        double changeInFood = changeInResources(
+        float changeInFood = changeInResources(
                 foodProductionPerMinute(
                         farmBuildings,
                         townhallBuilding,
                         troops),
                 kingdomLastUpdateTime);
-        double changeInGold = changeInResources(
+        float changeInGold = changeInResources(
                 goldProductionPerMinute(
                         mineBuildings,
                         townhallBuilding),
@@ -77,7 +77,7 @@ public class ResourceServices {
     }
 
     private int goldProductionPerMinute(List<Building> mines, Building townhallBuilding) {
-        return 10*(sumBuildingLevelFromAList(mines)
+        return 1*(sumBuildingLevelFromAList(mines)
                 + townhallBuilding.getLevel());
     }
 
@@ -89,7 +89,7 @@ public class ResourceServices {
         return sumBuildingLevel;
     }
 
-    public void addResource(Resource resource, double amount){
+    public void addResource(Resource resource, float amount){
         resource.addResource(amount);
         resourceRepo.save(resource);
     }
@@ -104,6 +104,10 @@ public class ResourceServices {
 
     public Resource findAllResourcesByKingdomIdAndType(long kingdomId, String type) {
         return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
+    }
+
+    public Resource findAllGoldResourceByKingdomId(long kingdomId){
+        return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), "gold");
     }
 
     public List<Resource> findAllResourcesByKingdomId(int kingdomId) {
