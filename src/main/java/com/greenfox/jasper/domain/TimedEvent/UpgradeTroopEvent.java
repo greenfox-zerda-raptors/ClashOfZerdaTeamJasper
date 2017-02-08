@@ -1,5 +1,6 @@
 package com.greenfox.jasper.domain.TimedEvent;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 
@@ -7,7 +8,11 @@ import javax.persistence.Inheritance;
 @Entity
 @Inheritance
 public class UpgradeTroopEvent extends MainEvent {
+//    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
+    @Column(name = "building_id")
     private long buildingId;
+//    @OneToOne(mappedBy = "troop", cascade = CascadeType.ALL)
+    @Column(name = "troop_id")
     private long troopId;
 
     public UpgradeTroopEvent(){

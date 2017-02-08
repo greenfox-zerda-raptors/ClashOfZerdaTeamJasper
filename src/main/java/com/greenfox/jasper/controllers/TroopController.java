@@ -1,10 +1,10 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.CustomError;
+import com.greenfox.jasper.services.MainEventServices;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.TimedEventServices;
 import com.greenfox.jasper.services.TroopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class TroopController {
     private TroopServices troopServices;
 
     @Autowired
-    private TimedEventServices timedEventServices;
+    private MainEventServices mainEventServices;
 
     @Autowired
     private DTOServices dtoServices;
@@ -47,7 +47,12 @@ public class TroopController {
 
     @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
     public void trainNewTroop(@PathVariable int barrackId) {
-        timedEventServices.addNewCreateTroopEvent((long) barrackId);
+        mainEventServices.addNewCreateTroopEvent((long) barrackId);
+    }
+
+    @RequestMapping(value = "/{troopId}/upgrade/{barrackId}", method = RequestMethod.GET)
+    public void upgradeTroop(@PathVariable int troopId, @PathVariable int barrackId){
+        mainEventServices.addNewUpgradeTroopEvent(troopId, barrackId);
     }
 
 }

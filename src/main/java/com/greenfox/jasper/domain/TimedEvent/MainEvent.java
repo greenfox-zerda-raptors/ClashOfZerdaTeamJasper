@@ -4,14 +4,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-@Table(name = "timedEventSuperclass")
+@Table(name = "mainevent_table")
 @Entity
 @Inheritance
 public abstract class MainEvent implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "mainevent_id")
     private long id;
+    @Column(name = "execution_time")
     private long executionTime;
+    @Column(name = "was_executed")
     private boolean wasExecuted;
 
     public MainEvent(){

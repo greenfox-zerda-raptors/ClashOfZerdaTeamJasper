@@ -2,6 +2,7 @@ package com.greenfox.jasper.domain.TimedEvent;
 
 import com.greenfox.jasper.domain.Troop;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import java.util.ArrayList;
@@ -11,10 +12,13 @@ import java.util.ArrayList;
 @Inheritance
 public class BattleEvent extends MainEvent {
 
+    // TODO resolve table joining
+
+    @Column(name = "attacker_id")
     private long attackerKingdomId;
-
-    private ArrayList<Troop> attackingTroops;
-
+    @Column(name = "troops")
+    private ArrayList<Troop> attackingTroops; // decide how we will save troops on the move
+    @Column(name = "defender_id")
     private long defenderKingdomId;
 
     public BattleEvent(){
