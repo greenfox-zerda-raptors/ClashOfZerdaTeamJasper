@@ -1,5 +1,6 @@
 package com.greenfox.jasper.domain;
 
+import com.greenfox.jasper.dto.BattleResultDto;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.TroopServices;
 import com.greenfox.jasper.services.UserServices;
@@ -14,6 +15,9 @@ import java.util.List;
 @Component
 public class Realm {
 
+    private Kingdom attacker;
+    private Kingdom defender;
+
     @Autowired
     UserServices userServices;
 
@@ -23,10 +27,7 @@ public class Realm {
     @Autowired
     KingdomServices kingdomServices;
 
-    public BattleResult battle(Kingdom attacker, Kingdom defender) {
-
-        attacker = kingdomServices.findKingdomByName("romania");
-        defender = kingdomServices.findKingdomByName("austria");
+    public BattleResultDto battle(Kingdom attacker, Kingdom defender) {
         List<Troop> attackingTroops = troopServices.findAllTroopsByKingdomName(attacker.getName());
         List<Troop> defendingTroops = troopServices.findAllTroopsByKingdomName(defender.getName());
         ArmyStats currentAttacker = getArmyStats(attackingTroops, attacker);
@@ -49,7 +50,7 @@ public class Realm {
             damageDoneByDefender += damageAgainstAttacker;
         }
 
-        return new BattleResult(attacker, defender, damageDoneByAttacker, damageDoneByDefender);
+        return new BattleResultDto(attacker.getName(), defender.getName(), damageDoneByAttacker, damageDoneByDefender);
     }
 
     public ArmyStats getArmyStats(List<Troop> attackingTroops, Kingdom kingdom) {
