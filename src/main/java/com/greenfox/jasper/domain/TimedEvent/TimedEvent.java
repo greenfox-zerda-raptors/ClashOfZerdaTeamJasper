@@ -1,4 +1,6 @@
-package com.greenfox.jasper.domain;
+package com.greenfox.jasper.domain.TimedEvent;
+
+import com.greenfox.jasper.domain.GameEvent;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.greenfox.jasper.battle.model;
+package com.greenfox.jasper.domain;
 
 /**
  * Created by Zoltán on 2017.02.07..

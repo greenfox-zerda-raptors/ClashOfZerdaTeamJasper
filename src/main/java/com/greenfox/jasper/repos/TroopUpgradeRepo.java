@@ -1,6 +1,6 @@
-package com.greenfox.jasper.battle.services;
+package com.greenfox.jasper.repos;
 
-import com.greenfox.jasper.battle.model.UpgradeTroopEvent;
+import com.greenfox.jasper.domain.TimedEvent.UpgradeTroopEvent;
 import org.springframework.data.repository.CrudRepository;
 
 /**

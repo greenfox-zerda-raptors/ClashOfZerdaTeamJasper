@@ -1,6 +1,6 @@
-package com.greenfox.jasper.battle.services;
+package com.greenfox.jasper.repos;
 
-import com.greenfox.jasper.battle.model.LevelUpEvent;
+import com.greenfox.jasper.domain.TimedEvent.LevelUpEvent;
 import org.springframework.data.repository.CrudRepository;
 
 /**

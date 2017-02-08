@@ -1,6 +1,6 @@
-package com.greenfox.jasper.battle.services;
+package com.greenfox.jasper.repos;
 
-import com.greenfox.jasper.battle.model.BattleEvent;
+import com.greenfox.jasper.domain.TimedEvent.BattleEvent;
 import org.springframework.data.repository.CrudRepository;
 
 /**

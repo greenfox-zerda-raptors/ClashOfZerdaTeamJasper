@@ -1,6 +1,6 @@
-package com.greenfox.jasper.battle.services;
+package com.greenfox.jasper.repos;
 
-import com.greenfox.jasper.battle.model.MainEvent;
+import com.greenfox.jasper.domain.TimedEvent.MainEvent;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

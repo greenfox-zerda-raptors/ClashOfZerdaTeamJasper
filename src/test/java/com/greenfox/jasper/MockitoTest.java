@@ -1,6 +1,7 @@
 package com.greenfox.jasper;
 
 import com.greenfox.jasper.domain.*;
+import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
 import com.greenfox.jasper.repos.BuildingRepo;
 import com.greenfox.jasper.repos.KingdomRepo;
 import com.greenfox.jasper.repos.TimedEventRepo;

@@ -1,4 +1,4 @@
-package com.greenfox.jasper.battle.model;
+package com.greenfox.jasper.domain.TimedEvent;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.greenfox.jasper.battle.model;
+package com.greenfox.jasper.domain.TimedEvent;
 
 import com.greenfox.jasper.domain.Troop;
 
