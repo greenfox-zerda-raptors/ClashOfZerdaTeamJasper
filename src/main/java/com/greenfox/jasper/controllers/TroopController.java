@@ -4,7 +4,7 @@ import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.services.MainEventServices;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
-import com.greenfox.jasper.services.DTOconverter;
+import com.greenfox.jasper.services.DtoConverter;
 import com.greenfox.jasper.services.TroopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,30 +28,30 @@ public class TroopController {
     private MainEventServices mainEventServices;
 
     @Autowired
-    private DTOconverter DTOconverter;
+    private DtoConverter DtoConverter;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<TroopResponse> getTroops(@PathVariable int kingdomId, HttpServletResponse response) {
+    public ResponseEntity<TroopResponse> getTroops(@PathVariable long kingdomId, HttpServletResponse response) {
         List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
         if(troopList == null){
             return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
         }
-        TroopResponse result = new TroopResponse(DTOconverter.convertTroopListToDTO(troopList));
+        TroopResponse result = new TroopResponse(DtoConverter.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{troopId}", method = RequestMethod.GET)
-    public Troop getOneTroop(@PathVariable int troopId) {
+    public Troop getOneTroop(@PathVariable long troopId) {
         return troopServices.findOneTroop(troopId);
     }
 
     @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
-    public void trainNewTroop(@PathVariable int barrackId) {
-        mainEventServices.addNewCreateTroopEvent((long) barrackId);
+    public void trainNewTroop(@PathVariable long barrackId) {
+        mainEventServices.addNewCreateTroopEvent(barrackId);
     }
 
     @RequestMapping(value = "/{troopId}/upgrade/{barrackId}", method = RequestMethod.GET)
-    public void upgradeTroop(@PathVariable int troopId, @PathVariable int barrackId){
+    public void upgradeTroop(@PathVariable int troopId, @PathVariable long barrackId){
         mainEventServices.addNewUpgradeTroopEvent(troopId, barrackId);
     }
 

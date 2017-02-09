@@ -13,8 +13,8 @@ public class UserServices {
     @Autowired
     UserRepo userRepo;
 
-    public User findOneUser(int userId){
-        return userRepo.findOne((long) userId);
+    public User findOneUser(long userId){
+        return userRepo.findOne(userId);
     }
 
     public Iterable<User> findAllUsers(){

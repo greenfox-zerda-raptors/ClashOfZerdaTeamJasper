@@ -120,7 +120,7 @@ public class MainEventServices {
     }
 
     public void addNewLevelUpEvent(long buildingID) {
-         Building temporaryBuilding = buildingServices.findOneBuilding((int) buildingID);
+         Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          MainEvent levelUpEvent = new LevelUpEvent(
                (System.currentTimeMillis() + calculateBuildingTime(temporaryBuilding)),  buildingID
                  );

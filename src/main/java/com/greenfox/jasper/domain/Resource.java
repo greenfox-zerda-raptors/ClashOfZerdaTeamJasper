@@ -69,7 +69,7 @@ public class Resource implements Serializable {
         this.type = type;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 

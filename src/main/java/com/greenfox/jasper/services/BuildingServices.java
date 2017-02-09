@@ -21,8 +21,8 @@ public class BuildingServices {
     KingdomServices kingdomServices;
 
 
-    public Building findOneBuilding(int buildingId){
-        return buildingRepo.findOne((long) buildingId);
+    public Building findOneBuilding(long buildingId){
+        return buildingRepo.findOne(buildingId);
     }
     public List<Building> findAllBuildings(){
         return buildingRepo.findAll();
@@ -32,14 +32,14 @@ public class BuildingServices {
         buildingRepo.save(building);
     }
 
-    public void addNewBuilding(int kingdomId, String type) {
+    public void addNewBuilding(long kingdomId, String type) {
         if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
             Building newBuilding = new Building(type, kingdomServices.findOneById((long) kingdomId));
             buildingRepo.save(newBuilding);
             mainEventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
         }
     }
-    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String type) {
+    public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {
         return buildingRepo.findAllBuildingByKingdomAndType(kingdomServices.findOneById((long) kingdomId), type);
     }
 

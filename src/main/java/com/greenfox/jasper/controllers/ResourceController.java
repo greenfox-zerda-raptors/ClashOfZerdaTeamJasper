@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
-import com.greenfox.jasper.services.DTOconverter;
+import com.greenfox.jasper.services.DtoConverter;
 import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,22 +24,22 @@ public class ResourceController {
     private ResourceServices resourceServices;
 
     @Autowired
-    private DTOconverter DTOconverter;
+    private DtoConverter DtoConverter;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResources(@PathVariable int kingdomId) {
+    public ResponseEntity<ResourceResponse> getResources(@PathVariable long kingdomId) {
         resourceServices.calculateResource(kingdomId);
         List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if(resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                DTOconverter.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
+                DtoConverter.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable int kingdomId, @PathVariable String type){
+    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable long kingdomId, @PathVariable String type){
         resourceServices.calculateResource(kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
@@ -54,7 +54,7 @@ public class ResourceController {
         if(resourceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(DTOconverter.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceResponse result = new ResourceResponse(DtoConverter.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
