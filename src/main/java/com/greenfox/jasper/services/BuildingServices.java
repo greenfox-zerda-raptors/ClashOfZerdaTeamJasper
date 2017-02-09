@@ -40,7 +40,7 @@ public class BuildingServices {
         }
     }
     public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {
-        return buildingRepo.findAllBuildingByKingdomAndType(kingdomServices.findOneById((long) kingdomId), type);
+        return buildingRepo.findAllBuildingByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
     }
 
     public Building findTownHallByKingdom(Kingdom kingdom){
@@ -49,10 +49,5 @@ public class BuildingServices {
 
     public List<Building> findAllBuildingsByKingdomId(long kingdomId){
         return buildingRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
-    }
-
-
-    public Building findLastBuiltByKingdom(long kingdomId) {
-        return buildingRepo.findAllByKingdomOrderByIdDesc(kingdomServices.findOneById(kingdomId)).get(0);
     }
 }

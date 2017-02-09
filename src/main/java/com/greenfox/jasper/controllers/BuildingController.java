@@ -62,13 +62,14 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
-    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody String buildingType){
-        buildingServices.addNewBuilding(kingdomId, buildingType);
-        return ResponseEntity.status(HttpStatus.OK).body("Added new building ");
+    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody BuildingPost type){
+        buildingServices.addNewBuilding(kingdomId, type.getType());
+        return ResponseEntity.status(HttpStatus.OK).body("Added new building");
     }
-    @RequestMapping(value = "/levelup", method = RequestMethod.POST)
-    public ResponseEntity levelUpBuilding(@PathVariable long kingdomId, @RequestBody BuildingPost buildingPost ){
+
+    @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+    public ResponseEntity upgradeBuilding(@RequestBody BuildingPost buildingPost ){
         mainEventServices.addNewLevelUpEvent(buildingPost.getId());
-        return ResponseEntity.status(HttpStatus.OK).body("Added new level-up event");
+        return ResponseEntity.status(HttpStatus.OK).body(buildingServices.findOneBuilding(buildingPost.getId()));
     }
 }
