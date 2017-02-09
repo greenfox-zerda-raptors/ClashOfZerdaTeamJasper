@@ -12,8 +12,6 @@ import java.util.ArrayList;
 @Inheritance
 public class BattleEvent extends TimedEvent {
 
-    // TODO resolve table joining
-
     @Column(name = "attacker_id")
     private long attackerKingdomId;
     @Column(name = "troops")

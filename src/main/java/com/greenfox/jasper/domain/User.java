@@ -66,8 +66,6 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
-
-    // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;

@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MainEventRepo extends CrudRepository <TimedEvent, Long > {
+public interface TimedEventRepo extends CrudRepository <TimedEvent, Long > {
 
     List<TimedEvent> findAll();
 
-    @Query("SELECT a FROM MainEvent a WHERE a.wasExecuted = false and a.executionTime < :currentTime ")
+    @Query("SELECT a FROM TimedEvent a WHERE a.wasExecuted = false and a.executionTime < :currentTime ")
     List<TimedEvent> findAllWaitingForExecution(@Param("currentTime") long currentTime);
 }

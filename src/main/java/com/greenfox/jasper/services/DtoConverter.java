@@ -16,7 +16,7 @@ public class DtoConverter {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    // TODO Battle
+    // TODO Battle converter for battle
 
     public KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
