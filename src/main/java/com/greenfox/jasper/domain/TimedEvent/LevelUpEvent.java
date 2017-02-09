@@ -10,7 +10,7 @@ import javax.persistence.Inheritance;
 @Entity
 @Inheritance
 @Configurable
-public class LevelUpEvent extends MainEvent{
+public class LevelUpEvent extends TimedEvent {
     // TODO dto can (probably) handle this better
 //    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
     @Column(name = "building_id")

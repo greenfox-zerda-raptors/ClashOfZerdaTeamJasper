@@ -15,7 +15,7 @@ public class BuildingServices {
     BuildingRepo buildingRepo;
 
     @Autowired
-    MainEventServices mainEventServices;
+    TimedEventServices timedEventServices;
 
     @Autowired
     KingdomServices kingdomServices;
@@ -36,7 +36,7 @@ public class BuildingServices {
         if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
             Building newBuilding = new Building(type, kingdomServices.findOneById(kingdomId));
             buildingRepo.save(newBuilding);
-            mainEventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
+            timedEventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
         }
     }
     public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {

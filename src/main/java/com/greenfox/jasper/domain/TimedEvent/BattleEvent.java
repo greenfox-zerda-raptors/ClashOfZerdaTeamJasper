@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Entity
 @Inheritance
-public class BattleEvent extends MainEvent {
+public class BattleEvent extends TimedEvent {
 
     // TODO resolve table joining
 

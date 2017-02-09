@@ -1,7 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.CustomError;
-import com.greenfox.jasper.services.MainEventServices;
+import com.greenfox.jasper.services.TimedEventServices;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.services.DtoConverter;
@@ -9,10 +9,7 @@ import com.greenfox.jasper.services.TroopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -25,7 +22,7 @@ public class TroopController {
     private TroopServices troopServices;
 
     @Autowired
-    private MainEventServices mainEventServices;
+    private TimedEventServices timedEventServices;
 
     @Autowired
     private DtoConverter DtoConverter;
@@ -47,12 +44,12 @@ public class TroopController {
 
     @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
     public void trainNewTroop(@PathVariable long barrackId) {
-        mainEventServices.addNewCreateTroopEvent(barrackId);
+        timedEventServices.addNewCreateTroopEvent(barrackId);
     }
 
     @RequestMapping(value = "/{troopId}/upgrade/{barrackId}", method = RequestMethod.GET)
     public void upgradeTroop(@PathVariable int troopId, @PathVariable long barrackId){
-        mainEventServices.addNewUpgradeTroopEvent(troopId, barrackId);
+        timedEventServices.addNewUpgradeTroopEvent(troopId, barrackId);
     }
 
 }

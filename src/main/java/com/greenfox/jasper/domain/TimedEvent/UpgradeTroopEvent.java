@@ -7,7 +7,7 @@ import javax.persistence.Inheritance;
 
 @Entity
 @Inheritance
-public class UpgradeTroopEvent extends MainEvent {
+public class UpgradeTroopEvent extends TimedEvent {
 //    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
     @Column(name = "building_id")
     private long buildingId;

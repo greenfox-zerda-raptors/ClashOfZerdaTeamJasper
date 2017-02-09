@@ -1,13 +1,13 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.BuildingPost;
+import com.greenfox.jasper.dto.PostDto;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.services.BuildingServices;
 import com.greenfox.jasper.services.DtoConverter;
-import com.greenfox.jasper.services.MainEventServices;
+import com.greenfox.jasper.services.TimedEventServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class BuildingController {
     private BuildingServices buildingServices;
 
     @Autowired
-    private MainEventServices mainEventServices;
+    private TimedEventServices timedEventServices;
 
     @Autowired
     private DtoConverter DtoConverter;
@@ -53,7 +53,7 @@ public class BuildingController {
 
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
     public void levelUpBuildingById(@PathVariable long buildingId) throws IOException {
-        mainEventServices.addNewLevelUpEvent(buildingId);
+        timedEventServices.addNewLevelUpEvent(buildingId);
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
@@ -62,14 +62,14 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
-    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody BuildingPost type){
+    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody PostDto type){
         buildingServices.addNewBuilding(kingdomId, type.getType());
         return ResponseEntity.status(HttpStatus.OK).body("Added new building");
     }
 
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-    public ResponseEntity upgradeBuilding(@RequestBody BuildingPost buildingPost ){
-        mainEventServices.addNewLevelUpEvent(buildingPost.getId());
-        return ResponseEntity.status(HttpStatus.OK).body(buildingServices.findOneBuilding(buildingPost.getId()));
+    public ResponseEntity upgradeBuilding(@RequestBody PostDto postDto){
+        timedEventServices.addNewLevelUpEvent(postDto.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(buildingServices.findOneBuilding(postDto.getId()));
     }
 }

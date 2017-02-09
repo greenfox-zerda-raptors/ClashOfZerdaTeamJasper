@@ -26,7 +26,7 @@ public class ProofOfConceptApplication implements CommandLineRunner {
     @Autowired
     UserServices userServices;
     @Autowired
-    MainEventServices mainEventServices;
+    TimedEventServices timedEventServices;
 
 
 

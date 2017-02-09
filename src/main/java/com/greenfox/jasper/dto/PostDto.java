@@ -1,14 +1,14 @@
-package com.greenfox.jasper.domain;
+package com.greenfox.jasper.dto;
 
-
-public class BuildingPost {
+// TODO discuss!!!
+public class PostDto {
     private long id;
     private String type;
 
-    public BuildingPost() {
+    public PostDto() {
     }
 
-    public BuildingPost(long id, String type) {
+    public PostDto(long id, String type) {
         this.id = id;
         this.type = type;
     }
