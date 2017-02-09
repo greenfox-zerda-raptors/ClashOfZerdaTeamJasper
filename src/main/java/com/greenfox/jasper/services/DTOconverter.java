@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
  * Created by Zoltán on 2017.02.02..
  */
 @Service
-public class DTOServices {
+public class DTOconverter {
 
     ModelMapper modelMapper = new ModelMapper();
 
     // TODO Battle
 
-    public com.greenfox.jasper.dto.KingdomDto convertKingdomToDTO(Kingdom kingdom) {
+    public KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
         kingdomDto.setBuildings(convertBuildingListToDTO(kingdom.getBuildings()));

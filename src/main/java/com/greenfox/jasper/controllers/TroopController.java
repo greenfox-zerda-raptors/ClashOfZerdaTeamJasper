@@ -4,7 +4,7 @@ import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.services.MainEventServices;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopResponse;
-import com.greenfox.jasper.services.DTOServices;
+import com.greenfox.jasper.services.DTOconverter;
 import com.greenfox.jasper.services.TroopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class TroopController {
     private MainEventServices mainEventServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOconverter DTOconverter;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<TroopResponse> getTroops(@PathVariable int kingdomId, HttpServletResponse response) {
@@ -36,7 +36,7 @@ public class TroopController {
         if(troopList == null){
             return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
         }
-        TroopResponse result = new TroopResponse(dtoServices.convertTroopListToDTO(troopList));
+        TroopResponse result = new TroopResponse(DTOconverter.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

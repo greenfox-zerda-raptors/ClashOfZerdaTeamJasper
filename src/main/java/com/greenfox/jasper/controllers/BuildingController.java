@@ -6,7 +6,7 @@ import com.greenfox.jasper.services.MainEventServices;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.services.BuildingServices;
-import com.greenfox.jasper.services.DTOServices;
+import com.greenfox.jasper.services.DTOconverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class BuildingController {
     private MainEventServices mainEventServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOconverter DTOconverter;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
@@ -39,7 +39,7 @@ public class BuildingController {
         if(buildingList == null){
             return  new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
-        BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
+        BuildingResponse result = new BuildingResponse(DTOconverter.convertBuildingListToDTO(buildingList));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -47,7 +47,7 @@ public class BuildingController {
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
     public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
-                dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
+                DTOconverter.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         if(result == null){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }

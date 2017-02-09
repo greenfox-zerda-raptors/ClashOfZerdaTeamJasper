@@ -54,19 +54,31 @@ public class MainEventServices {
 
 
     private void processEventTest(MainEvent mainEvent){
-       if(mainEvent.getClass() == BattleEvent.class){
+
+       if(isBattleEvent(mainEvent)){
            executeBattle(mainEvent);
-       }else if(mainEvent.getClass() == LevelUpEvent.class){
+       }else if(isLevelUpEvent(mainEvent)){
            executeLevelUp(mainEvent);
-       }else if(mainEvent.getClass() == UpgradeTroopEvent.class){
+       }else if(isUpgradeTroopEvent(mainEvent)){
            executeTroopUpgrade(mainEvent);
        }else{
-           System.out.println("No such event method");
+           System.out.println("No such event-method");
        }
         mainEvent.setWasExecuted(true);
         mainEventRepo.save(mainEvent);
     }
 
+    private boolean isUpgradeTroopEvent(MainEvent mainEvent) {
+        return mainEvent.getClass() == UpgradeTroopEvent.class;
+    }
+
+    private boolean isLevelUpEvent(MainEvent mainEvent) {
+        return mainEvent.getClass() == LevelUpEvent.class;
+    }
+
+    private boolean isBattleEvent(MainEvent mainEvent) {
+        return mainEvent.getClass() == BattleEvent.class;
+    }
 
 
     public void executeBattle(MainEvent mainEvent) {

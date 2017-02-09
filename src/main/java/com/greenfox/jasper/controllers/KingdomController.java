@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.KingdomDto;
-import com.greenfox.jasper.services.DTOServices;
+import com.greenfox.jasper.services.DTOconverter;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class KingdomController {
     private KingdomServices kingdomServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOconverter DTOconverter;
 
     @RequestMapping(value = "/{kingdomId}", method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@PathVariable int kingdomId, HttpServletResponse response) {
@@ -37,7 +37,7 @@ public class KingdomController {
             return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
         }
       
-        KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
+        KingdomDto result = DTOconverter.convertKingdomToDTO(kingdom);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
