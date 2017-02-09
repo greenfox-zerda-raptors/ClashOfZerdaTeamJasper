@@ -139,4 +139,18 @@ public class ResourceServices {
         return result;
     }
 
+    public boolean buyNewBuilding(long kingdomId){
+        Resource gold = findAllGoldResourceByKingdomId(kingdomId);
+        float money;
+        money = gold.getAmount();
+        boolean result;
+        result=(money>=250);
+        if(result){
+            money -= 250;
+            gold.setAmount(money);
+            resourceRepo.save(gold);
+        }
+        return result;
+    }
+
 }

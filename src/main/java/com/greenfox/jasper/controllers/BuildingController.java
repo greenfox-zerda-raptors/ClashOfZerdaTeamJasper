@@ -41,8 +41,8 @@ public class BuildingController {
     public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
-        if(buildingList == null){
-            return  new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
+        if (buildingList == null) {
+            return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
@@ -53,7 +53,7 @@ public class BuildingController {
     public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-        if(result == null){
+        if (result == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -63,17 +63,22 @@ public class BuildingController {
     @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.PUT)
     public ResponseEntity<BuildingDto> levelUpBuildingById(@PathVariable int kingdomId, @PathVariable int buildingId, HttpServletResponse response) throws IOException {
         boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
-        if(!available){
-            return new ResponseEntity( new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+        if (!available) {
+            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
         }
-            timedEventServices.addNewLevelUpEvent((long) buildingId);
-            BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-            return new ResponseEntity<>(result, HttpStatus.OK);
+        timedEventServices.addNewLevelUpEvent((long) buildingId);
+        BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-    public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
-        buildingServices.addNewBuilding(kingdomId, type);
-        response.sendRedirect("/kingdom/2/buildings");
+    public ResponseEntity<BuildingDto> addNewBuilding(@PathVariable int kingdomId, @PathVariable String type, HttpServletResponse response) throws IOException {
+        boolean available = resourceServices.buyNewBuilding(kingdomId);
+        if (!available) {
+            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+        }
+            buildingServices.addNewBuilding(kingdomId, type);
+            BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findLastBuilding(kingdomId));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
-}
