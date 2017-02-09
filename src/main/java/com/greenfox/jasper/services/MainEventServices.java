@@ -84,23 +84,21 @@ public class MainEventServices {
     public void executeBattle(MainEvent mainEvent) {
         // TODO actually doing battle
         BattleEvent battleEvent = (BattleEvent) mainEvent;
-        System.out.println("Wohohohohooooooo");
     }
     private void executeLevelUp(MainEvent mainEvent) {
         LevelUpEvent levelUpEvent = (LevelUpEvent) mainEvent;
-        System.out.println("executing the lvl up method");
-        Building tempBuilding = buildingServices.findOneBuilding((int) levelUpEvent.getBuildingId());
+        Building tempBuilding = buildingServices.findOneBuilding(levelUpEvent.getBuildingId());
         tempBuilding.levelUp();
         buildingServices.saveOneBuilding(tempBuilding);
+        resourceServices.calculateResource(tempBuilding.getKingdom().getKingdomId());
     }
 
     private void executeTroopUpgrade(MainEvent mainEvent) {
         // TODO building Occupation status?
         UpgradeTroopEvent upgradeTroopEvent = (UpgradeTroopEvent) mainEvent;
-        Troop troopToBeUpgraded = troopServices.findOneTroop((int) upgradeTroopEvent.getTroopId());
+        Troop troopToBeUpgraded = troopServices.findOneTroop(upgradeTroopEvent.getTroopId());
         troopToBeUpgraded.upgrade();
         troopServices.saveOneTroop(troopToBeUpgraded);
-        System.out.println("Upgraded your troop");
     }
 
     // TODO create controller
@@ -119,6 +117,7 @@ public class MainEventServices {
         mainEventRepo.save(upgradingTroop);
     }
 
+
     public void addNewLevelUpEvent(long buildingID) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          MainEvent levelUpEvent = new LevelUpEvent(
@@ -126,6 +125,7 @@ public class MainEventServices {
                  );
         mainEventRepo.save(levelUpEvent);
     }
+
 
     public void addNewCreateTroopEvent(long barrackId) {
         long queueTime = 0;
@@ -157,5 +157,13 @@ public class MainEventServices {
         return mainEventRepo.findAll();
     }
 
+    public void addTestLevelUpEvent(long buildingId, long time){
+        MainEvent levelUpEvent = new LevelUpEvent(time, buildingId);
+        mainEventRepo.save(levelUpEvent);
+    }
+    public void addTestUpgradeTroopEvent(long troopId, long barrackId, long time){
+        MainEvent upgrade = new UpgradeTroopEvent(time, barrackId, troopId);
+        mainEventRepo.save(upgrade);
+    }
 
 }

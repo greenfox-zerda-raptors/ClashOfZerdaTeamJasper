@@ -56,9 +56,6 @@ public class ResourceServices {
 
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
-
-        System.out.println(changeInFood);
-        System.out.println(changeInGold);
         kingdom.setUpdateTime(System.currentTimeMillis());
         kingdomServices.saveOneKingdom(kingdom);
 
