@@ -49,7 +49,7 @@ public class MainEventServices {
                 processEventTest(listedEvent);
             }
         }
-        System.out.println("I finished processing the events in: " + (System.currentTimeMillis() - currentTime));
+//        System.out.println("I finished processing the events in: " + (System.currentTimeMillis() - currentTime));
     }
 
 

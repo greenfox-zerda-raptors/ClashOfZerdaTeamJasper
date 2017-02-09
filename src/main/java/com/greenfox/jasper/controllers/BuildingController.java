@@ -1,6 +1,7 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.BuildingPost;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
@@ -10,10 +11,7 @@ import com.greenfox.jasper.services.MainEventServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +42,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
-    public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
+    public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable long buildingId) {
         BuildingDto result =
                 DtoConverter.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         if(result == null){
@@ -61,5 +59,16 @@ public class BuildingController {
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
     public void addNewBuilding(@PathVariable long kingdomId , @PathVariable String type) throws IOException{
         buildingServices.addNewBuilding(kingdomId, type);
+    }
+
+    @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
+    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody String buildingType){
+        buildingServices.addNewBuilding(kingdomId, buildingType);
+        return ResponseEntity.status(HttpStatus.OK).body("Added new building ");
+    }
+    @RequestMapping(value = "/levelup", method = RequestMethod.POST)
+    public ResponseEntity levelUpBuilding(@PathVariable long kingdomId, @RequestBody BuildingPost buildingPost ){
+        mainEventServices.addNewLevelUpEvent(buildingPost.getId());
+        return ResponseEntity.status(HttpStatus.OK).body("Added new level-up event");
     }
 }

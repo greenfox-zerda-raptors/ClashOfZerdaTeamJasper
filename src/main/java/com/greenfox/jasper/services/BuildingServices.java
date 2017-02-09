@@ -34,7 +34,7 @@ public class BuildingServices {
 
     public void addNewBuilding(long kingdomId, String type) {
         if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
-            Building newBuilding = new Building(type, kingdomServices.findOneById((long) kingdomId));
+            Building newBuilding = new Building(type, kingdomServices.findOneById(kingdomId));
             buildingRepo.save(newBuilding);
             mainEventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
         }
@@ -52,4 +52,7 @@ public class BuildingServices {
     }
 
 
+    public Building findLastBuiltByKingdom(long kingdomId) {
+        return buildingRepo.findAllByKingdomOrderByIdDesc(kingdomServices.findOneById(kingdomId)).get(0);
+    }
 }

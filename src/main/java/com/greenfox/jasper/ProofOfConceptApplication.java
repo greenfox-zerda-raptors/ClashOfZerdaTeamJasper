@@ -47,10 +47,10 @@ public class ProofOfConceptApplication implements CommandLineRunner {
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-
-        for(int i = 0; i < 100000; i++){
-            mainEventServices.addTestLevelUpEvent(5, currentTime + 60000 + i * 50);
-//            mainEventServices.addTestUpgradeTroopEvent(9, 5, currentTime + 30000 + i * 40);
-        }
+//
+//        for(int i = 0; i < 100000; i++){
+//            mainEventServices.addTestLevelUpEvent(5, currentTime + 60000 + i * 50);
+////            mainEventServices.addTestUpgradeTroopEvent(9, 5, currentTime + 30000 + i * 40);
+//        }
     }
 }
