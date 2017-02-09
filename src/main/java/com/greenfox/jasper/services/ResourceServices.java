@@ -77,7 +77,7 @@ public class ResourceServices {
     }
 
     private int goldProductionPerMinute(List<Building> mines, Building townhallBuilding) {
-        return 1*(sumBuildingLevelFromAList(mines)
+        return 10*(sumBuildingLevelFromAList(mines)
                 + townhallBuilding.getLevel());
     }
 
@@ -120,6 +120,23 @@ public class ResourceServices {
 
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
+    }
+
+    public boolean levelUpBuildingMoneyCheck(long kingdomId, int buildingId){
+        Resource gold = findAllGoldResourceByKingdomId(kingdomId);
+        float money;
+        money = gold.getAmount();
+        float cost;
+        Building building = buildingServices.findOneBuilding(buildingId);
+        cost = building.getLevel()*100;
+        if (money>cost){
+            money -= cost;
+            gold.setAmount(money);
+            resourceRepo.save(gold);
+        }
+        boolean result;
+        result=money>cost;
+        return result;
     }
 
 }

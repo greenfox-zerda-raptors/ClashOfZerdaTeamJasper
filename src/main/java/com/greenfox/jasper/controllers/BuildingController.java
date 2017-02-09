@@ -60,20 +60,12 @@ public class BuildingController {
     }
 
 
-    // TODO this should (probably) not redirect
-    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.PUT)
     public ResponseEntity<BuildingDto> levelUpBuildingById(@PathVariable int kingdomId, @PathVariable int buildingId, HttpServletResponse response) throws IOException {
-        Resource gold = resourceServices.findAllGoldResourceByKingdomId(kingdomId);
-        float money;
-        money = gold.getAmount();
-        float cost;
-        Building building = buildingServices.findOneBuilding(buildingId);
-        cost = building.getLevel()*100;
-        if(money<cost){
+        boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
+        if(!available){
             return new ResponseEntity( new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
         }
-            money -= cost;
-            gold.setAmount(money);
             timedEventServices.addNewLevelUpEvent((long) buildingId);
             BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
             return new ResponseEntity<>(result, HttpStatus.OK);
