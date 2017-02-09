@@ -128,7 +128,7 @@ public class ResourceServices {
         money = gold.getAmount();
         float cost;
         Building building = buildingServices.findOneBuilding(buildingId);
-        cost = building.getLevel()*100;
+        cost = (building.getLevel()+1)*100;
         if (money>cost){
             money -= cost;
             gold.setAmount(money);
