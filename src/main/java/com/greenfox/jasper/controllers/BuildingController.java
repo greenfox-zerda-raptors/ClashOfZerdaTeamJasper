@@ -1,7 +1,6 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.dto.PostDto;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
@@ -62,14 +61,14 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
-    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody PostDto type){
-        buildingServices.addNewBuilding(kingdomId, type.getType());
+    public ResponseEntity addNewBuildingPost(@PathVariable long kingdomId, @RequestBody Building building){
+        buildingServices.addNewBuilding(kingdomId, building.getType());
         return ResponseEntity.status(HttpStatus.OK).body("Added new building");
     }
 
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-    public ResponseEntity upgradeBuilding(@RequestBody PostDto postDto){
-        timedEventServices.addNewLevelUpEvent(postDto.getId());
-        return ResponseEntity.status(HttpStatus.OK).body(buildingServices.findOneBuilding(postDto.getId()));
+    public ResponseEntity upgradeBuilding(@RequestBody Building building){
+        timedEventServices.addNewLevelUpEvent(building.getBuildingId());
+        return ResponseEntity.status(HttpStatus.OK).body(buildingServices.findOneBuilding(building.getBuildingId()));
     }
 }
