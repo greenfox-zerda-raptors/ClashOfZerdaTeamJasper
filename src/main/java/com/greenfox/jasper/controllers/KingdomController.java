@@ -11,8 +11,7 @@ import com.greenfox.jasper.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,10 +33,8 @@ public class KingdomController {
     private DTOServices dtoServices;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<KingdomDto> getKingdom() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        JwtUser user = (JwtUser) securityContext.getAuthentication().getPrincipal();
-        long KING_ID = user.getId();
+    public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
+        long KING_ID = currentUser.getId();
 //        resourceServices.calculateResource(KING_ID);
         Kingdom kingdom = kingdomServices.findOneKingdom(KING_ID);
         if (kingdom == null) {
