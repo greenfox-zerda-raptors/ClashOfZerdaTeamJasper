@@ -4,12 +4,14 @@ import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
+import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.BuildingServices;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.TimedEventServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/kingdom/{kingdomId}/buildings")
+@RequestMapping(value = "/kingdom/buildings")
 public class BuildingController {
 
     @Autowired
@@ -33,11 +35,12 @@ public class BuildingController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
+    public ResponseEntity<BuildingResponse> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
+        long kingdomId = currentUser.getId();
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
-        if(buildingList == null){
-            return  new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
+        if (buildingList == null) {
+            return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
@@ -48,7 +51,7 @@ public class BuildingController {
     public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-        if(result == null){
+        if (result == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -63,7 +66,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-    public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
+    public void addNewBuilding(@PathVariable int kingdomId, @PathVariable String type, HttpServletResponse response) throws IOException {
         buildingServices.addNewBuilding(kingdomId, type);
         response.sendRedirect("/kingdom/3/buildings");
     }

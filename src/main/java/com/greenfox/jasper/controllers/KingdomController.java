@@ -27,16 +27,13 @@ public class KingdomController {
     private KingdomServices kingdomServices;
 
     @Autowired
-    private UserServices userServices;
-
-    @Autowired
     private DTOServices dtoServices;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
-        long KING_ID = currentUser.getId();
+        long kingdomId = currentUser.getId();
 //        resourceServices.calculateResource(KING_ID);
-        Kingdom kingdom = kingdomServices.findOneKingdom(KING_ID);
+        Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if (kingdom == null) {
             return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
         }
