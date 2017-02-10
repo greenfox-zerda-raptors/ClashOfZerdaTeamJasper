@@ -36,5 +36,9 @@ public class TroopServices {
         troopRepo.save(troop);
     }
 
+    public void deleteOneTroop(Troop troop) {
+        troopRepo.delete(troop);
+    }
+
 
 }

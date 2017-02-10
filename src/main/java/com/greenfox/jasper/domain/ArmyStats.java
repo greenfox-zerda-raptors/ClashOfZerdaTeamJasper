@@ -48,4 +48,5 @@ public class ArmyStats {
     public void setKingdom(Kingdom kingdom) {
         this.kingdom = kingdom;
     }
+
 }

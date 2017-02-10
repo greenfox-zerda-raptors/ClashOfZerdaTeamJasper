@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Created by almasics on 2017.02.08..
  */
@@ -24,11 +22,12 @@ public class BattleController {
 
     @Autowired
     private DTOServices dtoServices;
+
     @Autowired
     KingdomServices kingdomServices;
 
     @RequestMapping(value = "/battle", method = RequestMethod.GET)
-    public ResponseEntity<BattleResultResponse> getBattleResult(HttpServletResponse response) {
+    public ResponseEntity<BattleResultResponse> getBattleResult() {
 
         BattleResultResponse result = new BattleResultResponse(dtoServices.BattleResultToDTO(battleRealm.battle(kingdomServices.findKingdomByName("romania"), kingdomServices.findKingdomByName("austria"))));
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -17,11 +17,6 @@ public class BattleResultDto {
         this.damageDoneByDefender = damageDoneByDefender;
     }
 
-    public String battleToString() {
-        return String.format("damage done by attacker %d, damage done by defender %d", damageDoneByAttacker, damageDoneByDefender);
-    }
-
-
     public int getDamageDoneByAttacker() {
         return damageDoneByAttacker;
     }

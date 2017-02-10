@@ -15,9 +15,6 @@ import java.util.List;
 @Component
 public class Realm {
 
-    private Kingdom attacker;
-    private Kingdom defender;
-
     @Autowired
     UserServices userServices;
 
@@ -27,6 +24,9 @@ public class Realm {
     @Autowired
     KingdomServices kingdomServices;
 
+    private Long id;
+
+
     public BattleResultDto battle(Kingdom attacker, Kingdom defender) {
         List<Troop> attackingTroops = troopServices.findAllTroopsByKingdomName(attacker.getName());
         List<Troop> defendingTroops = troopServices.findAllTroopsByKingdomName(defender.getName());
@@ -34,32 +34,38 @@ public class Realm {
         ArmyStats currentDefender = getArmyStats(defendingTroops, defender);
         int currentHealthOfAttacker = currentAttacker.getTotalHp();
         int currentHealthOfDefender = currentDefender.getTotalHp();
+        int tempHealthOfAttacker = currentHealthOfAttacker;
+        int tempHealthOfDefender = currentHealthOfDefender;
         int currentAttackerDamage = currentAttacker.getTotalAttack();
         int currentDefenderDamage = currentDefender.getTotalAttack();
         int damageDoneByAttacker = 0;
         int damageDoneByDefender = 0;
 
 
-        while (currentHealthOfAttacker >= 0 && currentHealthOfDefender >= 0) {
+        while (tempHealthOfAttacker >= 0 && tempHealthOfDefender >= 0) {
 
             int damageAgainstDefender = currentAttackerDamage - currentDefender.getTotalDefense();
             int damageAgainstAttacker = currentDefenderDamage - currentAttacker.getTotalDefense();
-            currentHealthOfDefender -= damageAgainstDefender;
-            currentHealthOfAttacker -= damageAgainstAttacker;
+            tempHealthOfDefender -= damageAgainstDefender;
+            tempHealthOfAttacker -= damageAgainstAttacker;
             damageDoneByAttacker += damageAgainstDefender;
             damageDoneByDefender += damageAgainstAttacker;
+
+            if (damageDoneByAttacker > (currentHealthOfAttacker / attackingTroops.size())) {
+                troopServices.deleteOneTroop(attackingTroops.remove(Math.round(damageAgainstDefender / (currentHealthOfAttacker / attackingTroops.size()))));
+            }
         }
 
         return new BattleResultDto(attacker.getName(), defender.getName(), damageDoneByAttacker, damageDoneByDefender);
     }
 
-    public ArmyStats getArmyStats(List<Troop> attackingTroops, Kingdom kingdom) {
+    public ArmyStats getArmyStats(List<Troop> troops, Kingdom kingdom) {
 
 
         int totalHealth = 0;
         int totalDamage = 0;
         int totalDefense = 0;
-        for (Troop troop : attackingTroops) {
+        for (Troop troop : troops) {
             totalHealth += troop.getHp();
             totalDamage += troop.getAttack();
             totalDefense += troop.getDefense();
