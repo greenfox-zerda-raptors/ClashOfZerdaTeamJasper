@@ -1,6 +1,8 @@
 package com.greenfox.jasper.services;
 
+import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.User;
+import com.greenfox.jasper.dto.KingdomDto;
 import com.greenfox.jasper.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import org.springframework.stereotype.Service;
 public class UserServices {
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    DTOServices dtoServices;
 
     public User findOneUser(int userId){
         return userRepo.findOne((long) userId);
@@ -36,5 +41,7 @@ public class UserServices {
     public void saveOneUser(User user){
         userRepo.save(user);
     }
+
+    public KingdomDto returnKingdomByUsername(String username){return dtoServices.convertKingdomToDTO(userRepo.findByUsername(username).getKingdom());}
 
 }

@@ -65,7 +65,7 @@ public class BuildingController {
         boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
         if (!available) {
             return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
-        }
+         }
         timedEventServices.addNewLevelUpEvent((long) buildingId);
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         return new ResponseEntity<>(result, HttpStatus.OK);
