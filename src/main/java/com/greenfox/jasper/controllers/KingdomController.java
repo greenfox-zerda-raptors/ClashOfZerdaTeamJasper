@@ -7,7 +7,6 @@ import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.ResourceServices;
-import com.greenfox.jasper.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class KingdomController {
     private KingdomServices kingdomServices;
 
     @Autowired
-    private DTOServices DTOServices;
+    private DTOServices dtoServices;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {

@@ -1,16 +1,15 @@
 package com.greenfox.jasper.domain;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
-@Table(name = "Battles")
+//@Entity
+//@Table(name = "Battles")
 public class Battle {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private long battleId;
     private Kingdom attacker;
     private Kingdom defender;
