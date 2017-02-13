@@ -2,10 +2,12 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
+import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.services.BuildingServices;
 import com.greenfox.jasper.services.DTOServices;
+import com.greenfox.jasper.services.ResourceServices;
 import com.greenfox.jasper.services.TimedEventServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,12 +34,15 @@ public class BuildingController {
     @Autowired
     private DTOServices dtoServices;
 
+    @Autowired
+    private ResourceServices resourceServices;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<BuildingResponse> getBuildings(@PathVariable int kingdomId) {
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
-        if(buildingList == null){
-            return  new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
+        if (buildingList == null) {
+            return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
         BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
 
@@ -48,23 +53,32 @@ public class BuildingController {
     public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable int buildingId) {
         BuildingDto result =
                 dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-        if(result == null){
+        if (result == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
-    // TODO this should (probably) not redirect
-    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.GET)
-    public void levelUpBuildingById(@PathVariable int buildingId, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.PUT)
+    public ResponseEntity<BuildingDto> levelUpBuildingById(@PathVariable int kingdomId, @PathVariable int buildingId, HttpServletResponse response) throws IOException {
+        boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
+        if (!available) {
+            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+         }
         timedEventServices.addNewLevelUpEvent((long) buildingId);
-        response.sendRedirect("/kingdom/3/buildings");
+        BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-    public void addNewBuilding(@PathVariable int kingdomId , @PathVariable String type, HttpServletResponse response) throws IOException{
-        buildingServices.addNewBuilding(kingdomId, type);
-        response.sendRedirect("/kingdom/3/buildings");
+    public ResponseEntity<BuildingDto> addNewBuilding(@PathVariable int kingdomId, @PathVariable String type, HttpServletResponse response) throws IOException {
+        boolean available = resourceServices.buyNewBuilding(kingdomId);
+        if (!available) {
+            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+        }
+            buildingServices.addNewBuilding(kingdomId, type);
+            BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findLastBuilding(kingdomId));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
-}

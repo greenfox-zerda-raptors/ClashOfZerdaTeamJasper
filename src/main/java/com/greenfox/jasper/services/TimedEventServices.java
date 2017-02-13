@@ -24,6 +24,8 @@ public class TimedEventServices {
     private TroopRepo troopRepo;
     @Autowired
     private ResourceServices resourceServices;
+    @Autowired
+    private BuildingServices buildingServices;
 
     private final Logger log = LoggerFactory.getLogger(TimedEventServices.class);
 
@@ -120,6 +122,4 @@ public class TimedEventServices {
         }
         return totalCostOfBuilding + 250;
     }
-
-
 }

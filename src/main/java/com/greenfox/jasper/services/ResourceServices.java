@@ -42,13 +42,13 @@ public class ResourceServices {
 
         long kingdomLastUpdateTime = kingdom.getUpdateTime();
 
-        double changeInFood = changeInResources(
+        float changeInFood = changeInResources(
                 foodProductionPerMinute(
                         farmBuildings,
                         townhallBuilding,
                         troops),
                 kingdomLastUpdateTime);
-        double changeInGold = changeInResources(
+        float changeInGold = changeInResources(
                 goldProductionPerMinute(
                         mineBuildings,
                         townhallBuilding),
@@ -89,7 +89,7 @@ public class ResourceServices {
         return sumBuildingLevel;
     }
 
-    public void addResource(Resource resource, double amount){
+    public void addResource(Resource resource, float amount){
         resource.addResource(amount);
         resourceRepo.save(resource);
     }
@@ -106,6 +106,10 @@ public class ResourceServices {
         return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
     }
 
+    public Resource findAllGoldResourceByKingdomId(long kingdomId){
+        return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), "gold");
+    }
+
     public List<Resource> findAllResourcesByKingdomId(int kingdomId) {
         return resourceRepo.findAllByKingdom(kingdomServices.findOneById((long) kingdomId));
     }
@@ -116,6 +120,37 @@ public class ResourceServices {
 
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
+    }
+
+    public boolean levelUpBuildingMoneyCheck(long kingdomId, int buildingId){
+        Resource gold = findAllGoldResourceByKingdomId(kingdomId);
+        float money;
+        money = gold.getAmount();
+        float cost;
+        Building building = buildingServices.findOneBuilding(buildingId);
+        cost = (building.getLevel()+1)*100;
+        if (money>cost){
+            money -= cost;
+            gold.setAmount(money);
+            resourceRepo.save(gold);
+        }
+        boolean result;
+        result=money>cost;
+        return result;
+    }
+
+    public boolean buyNewBuilding(long kingdomId){
+        Resource gold = findAllGoldResourceByKingdomId(kingdomId);
+        float money;
+        money = gold.getAmount();
+        boolean result;
+        result=(money>=250);
+        if(result){
+            money -= 250;
+            gold.setAmount(money);
+            resourceRepo.save(gold);
+        }
+        return result;
     }
 
 }
