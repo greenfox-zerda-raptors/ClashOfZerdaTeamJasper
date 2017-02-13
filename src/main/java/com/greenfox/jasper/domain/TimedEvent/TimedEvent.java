@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "mainevent_table")
 @Entity
 @Inheritance
-public abstract class MainEvent implements Serializable{
+public abstract class TimedEvent implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "mainevent_id")
@@ -17,11 +17,11 @@ public abstract class MainEvent implements Serializable{
     @Column(name = "was_executed")
     private boolean wasExecuted;
 
-    public MainEvent(){
+    public TimedEvent(){
 
     }
 
-    public MainEvent(long executionTime){
+    public TimedEvent(long executionTime){
         this.wasExecuted = false;
         this.executionTime = executionTime;
     }
@@ -53,7 +53,7 @@ public abstract class MainEvent implements Serializable{
 
     @Override
     public String toString() {
-        return "MainEvent{" +
+        return "TimedEvent{" +
                 "id=" + id +
                 ", executionTime=" + executionTime +
                 ", wasExecuted=" + wasExecuted +

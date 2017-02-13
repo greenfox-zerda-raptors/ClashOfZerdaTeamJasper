@@ -17,9 +17,8 @@ branches:
   only:
     - master
     - bncbodrogi
-    - adam-zoltan-dto
-    - zoltan-writtingtests
     - adam-db
+    - zoltan-refactoring-cleaningcode
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

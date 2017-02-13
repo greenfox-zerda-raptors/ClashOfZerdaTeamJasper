@@ -24,22 +24,22 @@ public class ResourceController {
     private ResourceServices resourceServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOServices DTOServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResources(@PathVariable int kingdomId) {
+    public ResponseEntity<ResourceResponse> getResources(@PathVariable long kingdomId) {
         resourceServices.calculateResource(kingdomId);
         List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if(resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
+                DTOServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable int kingdomId, @PathVariable String type){
+    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable long kingdomId, @PathVariable String type){
         resourceServices.calculateResource(kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
@@ -54,7 +54,7 @@ public class ResourceController {
         if(resourceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceResponse result = new ResourceResponse(DTOServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

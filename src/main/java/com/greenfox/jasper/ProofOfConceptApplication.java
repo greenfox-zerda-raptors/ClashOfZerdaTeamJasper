@@ -25,6 +25,8 @@ public class ProofOfConceptApplication implements CommandLineRunner {
     TroopServices troopServices;
     @Autowired
     UserServices userServices;
+    @Autowired
+    TimedEventServices timedEventServices;
 
 
 
@@ -34,6 +36,7 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        long currentTime = System.currentTimeMillis();
         userServices.saveOneUser(new User("romania", "aaaaa", "admin", "John", "Smith", "some@email.com"));
         resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("romania")));
         resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("romania")));
@@ -44,6 +47,7 @@ public class ProofOfConceptApplication implements CommandLineRunner {
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+
         userServices.saveOneUser(new User("austria", "bbb", "admin", "John", "Smith", "some@email.eu"));
         resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("austria")));
         resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("austria")));

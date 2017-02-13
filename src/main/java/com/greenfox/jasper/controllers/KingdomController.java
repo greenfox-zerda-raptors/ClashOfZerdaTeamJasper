@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping(value = "/kingdom", method = RequestMethod.GET)
 public class KingdomController {
@@ -27,17 +25,17 @@ public class KingdomController {
     private KingdomServices kingdomServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOServices DTOServices;
 
     @RequestMapping(value = "/{kingdomId}", method = RequestMethod.GET)
-    public ResponseEntity<KingdomDto> getKingdom(@PathVariable int kingdomId, HttpServletResponse response) {
+    public ResponseEntity<KingdomDto> getKingdom(@PathVariable long kingdomId) {
         resourceServices.calculateResource(kingdomId);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if(kingdom == null) {
             return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
         }
       
-        KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
+        KingdomDto result = DTOServices.convertKingdomToDTO(kingdom);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
