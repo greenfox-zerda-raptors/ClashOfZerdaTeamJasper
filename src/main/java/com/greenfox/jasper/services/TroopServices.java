@@ -15,9 +15,8 @@ public class TroopServices {
 
     @Autowired
     KingdomServices kingdomServices;
-
-    public Troop findOneTroop(int troopId) {
-        return troopRepo.findOne((long) troopId);
+    public Troop findOneTroop(long troopId){
+        return troopRepo.findOne(troopId);
     }
 
     public Iterable<Troop> findAllTroops() {

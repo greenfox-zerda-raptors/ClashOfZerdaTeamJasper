@@ -67,17 +67,12 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
 
-    @Transient
-    @OneToMany
-    private List<Troop> troops;
-
-    // TODO do we need this?
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
     @Column(name = "POINTS")
     @NotNull
-    private int points;
+    private int points; // TODO method to calc. points, when to calc points? 2nd @scheduler?
 
     public User() {
     }

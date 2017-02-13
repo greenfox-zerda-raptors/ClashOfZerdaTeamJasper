@@ -26,7 +26,7 @@ public class ResourceController {
     private ResourceServices resourceServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOServices DTOServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResources(@AuthenticationPrincipal JwtUser currentUser) {
@@ -58,7 +58,7 @@ public class ResourceController {
         if (resourceList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceResponse result = new ResourceResponse(DTOServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

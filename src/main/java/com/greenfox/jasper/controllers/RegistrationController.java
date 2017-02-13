@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrationController {
 
     @Autowired
+    BCryptPasswordEncoder encoder;
+
+    @Autowired
     RegistrationServices registrationServices;
 
     @Autowired
@@ -32,10 +35,9 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity registerNewUser (@RequestBody UserDto userDto){
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
         if (userServices.findeOneUserByName(userDto.getUsername()) == null
-                && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null){
+                && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null
+                && userServices.findOneUserByEmail(userDto.getEmail()) == null){
 
             registrationServices.registerNewUser(new User(
                     userDto.getKingdomname(),
@@ -44,12 +46,15 @@ public class RegistrationController {
                     userDto.getFirstname(),
                     userDto.getLastname(),
                     userDto.getEmail()));
-
+        //TODO new error dto to send Json back
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Successful registration");
         }else if (userServices.findeOneUserByName(userDto.getUsername()) != null){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate username");
+        }else if (userServices.findOneUserByEmail(userDto.getEmail()) != null){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body("Duplicate email address");
         }else{
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate kingdom");

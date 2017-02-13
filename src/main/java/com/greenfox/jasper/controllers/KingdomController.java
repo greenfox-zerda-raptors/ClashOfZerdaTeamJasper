@@ -27,7 +27,7 @@ public class KingdomController {
     private KingdomServices kingdomServices;
 
     @Autowired
-    private DTOServices dtoServices;
+    private DTOServices DTOServices;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
@@ -39,7 +39,6 @@ public class KingdomController {
         }
 
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
-
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

@@ -2,7 +2,6 @@ package com.greenfox.jasper.dto;
 
 
 public class BuildingDto {
-
     private int id;
     private String type;
     private int level;

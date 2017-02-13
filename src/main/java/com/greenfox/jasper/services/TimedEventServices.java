@@ -1,113 +1,131 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.domain.*;
-import com.greenfox.jasper.repos.BuildingRepo;
+import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.TimedEvent.*;
+import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.repos.TimedEventRepo;
-import com.greenfox.jasper.repos.TroopRepo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.greenfox.jasper.repos.TrainTroopEventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TimedEventServices {
 
-
     @Autowired
     private TimedEventRepo timedEventRepo;
     @Autowired
-    private BuildingRepo buildingRepo;
+    private TrainTroopEventRepo trainTroopEventRepo;
     @Autowired
-    private TroopRepo troopRepo;
+    private TroopServices troopServices;
     @Autowired
     private ResourceServices resourceServices;
+    @Autowired
+    private BuildingServices buildingServices;
 
-    private final Logger log = LoggerFactory.getLogger(TimedEventServices.class);
-
+    // @Inheritance, timedEventRepo will obtain everything you need, "subrepos" will only obtain the data for that class (no data from superclass only ID)
+    // If you want to filter in different event types, there is a field automatically generated, use custom queries for them
 
     @Scheduled(fixedRate = 1000)
     public void checkForEvents() {
         long currentTime = System.currentTimeMillis();
         List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
-
-        for (TimedEvent listedEvent : listedEvents) {
-            processEvent(listedEvent);
+        if(listedEvents.size() != 0) {
+            for (TimedEvent listedEvent : listedEvents) {
+                processEventTest(listedEvent);
+            }
         }
     }
 
-    private void processEvent(TimedEvent timedEvent) {
-        executeEvent(timedEvent.getBuildingId(), timedEvent.getEvent());
+
+    private void processEventTest(TimedEvent timedEvent){
+
+       if(isBattleEvent(timedEvent)){
+           executeBattle(timedEvent);
+       }else if(isLevelUpEvent(timedEvent)){
+           executeLevelUp(timedEvent);
+       }else if(isUpgradeTroopEvent(timedEvent)){
+           executeTroopUpgrade(timedEvent);
+       }else{
+           System.out.println("No such event-method");
+       }
         timedEvent.setWasExecuted(true);
         timedEventRepo.save(timedEvent);
     }
 
-    public void executeEvent(long buildingID, GameEvent events) {
-        Building tempBuilding = buildingRepo.findOne(buildingID);
-        Kingdom tempKingdom = tempBuilding.getKingdom();
-
-        //TODO Battle event - see TimedEvent class for further info
-        //TODO Examine possibilities/limits of inheritance via superclass method instead of switch
-
-        switch (events) {
-            case LEVELUP:
-                tempBuilding.levelUp();
-                resourceServices.calculateResource((int) tempKingdom.getKingdomId());
-                buildingRepo.save(tempBuilding);
-                log.info("Leveled up building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
-                break;
-            case DELEVEL:
-                tempBuilding.decreaseLvl();
-                resourceServices.calculateResource((int) tempKingdom.getKingdomId());
-                buildingRepo.save(tempBuilding);
-                log.info("De-leveled building with id {} to level {}", tempBuilding.getBuildingId(), tempBuilding.getLevel());
-                break;
-            case TRAINTROOPS:
-                Troop tempTroop = new Troop(tempKingdom);
-                troopRepo.save(tempTroop);
-                log.info("Troop with id {} and kingdom {} has been trained by building with ID {}", tempTroop.getTroopId(), tempKingdom.getKingdomId(), tempBuilding.getBuildingId());
-                break;
-            case UPGRADETROOPS:
-                // TODO level up the selected troop - see timed event TODO for further info
-                System.out.println("Troops being upgraded");
-                break;
-            default:
-                System.out.println("CustomError, no such event found");
-        }
+    private boolean isUpgradeTroopEvent(TimedEvent timedEvent) {
+        return timedEvent.getClass() == UpgradeTroopEvent.class;
     }
 
+    private boolean isLevelUpEvent(TimedEvent timedEvent) {
+        return timedEvent.getClass() == LevelUpEvent.class;
+    }
+
+    private boolean isBattleEvent(TimedEvent timedEvent) {
+        return timedEvent.getClass() == BattleEvent.class;
+    }
+
+    public void executeBattle(TimedEvent timedEvent) {
+        // TODO actually doing battle
+        BattleEvent battleEvent = (BattleEvent) timedEvent;
+    }
+    private void executeLevelUp(TimedEvent timedEvent) {
+        LevelUpEvent levelUpEvent = (LevelUpEvent) timedEvent;
+        Building tempBuilding = buildingServices.findOneBuilding(levelUpEvent.getBuildingId());
+        tempBuilding.levelUp();
+        buildingServices.saveOneBuilding(tempBuilding);
+        resourceServices.calculateResource(tempBuilding.getKingdom().getKingdomId());
+    }
+
+    private void executeTroopUpgrade(TimedEvent timedEvent) {
+        UpgradeTroopEvent upgradeTroopEvent = (UpgradeTroopEvent) timedEvent;
+        Troop troopToBeUpgraded = troopServices.findOneTroop(upgradeTroopEvent.getTroopId());
+        troopToBeUpgraded.upgrade();
+        troopServices.saveOneTroop(troopToBeUpgraded);
+    }
     public void cancelEvent(long eventID) {
-        timedEventRepo.delete(eventID);
+        TimedEvent tempEvent = timedEventRepo.findOne(eventID);
+        tempEvent.setWasExecuted(true);
+        // Here retrieve resources etc.
+        timedEventRepo.save(tempEvent);
+    }
+    // TODO battle controller
+    public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
+        BattleEvent battleEvenet = new BattleEvent(System.currentTimeMillis()+15000, attackerId, troops, defenderId);
+        timedEventRepo.save(battleEvenet);
     }
 
+    public void addNewUpgradeTroopEvent(long troopId, long barrackId){
+        // TODO upgrade troop time calc.; currently 15sec; building occupation status?
+        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(System.currentTimeMillis()+15000, barrackId, troopId);
+        timedEventRepo.save(upgradingTroop);
+    }
     public void addNewLevelUpEvent(long buildingID) {
-
-        Building temporaryBuilding = buildingRepo.findOne(buildingID);
-
-        TimedEvent timedEvent = new TimedEvent(
-                buildingID, (System.currentTimeMillis()
-                + (60000
-                * calculateBuildingTime(temporaryBuilding.getLevel()))),
-                GameEvent.LEVELUP);
-
-        timedEventRepo.save(timedEvent);
+         Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
+         TimedEvent levelUpEvent = new LevelUpEvent(
+               (System.currentTimeMillis() + 60000 * calculateBuildingTimeRatio(temporaryBuilding)),  buildingID
+                 );
+        timedEventRepo.save(levelUpEvent);
     }
 
-    public void addNewCreateTroopEvent(long buildingId) {
+
+    public void addNewCreateTroopEvent(long barrackId) {
         long queueTime = 0;
-        List<TimedEvent> allEventForABuilding = timedEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(buildingId);
+        List<TrainTroopEvent> allEventForABuilding = trainTroopEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(barrackId);
         if (allEventForABuilding.size() > 0) {
             TimedEvent tempTimedEvent = allEventForABuilding.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
-        // TODO add building-occupation-status(?);  handle time formula for troop;
-        TimedEvent timedEvent = new TimedEvent(buildingId, (System.currentTimeMillis() + queueTime + 60000), GameEvent.TRAINTROOPS);
+        // TODO handle time formula for troop;
+        TimedEvent timedEvent = new TrainTroopEvent((System.currentTimeMillis() + queueTime + 60000), barrackId);
         timedEventRepo.save(timedEvent);
     }
 
-    private long calculateBuildingTime(int buildingLevel) {
+    private long calculateBuildingTimeRatio(Building building) {
+        int buildingLevel = building.getLevel();
         return calculateTotalCost(buildingLevel) / 250;
     }
 
@@ -121,5 +139,12 @@ public class TimedEventServices {
         return totalCostOfBuilding + 250;
     }
 
+    public List<TimedEvent> findAll(){
+        return timedEventRepo.findAll();
+    }
+
+    public TimedEvent findOne(long id) {
+        return timedEventRepo.findOne(id);
+    }
 
 }
