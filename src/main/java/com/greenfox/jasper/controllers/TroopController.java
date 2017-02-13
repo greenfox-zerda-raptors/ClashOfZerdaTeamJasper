@@ -1,9 +1,13 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
+import com.greenfox.jasper.dto.BuildingDto;
+import com.greenfox.jasper.dto.TroopPostDto;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.security.JwtUser;
+import com.greenfox.jasper.services.BuildingServices;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.TimedEventServices;
 import com.greenfox.jasper.services.TroopServices;
@@ -11,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +28,9 @@ public class TroopController {
 
     @Autowired
     private TimedEventServices timedEventServices;
+
+    @Autowired
+    private BuildingServices buildingServices;
 
     @Autowired
     private DTOServices DTOServices;
@@ -43,18 +47,36 @@ public class TroopController {
     }
 
     @RequestMapping(value = "/{troopId}", method = RequestMethod.GET)
-    public Troop getOneTroop(@PathVariable long troopId) {
-        return troopServices.findOneTroop(troopId);
+    public ResponseEntity getOneTroop(@PathVariable long troopId) {
+        Troop result =  troopServices.findOneTroop(troopId);
+        if(result == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such troop");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.GET)
-    public void trainNewTroop(@PathVariable long barrackId) {
-        timedEventServices.addNewCreateTroopEvent(barrackId);
+    @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.POST)
+    public ResponseEntity trainNewTroop(@RequestBody BuildingDto buildingDto) {
+        Building barrack = buildingServices.findOneBuilding(buildingDto.getId());
+        if( barrack == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such building");
+        }else if(!barrack.getType().contains("barrack")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not a barrack");
+        }
+        timedEventServices.addNewCreateTroopEvent(buildingDto.getId());
+        return ResponseEntity.status(HttpStatus.OK).body("Mkay");
     }
 
-    @RequestMapping(value = "/{troopId}/upgrade/{barrackId}", method = RequestMethod.GET)
-    public void upgradeTroop(@PathVariable int troopId, @PathVariable long barrackId){
-        timedEventServices.addNewUpgradeTroopEvent(troopId, barrackId);
+    @RequestMapping(value = "/upgrade/", method = RequestMethod.POST)
+    public ResponseEntity upgradeTroop(@RequestBody TroopPostDto postDto){
+        Building barrack = buildingServices.findOneBuilding(postDto.getBarrackId());
+        if( barrack == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such building");
+        }else if(!barrack.getType().contains("barrack")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not a barrack");
+        }
+        timedEventServices.addNewUpgradeTroopEvent(postDto.getTroopId(), postDto.getBarrackId());
+        return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + postDto.getTroopId() + " will be upgraded");
     }
 
 }
