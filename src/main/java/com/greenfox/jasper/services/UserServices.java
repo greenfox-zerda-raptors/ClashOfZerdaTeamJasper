@@ -42,6 +42,9 @@ public class UserServices {
         userRepo.save(user);
     }
 
-    public KingdomDto returnKingdomByUsername(String username){return dtoServices.convertKingdomToDTO(userRepo.findByUsername(username).getKingdom());}
+    public KingdomDto returnKingdomByUsername(String username){
+        try{
+        return dtoServices.convertKingdomToDTO(userRepo.findByUsername(username).getKingdom());}
+        catch(NullPointerException e){return null;}}
 
 }
