@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
-import com.greenfox.jasper.services.DtoConverter;
+import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ResourceController {
     private ResourceServices resourceServices;
 
     @Autowired
-    private DtoConverter DtoConverter;
+    private DTOServices DTOServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResources(@PathVariable long kingdomId) {
@@ -34,7 +34,7 @@ public class ResourceController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                DtoConverter.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
+                DTOServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class ResourceController {
         if(resourceList == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(DtoConverter.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceResponse result = new ResourceResponse(DTOServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -12,44 +12,32 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class TimedEventServices {
 
     @Autowired
-    TimedEventRepo timedEventRepo;
-
+    private TimedEventRepo timedEventRepo;
     @Autowired
-    TrainTroopEventRepo trainTroopEventRepo;
-
+    private TrainTroopEventRepo trainTroopEventRepo;
     @Autowired
-    BuildingServices buildingServices;
-
+    private TroopServices troopServices;
     @Autowired
-    TroopServices troopServices;
-
+    private ResourceServices resourceServices;
     @Autowired
-    KingdomServices kingdomServices;
-
-    @Autowired
-    ResourceServices resourceServices;
-
+    private BuildingServices buildingServices;
 
     // @Inheritance, timedEventRepo will obtain everything you need, "subrepos" will only obtain the data for that class (no data from superclass only ID)
     // If you want to filter in different event types, there is a field automatically generated, use custom queries for them
 
-
     @Scheduled(fixedRate = 1000)
-    public void checkForEvents(){
+    public void checkForEvents() {
         long currentTime = System.currentTimeMillis();
-
         List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
         if(listedEvents.size() != 0) {
             for (TimedEvent listedEvent : listedEvents) {
                 processEventTest(listedEvent);
             }
         }
-//        System.out.println("I finished processing the events in: " + (System.currentTimeMillis() - currentTime));
     }
 
 
@@ -79,7 +67,6 @@ public class TimedEventServices {
     private boolean isBattleEvent(TimedEvent timedEvent) {
         return timedEvent.getClass() == BattleEvent.class;
     }
-
 
     public void executeBattle(TimedEvent timedEvent) {
         // TODO actually doing battle
@@ -116,12 +103,10 @@ public class TimedEventServices {
         UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(System.currentTimeMillis()+15000, barrackId, troopId);
         timedEventRepo.save(upgradingTroop);
     }
-
-
     public void addNewLevelUpEvent(long buildingID) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          TimedEvent levelUpEvent = new LevelUpEvent(
-               (System.currentTimeMillis() + calculateBuildingTime(temporaryBuilding)),  buildingID
+               (System.currentTimeMillis() + 60000 * calculateBuildingTimeRatio(temporaryBuilding)),  buildingID
                  );
         timedEventRepo.save(levelUpEvent);
     }
@@ -139,8 +124,9 @@ public class TimedEventServices {
         timedEventRepo.save(timedEvent);
     }
 
-    private long calculateBuildingTime(Building building) {
-        return 60000* calculateTotalCost(building.getLevel()) / 250;
+    private long calculateBuildingTimeRatio(Building building) {
+        int buildingLevel = building.getLevel();
+        return calculateTotalCost(buildingLevel) / 250;
     }
 
     private int calculateTotalCost(int buildingLevel) {
@@ -157,16 +143,8 @@ public class TimedEventServices {
         return timedEventRepo.findAll();
     }
 
-    public void addTestLevelUpEvent(long buildingId, long time){
-        TimedEvent levelUpEvent = new LevelUpEvent(time, buildingId);
-        timedEventRepo.save(levelUpEvent);
-    }
-    public void addTestUpgradeTroopEvent(long troopId, long barrackId, long time){
-        TimedEvent upgrade = new UpgradeTroopEvent(time, barrackId, troopId);
-        timedEventRepo.save(upgrade);
-    }
-
     public TimedEvent findOne(long id) {
         return timedEventRepo.findOne(id);
     }
+
 }

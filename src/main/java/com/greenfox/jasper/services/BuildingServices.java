@@ -1,6 +1,7 @@
 package com.greenfox.jasper.services;
 
-import com.greenfox.jasper.domain.*;
+import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.repos.BuildingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class BuildingServices {
     public Building findOneBuilding(long buildingId){
         return buildingRepo.findOne(buildingId);
     }
+
+    public Building findLastBuilding(long kingdomId){
+        return buildingRepo.findAllOrderByBuildingIdDesc(kingdomServices.findOneById(kingdomId)).get(0);
+    }
+
     public List<Building> findAllBuildings(){
         return buildingRepo.findAll();
     }
@@ -50,4 +56,5 @@ public class BuildingServices {
     public List<Building> findAllBuildingsByKingdomId(long kingdomId){
         return buildingRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
     }
+
 }

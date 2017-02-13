@@ -45,16 +45,16 @@ public class Resource implements Serializable {
         this.amount = 1;
     }
 
-    public Resource(String type, Kingdom kingdom, int amount) {
+    public Resource(String type, Kingdom kingdom, float amount) {
       this(type, kingdom);
         this.amount = amount;
     }
 
-    public void addResource(double amountOfResourceAdded){
+    public void addResource(float amountOfResourceAdded){
         this.amount +=  amountOfResourceAdded;
     }
 
-    public void subtractResource(int amountOfResourceSubstracted){
+    public void subtractResource(float amountOfResourceSubstracted){
         float result = amount - amountOfResourceSubstracted;
         if(result > 0){
             this.amount = result;
@@ -73,7 +73,7 @@ public class Resource implements Serializable {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

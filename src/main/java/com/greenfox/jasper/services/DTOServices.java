@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by Zoltán on 2017.02.02..
  */
 @Service
-public class DtoConverter {
+public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 

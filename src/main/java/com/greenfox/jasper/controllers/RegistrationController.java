@@ -34,7 +34,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity registerNewUser (@RequestBody UserDto userDto){
-        
+
         if (userServices.findeOneUserByName(userDto.getUsername()) == null
                 && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null
                 && userServices.findOneUserByEmail(userDto.getEmail()) == null){
