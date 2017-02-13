@@ -6,6 +6,8 @@ import com.greenfox.jasper.repos.KingdomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class KingdomServices {
 
@@ -28,4 +30,7 @@ public class KingdomServices {
         return kingdomRepo.findByName(kingdom);
     }
 
+    public List<Kingdom> findAll() {
+        return kingdomRepo.findAll();
+    }
 }
