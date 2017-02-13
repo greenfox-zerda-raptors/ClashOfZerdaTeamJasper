@@ -3,11 +3,13 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
+import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/kingdom/{kingdomId}/resources", method = RequestMethod.GET)
+@RequestMapping(value = "/kingdom/resources", method = RequestMethod.GET)
 public class ResourceController {
 
     @Autowired
@@ -27,31 +29,33 @@ public class ResourceController {
     private DTOServices DTOServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResources(@PathVariable long kingdomId) {
-        resourceServices.calculateResource(kingdomId);
-        List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
-        if(resourceList == null) {
+    public ResponseEntity<ResourceResponse> getResources(@AuthenticationPrincipal JwtUser currentUser) {
+        long kingdomId = currentUser.getId();
+        resourceServices.calculateResource((int) kingdomId);
+        List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId((int) kingdomId);
+        if (resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                DTOServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId(kingdomId)));
+                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((int) kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@PathVariable long kingdomId, @PathVariable String type){
-        resourceServices.calculateResource(kingdomId);
+    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@AuthenticationPrincipal JwtUser currentUser, @PathVariable String type) {
+        long kingdomId = currentUser.getId();
+        resourceServices.calculateResource((int) kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
-        if(type.equals("food")) {
-            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
-        }else if(type.equals("gold")){
-            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
-        }else{
+        if (type.equals("food")) {
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType((int) kingdomId, "farm");
+        } else if (type.equals("gold")) {
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType((int) kingdomId, "mine");
+        } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        if(resourceList == null){
+        if (resourceList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         ResourceResponse result = new ResourceResponse(DTOServices.convertResourceWithBuildingsDto(resourceList, buildingList));

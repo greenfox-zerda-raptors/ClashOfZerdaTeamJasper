@@ -12,23 +12,20 @@ public class KingdomServices {
     @Autowired
     KingdomRepo kingdomRepo;
 
-    public Kingdom findOneById(long kingdomId){
+    public Kingdom findOneById(long kingdomId) {
         return kingdomRepo.findOne(kingdomId);
     }
 
-    public void saveOneKingdom(Kingdom kingdom){
+    public void saveOneKingdom(Kingdom kingdom) {
         kingdomRepo.save(kingdom);
     }
 
-    public Kingdom findOneKingdom(long kingdomId){
+    public Kingdom findOneKingdom(long kingdomId) {
         return kingdomRepo.findOne(kingdomId);
     }
 
-    public Kingdom findKingdomByName(String kingdom){
+    public Kingdom findKingdomByName(String kingdom) {
         return kingdomRepo.findByName(kingdom);
     }
-
-
-
 
 }

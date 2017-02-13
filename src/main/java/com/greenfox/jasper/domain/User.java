@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "APPUSER")
 @Component
-@SequenceGenerator(name="user_seq", initialValue=4)
+@SequenceGenerator(name = "user_seq", initialValue = 4)
 public class User implements Serializable {
 
     @Id
@@ -66,6 +66,7 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private List<Authority> authorities;
+
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;

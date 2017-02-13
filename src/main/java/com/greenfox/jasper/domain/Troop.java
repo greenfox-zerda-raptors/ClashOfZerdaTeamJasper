@@ -16,11 +16,16 @@ public class Troop implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "troop_id")
     private long troopId;
+
     @Column(name = "troop_level")
     private int level;
+
     private int hp;
+
     private int attack;
+
     private int defense;
+
     @ManyToOne
     @JsonIgnore
     private Kingdom kingdom;
