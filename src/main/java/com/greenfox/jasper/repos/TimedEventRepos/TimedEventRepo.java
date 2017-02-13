@@ -1,4 +1,4 @@
-package com.greenfox.jasper.repos;
+package com.greenfox.jasper.repos.TimedEventRepos;
 
 import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
 import org.springframework.data.jpa.repository.Query;
