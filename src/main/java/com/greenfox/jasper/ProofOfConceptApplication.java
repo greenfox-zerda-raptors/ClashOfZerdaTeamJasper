@@ -44,5 +44,15 @@ public class ProofOfConceptApplication implements CommandLineRunner {
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
         troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+        userServices.saveOneUser(new User("austria", "bbb", "admin", "John", "Smith", "some@email.eu"));
+        resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("austria")));
+        resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("austria")));
+        buildingServices.saveOneBuilding(new Building("farm", kingdomServices.findKingdomByName("austria"), 60));
+        buildingServices.saveOneBuilding(new Building("mine", kingdomServices.findKingdomByName("austria"), 60));
+        buildingServices.saveOneBuilding(new Building("townhall", kingdomServices.findKingdomByName("austria"), 1));
+        buildingServices.saveOneBuilding(new Building("barrack", kingdomServices.findKingdomByName("austria")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("austria")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("austria")));
+        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("austria")));
     }
 }
