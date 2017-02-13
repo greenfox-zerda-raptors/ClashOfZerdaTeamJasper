@@ -28,7 +28,7 @@ public class ResourceServices {
     TroopServices troopServices;
 
     // TODO refactor! + consider adding a production field into kingdom/resource entity to make this method execution faster
-    public void calculateResource(int kingdomId) {
+    public void calculateResource(long kingdomId) {
 
         Kingdom kingdom = kingdomServices.findOneById(kingdomId);
 
@@ -56,9 +56,6 @@ public class ResourceServices {
 
         addResource(foodResource, changeInFood);
         addResource(goldResource, changeInGold);
-
-        System.out.println(changeInFood);
-        System.out.println(changeInGold);
         kingdom.setUpdateTime(System.currentTimeMillis());
         kingdomServices.saveOneKingdom(kingdom);
 
@@ -94,7 +91,7 @@ public class ResourceServices {
         resourceRepo.save(resource);
     }
 
-    public Resource findOneResource(int resourceId) {
+    public Resource findOneResource(long resourceId) {
         return resourceRepo.findOneById(resourceId);
     }
 
@@ -106,6 +103,11 @@ public class ResourceServices {
         return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
     }
 
+    public List<Resource> findAllResourcesByKingdomId(long kingdomId) {
+        return resourceRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
+
+    }
+
     public Resource findAllGoldResourceByKingdomId(long kingdomId){
         return resourceRepo.findOneByKingdomAndType(kingdomServices.findOneById(kingdomId), "gold");
     }
@@ -114,7 +116,7 @@ public class ResourceServices {
         return resourceRepo.findAllByKingdom(kingdomServices.findOneById((long) kingdomId));
     }
 
-    public List<Building> findAllBuildingByKingdomIdAndByType(int kingdomId, String mine) {
+    public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String mine) {
         return buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, mine);
     }
 
@@ -122,7 +124,7 @@ public class ResourceServices {
         resourceRepo.save(resource);
     }
 
-    public boolean levelUpBuildingMoneyCheck(long kingdomId, int buildingId){
+    public boolean levelUpBuildingMoneyCheck(long kingdomId, long buildingId){
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money;
         money = gold.getAmount();

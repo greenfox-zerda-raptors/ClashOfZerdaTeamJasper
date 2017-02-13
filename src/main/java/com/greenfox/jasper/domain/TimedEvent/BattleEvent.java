@@ -10,9 +10,7 @@ import java.util.ArrayList;
 
 @Entity
 @Inheritance
-public class BattleEvent extends MainEvent {
-
-    // TODO resolve table joining
+public class BattleEvent extends TimedEvent {
 
     @Column(name = "attacker_id")
     private long attackerKingdomId;

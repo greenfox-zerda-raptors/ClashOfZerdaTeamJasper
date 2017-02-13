@@ -2,7 +2,6 @@ package com.greenfox.jasper.domain;
 
 public class CustomError {
 
-
     private String message;
     private long id;
 

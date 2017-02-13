@@ -21,4 +21,5 @@ public interface BuildingRepo extends CrudRepository<Building, Long>{
 
     @Query("SELECT a FROM Building a where a.kingdom = :kingdom order by a.buildingId desc")
     List<Building> findAllOrderByBuildingIdDesc(@Param("kingdom") Kingdom kingdom);
+
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class UserServices {
     @Autowired
     UserRepo userRepo;
-
     @Autowired
     DTOServices dtoServices;
 
@@ -44,7 +43,11 @@ public class UserServices {
 
     public KingdomDto returnKingdomByUsername(String username){
         try{
-        return dtoServices.convertKingdomToDTO(userRepo.findByUsername(username).getKingdom());}
-        catch(NullPointerException e){return null;}}
+            return dtoServices.convertKingdomToDTO(userRepo.findByUsername(username).getKingdom());
+        } catch(NullPointerException e){return null;}
+    }
+    public User findOneUser(long userId) {
+        return userRepo.findOne(userId);
+    }
 
 }
