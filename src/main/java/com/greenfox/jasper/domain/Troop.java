@@ -41,6 +41,10 @@ public class Troop implements Serializable {
         this.kingdom = kingdom;
     }
 
+    public void upgrade(){
+        level++;
+    }
+
     public Kingdom getKingdom() {
         return kingdom;
     }

@@ -31,11 +31,14 @@ public class DTOServices {
     }
 
     public BuildingDto convertBuildingToDTO(Building building) {
+        // TODO set finish time
         return modelMapper.map(building, BuildingDto.class);
     }
 
     public UserDto convertUserToDto(User user) {
-        return modelMapper.map(user, UserDto.class);
+        UserDto result = modelMapper.map(user, UserDto.class);
+        result.setKingdomname(user.getKingdom().getName());
+        return result;
     }
 
     public List<TroopDto> convertTroopListToDTO(List<Troop> troopList) {
