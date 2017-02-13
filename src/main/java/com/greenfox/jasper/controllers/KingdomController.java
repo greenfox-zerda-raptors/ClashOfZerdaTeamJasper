@@ -38,7 +38,7 @@ public class KingdomController {
             return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
         }
 
-        KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
+        KingdomDto result = DTOServices.convertKingdomToDTO(kingdom);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
