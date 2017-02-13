@@ -51,10 +51,6 @@ public class DTOServices {
         return modelMapper.map(troop, TroopDto.class);
     }
 
-    public BattleResultDto BattleResultToDTO(BattleResultDto battleResultDto) {
-        return modelMapper.map(battleResultDto, BattleResultDto.class);
-    }
-
     public List<ResourceDto> convertResourcesListToDTO(List<Resource> resourcesList) {
         return resourcesList.stream().map(this::convertResourcesToDTO).collect(Collectors.toList());
     }
