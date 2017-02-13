@@ -37,7 +37,7 @@ public class ResourceController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                DTOServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((int) kingdomId)));
+                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((int) kingdomId)));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
