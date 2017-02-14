@@ -47,4 +47,15 @@ public class TroopDto {
     public void setDefense(int defense) {
         this.defense = defense;
     }
+
+    @Override
+    public String toString() {
+        return "TroopDto{" +
+                "id=" + id +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                '}';
+    }
 }

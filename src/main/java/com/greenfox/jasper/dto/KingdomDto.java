@@ -41,4 +41,5 @@ public class KingdomDto {
     public void setTroops(List<TroopDto> troops) {
         this.troops = troops;
     }
+
 }

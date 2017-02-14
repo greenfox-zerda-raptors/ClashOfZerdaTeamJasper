@@ -2,13 +2,16 @@ package com.greenfox.jasper;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
+import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.BuildingDto;
+import com.greenfox.jasper.dto.ResourceDto;
 import com.greenfox.jasper.dto.TroopDto;
 import com.greenfox.jasper.services.DTOServices;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,10 +37,7 @@ public class DTOServicesTest {
         expected.setType("mine");
         expected.setId(0);
 
-        assertEquals(expected.getLevel(), converted.getLevel());
-        assertEquals(expected.getType(), converted.getType());
-        assertEquals(expected.getHp(), converted.getHp());
-        assertEquals(expected.getId(), converted.getId());
+        assertEquals(expected.toString(), converted.toString());
     }
 
     @Test
@@ -56,14 +56,8 @@ public class DTOServicesTest {
         expectedList.add(dtoServices.convertBuildingToDTO(buildingOne));
         expectedList.add(dtoServices.convertBuildingToDTO(buildingTwo));
 
-        assertEquals(expectedList.get(0).getId(), convertedList.get(0).getId());
-        assertEquals(expectedList.get(0).getLevel(), convertedList.get(0).getLevel());
-        assertEquals(expectedList.get(0).getHp(), convertedList.get(0).getHp());
-        assertEquals(expectedList.get(0).getType(), convertedList.get(0).getType());
-        assertEquals(expectedList.get(1).getId(), convertedList.get(1).getId());
-        assertEquals(expectedList.get(1).getLevel(), convertedList.get(1).getLevel());
-        assertEquals(expectedList.get(1).getHp(), convertedList.get(1).getHp());
-        assertEquals(expectedList.get(1).getType(), convertedList.get(1).getType());
+        assertEquals(expectedList.get(0).toString(), convertedList.get(0).toString());
+        assertEquals(expectedList.get(1).toString(), convertedList.get(1).toString());
 
     }
         @Test
@@ -71,7 +65,70 @@ public class DTOServicesTest {
             Troop testTroop = new Troop();
             TroopDto converted = dtoServices.convertTRoopToDTO(testTroop);
 
+            TroopDto expected = new TroopDto();
+            expected.setId(0);
+            expected.setHp(20);
+            expected.setLevel(0);
+            expected.setAttack(10);
+            expected.setDefense(5);
+
+            assertEquals(expected.toString(), converted.toString());
         }
 
+        @Test
+    public void convertTroopListToDtoTest(){
+            List<Troop> troopList = new ArrayList<>(
+                    Arrays.asList(
+                            new Troop(),
+                            new Troop())
+            );
+            List<TroopDto> converted = dtoServices.convertTroopListToDTO(troopList);
 
+            List<TroopDto> expected = new ArrayList<>(
+                    Arrays.asList(
+                            dtoServices.convertTRoopToDTO(troopList.get(0)),
+                            dtoServices.convertTRoopToDTO(troopList.get(1))
+                    ));
+            assertEquals(expected.get(0).toString(), converted.get(0).toString());
+            assertEquals(expected.size(), converted.size());
+            assertEquals(expected.get(1).toString(), converted.get(1).toString());
+        }
+        @Test
+        public void convertResourcesToDtoTest(){
+            Resource testResource = new Resource("gold");
+            List<Building> testBuildingList = new ArrayList<>(
+                    Arrays.asList(new Building())
+            );
+            testResource.setBuildings(testBuildingList);
+
+            ResourceDto converted = dtoServices.convertResourcesToDTO(testResource);
+
+            ResourceDto expected = new ResourceDto();
+            expected.setId(0);
+            expected.setAmount(1);
+            expected.setType("gold");
+            expected.setBuildings(new ArrayList<>());
+
+            assertEquals(expected.toString(), converted.toString());
+        }
+
+        @Test
+       public void convertResourcesDtoWithBuildingsTest(){
+            Resource testResource = new Resource("gold");
+            List<Building> testBuildingList = new ArrayList<>(
+                    Arrays.asList(new Building("mine"))
+            );
+            testResource.setBuildings(testBuildingList);
+
+            ResourceDto converted = dtoServices.convertResourceWithBuildingsDto(testResource, testBuildingList);
+
+            ResourceDto expected = new ResourceDto();
+            expected.setId(0);
+            expected.setAmount(1);
+            expected.setType("gold");
+            expected.setBuildings(dtoServices.convertBuildingListToDTO(testBuildingList));
+
+            assertEquals(expected.toString(), converted.toString());
+            assertEquals(expected.getBuildings().get(0).toString(), converted.getBuildings().get(0).toString());
+        }
 }

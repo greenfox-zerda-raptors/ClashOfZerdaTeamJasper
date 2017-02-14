@@ -38,4 +38,14 @@ public class BuildingDto {
     public void setHp(int hp) {
         this.hp = hp;
     }
+
+    @Override
+    public String toString() {
+        return "BuildingDto{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                '}';
+    }
 }
