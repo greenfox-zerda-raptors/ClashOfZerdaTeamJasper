@@ -9,4 +9,6 @@ public interface KingdomRepo extends CrudRepository<Kingdom, Long> {
     public Kingdom findByName(String name);
 
     List<Kingdom> findAll();
+
+    Kingdom findOneByUserId(long userId);
 }

@@ -3,6 +3,7 @@ package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.repos.KingdomRepo;
+import com.greenfox.jasper.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,13 @@ public class KingdomServices {
 
     public List<Kingdom> findAll() {
         return kingdomRepo.findAll();
+    }
+
+    public Kingdom findOneByUserId(long userId){
+        return kingdomRepo.findOneByUserId(userId);
+    }
+
+    public long getKingdomIdFromJWTUser(JwtUser jwtUser){
+     return findOneByUserId(jwtUser.getId()).getKingdomId();
     }
 }

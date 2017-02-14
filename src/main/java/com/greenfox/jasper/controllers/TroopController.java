@@ -7,10 +7,7 @@ import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.TroopPostDto;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.security.JwtUser;
-import com.greenfox.jasper.services.BuildingServices;
-import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.TimedEventServices;
-import com.greenfox.jasper.services.TroopServices;
+import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/kingdom/troops", method = RequestMethod.GET)
 public class TroopController {
+
+    @Autowired
+    private KingdomServices kingdomServices;
 
     @Autowired
     private TroopServices troopServices;
@@ -37,7 +37,7 @@ public class TroopController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<TroopResponse> getTroops(@AuthenticationPrincipal JwtUser currentUser) {
-        long kingdomId = currentUser.getId();
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
         if (troopList == null) {
             return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
@@ -68,15 +68,15 @@ public class TroopController {
     }
 
     @RequestMapping(value = "/upgrade/", method = RequestMethod.POST)
-    public ResponseEntity upgradeTroop(@RequestBody TroopPostDto postDto){
-        Building barrack = buildingServices.findOneBuilding(postDto.getBarrackId());
+    public ResponseEntity upgradeTroop(@RequestBody TroopPostDto troopPostDto){
+        Building barrack = buildingServices.findOneBuilding(troopPostDto.getBarrackId());
         if( barrack == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such building");
         }else if(!barrack.getType().contains("barrack")){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not a barrack");
         }
-        timedEventServices.addNewUpgradeTroopEvent(postDto.getTroopId(), postDto.getBarrackId());
-        return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + postDto.getTroopId() + " will be upgraded");
+        timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), troopPostDto.getBarrackId());
+        return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + troopPostDto.getTroopId() + " will be upgraded");
     }
 
 }

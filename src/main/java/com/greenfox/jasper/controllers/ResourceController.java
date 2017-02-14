@@ -5,6 +5,7 @@ import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceResponse;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
+import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.ResourceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ import java.util.List;
 public class ResourceController {
 
     @Autowired
+    private KingdomServices kingdomServices;
+
+    @Autowired
     private ResourceServices resourceServices;
 
     @Autowired
@@ -30,27 +34,27 @@ public class ResourceController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResources(@AuthenticationPrincipal JwtUser currentUser) {
-        long kingdomId = currentUser.getId();
-        resourceServices.calculateResource((int) kingdomId);
-        List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId((int) kingdomId);
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        resourceServices.calculateResource(kingdomId);
+        List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if (resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         ResourceResponse result = new ResourceResponse(
-                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((int) kingdomId)));
+                dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((kingdomId))));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
     public ResponseEntity<ResourceResponse> getResourceBuildingByType(@AuthenticationPrincipal JwtUser currentUser, @PathVariable String type) {
-        long kingdomId = currentUser.getId();
-        resourceServices.calculateResource((int) kingdomId);
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        resourceServices.calculateResource(kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
         List<Building> buildingList;
         if (type.equals("food")) {
-            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType((int) kingdomId, "farm");
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
         } else if (type.equals("gold")) {
-            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType((int) kingdomId, "mine");
+            buildingList = resourceServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
