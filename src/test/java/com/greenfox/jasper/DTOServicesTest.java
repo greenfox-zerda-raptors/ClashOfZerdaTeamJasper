@@ -35,7 +35,7 @@ public class DTOServicesTest {
         expected.setHp(100);
         expected.setLevel(0);
         expected.setType("mine");
-        expected.setId(0);
+        expected.setId(testBuilding.getBuildingId());
 
         assertEquals(expected.toString(), converted.toString());
     }
