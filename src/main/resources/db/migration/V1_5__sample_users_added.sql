@@ -1,5 +1,6 @@
-ALTER TABLE building_table DROP CONSTRAINT fksut7mrpf8dfy5old6t6yvki2p;
-ALTER TABLE building_table DROP COLUMN resource_resource_id;
+ALTER TABLE building_table ADD hp INTEGER;
+ALTER TABLE troop_table ADD attack INTEGER;
+ALTER TABLE troop_table ADD defense INTEGER;
 
 INSERT INTO APPUSER (ID, USERNAME, PASSWORD, FIRSTNAME, LASTNAME, EMAIL, ENABLED, LASTPASSWORDRESETDATE, POINTS) VALUES (12, 'olaf','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC' , 'user', 'user', 'user@user.com', true, current_date, 1000),(13, 'tom','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC' , 'user', 'user', 'user@user.com', true, current_date, 1500),(14, 'linda','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC' , 'user', 'user', 'user@user.com', true, current_date, 2000);
 INSERT INTO kingdom_table(kingdom_id, kingdom_name, last_update_time, user_id) VALUES (15, 'sweden', 1486986121259, 12 ),(16, 'england', 1486986121259, 13 ),(17, 'france', 1486986121259, 14 );
