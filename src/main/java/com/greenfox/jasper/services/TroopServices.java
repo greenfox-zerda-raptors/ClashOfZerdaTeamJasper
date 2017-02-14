@@ -35,9 +35,21 @@ public class TroopServices {
         troopRepo.save(troop);
     }
 
+    public void saveAllFromList(List<Troop> listOfTroops){
+        troopRepo.save(listOfTroops);
+    }
     public void deleteOneTroop(Troop troop) {
         troopRepo.delete(troop);
     }
 
+    public void deleteAllFromList(List<Troop> listOfTroops){
+        troopRepo.delete(listOfTroops);
+    }
+
+    public void deleteMany(List<Troop> ... Lists){
+        for(List<Troop> troops : Lists){
+            troopRepo.delete(troops);
+            }
+    }
 
 }
