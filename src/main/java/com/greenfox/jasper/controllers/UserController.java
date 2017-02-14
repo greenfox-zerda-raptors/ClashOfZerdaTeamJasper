@@ -4,10 +4,12 @@ import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.KingdomDto;
+import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,8 +20,9 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable long userId) {
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public User getUser(@AuthenticationPrincipal JwtUser currentUser) {
+        long userId = currentUser.getId();
         return userServices.findOneUser(userId);
     }
 

@@ -30,7 +30,7 @@ public class KingdomController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
-        long kingdomId = currentUser.getId();
+        long kingdomId = currentUser.getId(); // TODO EZ ITT EGY KIBASZOTTNAGY BUG
 //        resourceServices.calculateResource(KING_ID);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if (kingdom == null) {
