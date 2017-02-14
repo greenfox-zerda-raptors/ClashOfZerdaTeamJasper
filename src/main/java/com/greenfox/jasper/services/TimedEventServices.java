@@ -3,8 +3,8 @@ package com.greenfox.jasper.services;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.TimedEvent.*;
 import com.greenfox.jasper.domain.Troop;
-import com.greenfox.jasper.repos.TimedEventRepo;
-import com.greenfox.jasper.repos.TrainTroopEventRepo;
+import com.greenfox.jasper.repos.TimedEventRepos.TimedEventRepo;
+import com.greenfox.jasper.repos.TimedEventRepos.TrainTroopEventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -92,15 +92,13 @@ public class TimedEventServices {
         // Here retrieve resources etc.
         timedEventRepo.save(tempEvent);
     }
-    // TODO battle controller
     public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
-        BattleEvent battleEvenet = new BattleEvent(System.currentTimeMillis()+15000, attackerId, troops, defenderId);
-        timedEventRepo.save(battleEvenet);
+        BattleEvent battleEvent = new BattleEvent(System.currentTimeMillis()+15000, attackerId, troops, defenderId);
+        timedEventRepo.save(battleEvent);
     }
 
-    public void addNewUpgradeTroopEvent(long troopId, long barrackId){
-        // TODO upgrade troop time calc.; currently 15sec; building occupation status?
-        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(System.currentTimeMillis()+15000, barrackId, troopId);
+    public void addNewUpgradeTroopEvent(long troopId, long kingdomId){
+        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(System.currentTimeMillis()+15000 + getQueueTime(kingdomId), kingdomId, troopId);
         timedEventRepo.save(upgradingTroop);
     }
     public void addNewLevelUpEvent(long buildingID) {
@@ -112,16 +110,25 @@ public class TimedEventServices {
     }
 
 
-    public void addNewCreateTroopEvent(long barrackId) {
+    public void addNewCreateTroopEvent(long kingdomId) {
+        long queueTime = getQueueTime(kingdomId);
+        int totalBarrackLevel = buildingServices.calculateTotalLevel(kingdomId, "barrack");
+        TimedEvent timedEvent = new TrainTroopEvent((troopProductionTime(totalBarrackLevel) +  queueTime), kingdomId);
+        timedEventRepo.save(timedEvent);
+    }
+
+    private long getQueueTime(long kingdomId) {
         long queueTime = 0;
-        List<TrainTroopEvent> allEventForABuilding = trainTroopEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(barrackId);
-        if (allEventForABuilding.size() > 0) {
-            TimedEvent tempTimedEvent = allEventForABuilding.get(0);
+        List<TrainTroopEvent> allEventForKingdom = trainTroopEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(kingdomId);
+        if (allEventForKingdom.size() > 0) {
+            TimedEvent tempTimedEvent = allEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
-        // TODO handle time formula for troop;
-        TimedEvent timedEvent = new TrainTroopEvent((System.currentTimeMillis() + queueTime + 60000), barrackId);
-        timedEventRepo.save(timedEvent);
+        return queueTime;
+    }
+
+    public long troopProductionTime(int totalBarrackLevel){
+        return System.currentTimeMillis() + 60000/totalBarrackLevel;
     }
 
     private long calculateBuildingTimeRatio(Building building) {

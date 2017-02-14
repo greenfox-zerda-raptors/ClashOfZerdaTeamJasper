@@ -73,6 +73,10 @@ public class DTOServices {
         return result;
     }
 
+    public List<KingdomDto> convertKingdomListToDTO(List<Kingdom> kingdomList){
+        return kingdomList.stream().map(this::convertKingdomToDTO).collect(Collectors.toList());
+    }
+
     public void takeRegisterDTO() {
 
     }

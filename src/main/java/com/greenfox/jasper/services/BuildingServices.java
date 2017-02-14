@@ -57,4 +57,9 @@ public class BuildingServices {
         return buildingRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
     }
 
+    public int calculateTotalLevel(long kingdomId, String buildingType) {
+        return 1;
+        // TODO total level
+                //buildingRepo.calculateTotalLevel(kingdomServices.findOneById(kingdomId), buildingType);
+    }
 }
