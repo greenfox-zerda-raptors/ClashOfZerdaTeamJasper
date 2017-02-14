@@ -2,6 +2,7 @@ package com.greenfox.jasper.services;
 
 
 import com.greenfox.jasper.domain.Kingdom;
+import com.greenfox.jasper.dto.LocationDto;
 import com.greenfox.jasper.repos.KingdomRepo;
 import com.greenfox.jasper.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,13 @@ public class KingdomServices {
         return kingdomRepo.findOneByUserId(userId);
     }
 
-    public long getKingdomIdFromJWTUser(JwtUser jwtUser){
-     return findOneByUserId(jwtUser.getId()).getKingdomId();
+
+    public void updateLocation(JwtUser currentUser, LocationDto locationDto) {
+        Kingdom movingKingdom = kingdomRepo.findOneByUserId(currentUser.getId());
+
+    }
+
+    public long getKingdomIdFromJWTUser(JwtUser currentUser) {
+        return findOneByUserId(currentUser.getId()).getKingdomId();
     }
 }

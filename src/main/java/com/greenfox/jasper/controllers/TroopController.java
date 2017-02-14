@@ -1,9 +1,7 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
-import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.TroopPostDto;
 import com.greenfox.jasper.dto.TroopResponse;
 import com.greenfox.jasper.security.JwtUser;
@@ -48,8 +46,8 @@ public class TroopController {
 
     @RequestMapping(value = "/{troopId}", method = RequestMethod.GET)
     public ResponseEntity getOneTroop(@PathVariable long troopId) {
-        Troop result =  troopServices.findOneTroop(troopId);
-        if(result == null){
+        Troop result = troopServices.findOneTroop(troopId);
+        if (result == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such troop");
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -58,28 +56,20 @@ public class TroopController {
 
     // TODO remove building time cd to kingdom - calculate max available troop (from barrack level)
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public ResponseEntity trainNewTroop(@RequestBody BuildingDto buildingDto) {
-        Building barrack = buildingServices.findOneBuilding(buildingDto.getId());
-        if( barrack == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such building");
-        }else if(!barrack.getType().contains("barrack")){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not a barrack");
-        }
-        timedEventServices.addNewCreateTroopEvent(buildingDto.getId());
+    public ResponseEntity trainNewTroop(@AuthenticationPrincipal JwtUser currentUser) {
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        timedEventServices.addNewCreateTroopEvent(kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Mkay");
     }
 
     // TODO remove building dependency cd to kingdom
     @RequestMapping(value = "/upgrade/", method = RequestMethod.POST)
-    public ResponseEntity upgradeTroop(@RequestBody TroopPostDto troopPostDto){
-        Building barrack = buildingServices.findOneBuilding(troopPostDto.getBarrackId());
-        if( barrack == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such building");
-        }else if(!barrack.getType().contains("barrack")){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not a barrack");
+    public ResponseEntity upgradeTroop(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto) {
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        if (kingdomId == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such kingdom");
         }
-        timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), troopPostDto.getBarrackId());
+        timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + troopPostDto.getTroopId() + " will be upgraded");
     }
-
 }
