@@ -2,7 +2,6 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
-import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.security.JwtUser;
@@ -36,8 +35,8 @@ public class BuildingController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<BuildingResponse> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
-        Kingdom kingdomId = kingdomServices.findOneByUserId(currentUser.getId());
-        List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId.getKingdomId());
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
         if (buildingList == null) {
             return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);

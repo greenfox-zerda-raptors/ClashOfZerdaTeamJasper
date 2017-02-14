@@ -63,7 +63,7 @@ public class TroopController {
     }
 
     // TODO remove building dependency cd to kingdom
-    @RequestMapping(value = "/upgrade/", method = RequestMethod.POST)
+    @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
     public ResponseEntity upgradeTroop(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         if (kingdomId == 0) {
