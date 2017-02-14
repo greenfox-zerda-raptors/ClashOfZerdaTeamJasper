@@ -18,8 +18,7 @@ branches:
     - master
     - bncbodrogi
     - adam-db
-    - zoltan-refactoring-cleaningcode
-    - zoltan-matching-frontend-requests
+    - zoltan-troopevent-update
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
