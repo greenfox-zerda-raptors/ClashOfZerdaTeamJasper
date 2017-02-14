@@ -119,7 +119,7 @@ public class ResourceServices {
         return buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, mine);
     }
 
-    
+
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
     }
