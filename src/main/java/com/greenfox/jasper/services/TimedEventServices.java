@@ -92,7 +92,6 @@ public class TimedEventServices {
         // Here retrieve resources etc.
         timedEventRepo.save(tempEvent);
     }
-    // TODO battle controller
     public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
         BattleEvent battleEvenet = new BattleEvent(System.currentTimeMillis()+15000, attackerId, troops, defenderId);
         timedEventRepo.save(battleEvenet);

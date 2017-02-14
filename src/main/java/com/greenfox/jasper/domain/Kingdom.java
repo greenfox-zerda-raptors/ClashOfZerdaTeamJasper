@@ -39,6 +39,8 @@ public class Kingdom implements Serializable {
     private long updateTime;
 
 
+    // TODO positions
+
     public Kingdom() {
         this.name = "";
         this.buildings = new ArrayList<>();

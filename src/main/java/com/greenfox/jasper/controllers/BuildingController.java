@@ -56,8 +56,7 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity addNewBuildingPost(@AuthenticationPrincipal JwtUser currentUser,@RequestBody Building building) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         boolean available = resourceServices.buyNewBuilding(kingdomId);
@@ -81,29 +80,6 @@ public class BuildingController {
         timedEventServices.addNewLevelUpEvent(buildingId);
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         return new ResponseEntity<>(result, HttpStatus.OK);
-        }
     }
+}
 
-//    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.PUT)
-//    public ResponseEntity<BuildingDto> levelUpBuildingById(@PathVariable int kingdomId, @PathVariable int buildingId) throws IOException {
-//        boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
-//        if (!available) {
-//            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
-//         }
-//        timedEventServices.addNewLevelUpEvent(buildingId);
-//        BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//
-//    @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-//    public ResponseEntity<BuildingDto> addNewBuilding(@PathVariable int kingdomId, @PathVariable String type) throws IOException {
-//        boolean available = resourceServices.buyNewBuilding(kingdomId);
-//        if (!available) {
-//            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
-//        }
-//            buildingServices.addNewBuilding(kingdomId, type);
-//            BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findLastBuilding(kingdomId));
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        }
-//    }

@@ -55,7 +55,9 @@ public class TroopController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @RequestMapping(value = "/new/{barrackId}", method = RequestMethod.POST)
+
+    // TODO remove building time cd to kingdom - calculate max available troop (from barrack level)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public ResponseEntity trainNewTroop(@RequestBody BuildingDto buildingDto) {
         Building barrack = buildingServices.findOneBuilding(buildingDto.getId());
         if( barrack == null){
@@ -67,6 +69,7 @@ public class TroopController {
         return ResponseEntity.status(HttpStatus.OK).body("Mkay");
     }
 
+    // TODO remove building dependency cd to kingdom
     @RequestMapping(value = "/upgrade/", method = RequestMethod.POST)
     public ResponseEntity upgradeTroop(@RequestBody TroopPostDto troopPostDto){
         Building barrack = buildingServices.findOneBuilding(troopPostDto.getBarrackId());
