@@ -25,6 +25,8 @@ public class TimedEventServices {
     private ResourceServices resourceServices;
     @Autowired
     private BuildingServices buildingServices;
+    @Autowired
+    private KingdomServices kingdomServices;
 
     // @Inheritance, timedEventRepo will obtain everything you need, "subrepos" will only obtain the data for that class (no data from superclass only ID)
     // If you want to filter in different event types, there is a field automatically generated, use custom queries for them
@@ -49,11 +51,17 @@ public class TimedEventServices {
            executeLevelUp(timedEvent);
        }else if(isUpgradeTroopEvent(timedEvent)){
            executeTroopUpgrade(timedEvent);
-       }else{
+       }else if(isTrainTroopEvent(timedEvent)){
+           executeNewTroopEvent(timedEvent);
+       } else{
            System.out.println("No such event-method");
        }
         timedEvent.setWasExecuted(true);
         timedEventRepo.save(timedEvent);
+    }
+
+    private boolean isTrainTroopEvent(TimedEvent timedEvent) {
+        return timedEvent.getClass() == TrainTroopEvent.class;
     }
 
     private boolean isUpgradeTroopEvent(TimedEvent timedEvent) {
@@ -71,6 +79,11 @@ public class TimedEventServices {
     public void executeBattle(TimedEvent timedEvent) {
         // TODO actually doing battle
         BattleEvent battleEvent = (BattleEvent) timedEvent;
+    }
+    private void executeNewTroopEvent(TimedEvent timedEvent){
+        TrainTroopEvent trainTroopEvent = (TrainTroopEvent) timedEvent;
+        Troop troop = new Troop(kingdomServices.findOneById(trainTroopEvent.getKingdomId()));
+        troopServices.saveOneTroop(troop);
     }
     private void executeLevelUp(TimedEvent timedEvent) {
         LevelUpEvent levelUpEvent = (LevelUpEvent) timedEvent;
@@ -109,7 +122,6 @@ public class TimedEventServices {
         timedEventRepo.save(levelUpEvent);
     }
 
-
     public void addNewCreateTroopEvent(long kingdomId) {
         long queueTime = getQueueTime(kingdomId);
         int totalBarrackLevel = buildingServices.calculateTotalLevel(kingdomId, "barrack");
@@ -119,7 +131,7 @@ public class TimedEventServices {
 
     private long getQueueTime(long kingdomId) {
         long queueTime = 0;
-        List<TrainTroopEvent> allEventForKingdom = trainTroopEventRepo.findAllByBuildingIdOrderByExecutionTimeDesc(kingdomId);
+        List<TrainTroopEvent> allEventForKingdom = trainTroopEventRepo.findAllByKingdomIdOrderByExecutionTimeDesc(kingdomId);
         if (allEventForKingdom.size() > 0) {
             TimedEvent tempTimedEvent = allEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
