@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
  * Created by Zoltán on 2017.02.14..
  */
 
-
 public class DTOServicesTest {
     private DTOServices dtoServices = new DTOServices();
 
