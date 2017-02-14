@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by almasics on 2017.02.08..
- */
 @RestController
 @RequestMapping(value = "/kingdom/battles")
 public class BattleController {

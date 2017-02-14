@@ -72,4 +72,6 @@ public class TroopController {
         timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + troopPostDto.getTroopId() + " will be upgraded");
     }
+
+
 }
