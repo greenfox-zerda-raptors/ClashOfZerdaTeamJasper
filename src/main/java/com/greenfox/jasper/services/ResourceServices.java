@@ -19,7 +19,6 @@ public class ResourceServices {
 
     @Autowired
     ResourceRepo resourceRepo;
-
     @Autowired
     BuildingServices buildingServices;
     @Autowired
