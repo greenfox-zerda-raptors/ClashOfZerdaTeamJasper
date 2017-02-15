@@ -1,13 +1,15 @@
 package com.greenfox.jasper;
 
-import com.greenfox.jasper.domain.*;
+import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.Kingdom;
+import com.greenfox.jasper.domain.Resource;
+import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableScheduling
@@ -25,8 +27,6 @@ public class ProofOfConceptApplication implements CommandLineRunner {
     UserServices userServices;
     @Autowired
     TimedEventServices timedEventServices;
-    @Autowired
-    BCryptPasswordEncoder encoder;
 
 
     public static void main(String[] args) {
