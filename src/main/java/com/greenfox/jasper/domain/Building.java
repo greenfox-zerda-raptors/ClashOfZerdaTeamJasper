@@ -31,6 +31,9 @@ public class Building implements Serializable {
     @JsonIgnore
     private Resource resource;
 
+    @Column(name = "levelup_time")
+    private long levelUpTime;
+
     public Building() {
     }
 
@@ -100,6 +103,14 @@ public class Building implements Serializable {
         this.resource = resource;
     }
 
+    public long getLevelUpTime() {
+        return levelUpTime;
+    }
+
+    public void setLevelUpTime(long levelUpTime) {
+        this.levelUpTime = levelUpTime;
+    }
+
     public void levelUp() {
 //        TODO formula for stat changes due to lvl
         this.level++;
@@ -110,5 +121,6 @@ public class Building implements Serializable {
             this.level--;
         }
     }
+
 
 }

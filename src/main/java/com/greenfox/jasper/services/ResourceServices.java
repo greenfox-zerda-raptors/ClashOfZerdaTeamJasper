@@ -125,6 +125,7 @@ public class ResourceServices {
     }
 
     public boolean levelUpBuildingMoneyCheck(long kingdomId, long buildingId){
+        calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money;
         money = gold.getAmount();

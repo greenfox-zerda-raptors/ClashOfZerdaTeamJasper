@@ -38,12 +38,17 @@ public class Kingdom implements Serializable {
     @Column(name="last_update_time")
     private long updateTime;
 
+    @Column(name = "pos_x")
+    private int posX;
+
+    @Column(name = "pos_y")
+    private int posY;
 
     public Kingdom() {
         this.name = "";
         this.buildings = new ArrayList<>();
         this.resources = new ArrayList<>();
-        this.troops = new ArrayList<>();
+         this.troops = new ArrayList<>();
         this.updateTime = System.currentTimeMillis();
     }
 
@@ -110,5 +115,21 @@ public class Kingdom implements Serializable {
 
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 }

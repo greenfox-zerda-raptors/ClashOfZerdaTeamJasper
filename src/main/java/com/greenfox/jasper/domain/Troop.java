@@ -26,6 +26,9 @@ public class Troop implements Serializable {
 
     private int defense;
 
+    @Column(name="upgrade_time")
+    private long upgradeTime;
+
     @ManyToOne
     @JsonIgnore
     private Kingdom kingdom;

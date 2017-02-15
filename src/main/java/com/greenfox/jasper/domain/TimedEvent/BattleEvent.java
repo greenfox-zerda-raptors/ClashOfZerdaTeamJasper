@@ -14,7 +14,7 @@ public class BattleEvent extends TimedEvent {
 
     @Column(name = "attacker_id")
     private long attackerKingdomId;
-    @Column(name = "troops")
+    @Column(name = "troops_list")
     private ArrayList<Troop> attackingTroops; // decide how we will save troops on the move
     @Column(name = "defender_id")
     private long defenderKingdomId;

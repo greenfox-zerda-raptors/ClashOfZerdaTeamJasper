@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-@Table(name = "mainevent_table")
+@Table(name = "timed_event_table")
 @Entity
 @Inheritance
 public abstract class TimedEvent implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "mainevent_id")
+    @Column(name = "timed_event_id")
     private long id;
     @Column(name = "execution_time")
     private long executionTime;
