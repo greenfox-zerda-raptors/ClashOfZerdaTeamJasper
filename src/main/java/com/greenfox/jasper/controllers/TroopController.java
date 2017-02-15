@@ -58,7 +58,7 @@ public class TroopController {
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public ResponseEntity trainNewTroop(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
-        timedEventServices.addNewCreateTroopEvent(kingdomId);
+        troopServices.addNewTroop(kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Mkay");
     }
 
@@ -71,6 +71,13 @@ public class TroopController {
         }
         timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + troopPostDto.getTroopId() + " will be upgraded");
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity delete(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto){
+        Troop result = troopServices.findOneTroop(troopPostDto.getTroopId());
+        troopServices.deleteTest(troopPostDto.getTroopId());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 
