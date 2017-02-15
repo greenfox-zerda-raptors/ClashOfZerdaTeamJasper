@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class TimedEventServices {
 
-    private long baseTime = 60000;
+    private long baseTime = 60000; // currently set for 1 min., more balance changes required
 
     @Autowired
     private TimedEventRepo timedEventRepo;
