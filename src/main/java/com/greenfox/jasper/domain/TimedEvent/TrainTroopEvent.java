@@ -8,19 +8,23 @@ import javax.persistence.Inheritance;
 @Inheritance
 public class TrainTroopEvent extends TimedEvent {
 //    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
-    @Column(name = "building_id")
-    private long buildingId;
+    @Column(name = "kingdom_id")
+    private long kingdomId;
 
-    public TrainTroopEvent(long executionTime, long buildingId) {
+    public TrainTroopEvent(){
+
+    }
+
+    public TrainTroopEvent(long executionTime, long kingdomId) {
         super(executionTime);
-        this.buildingId = buildingId;
+        this.kingdomId = kingdomId;
     }
 
-    public long getBuildingId() {
-        return buildingId;
+    public long getKingdomId() {
+        return kingdomId;
     }
 
-    public void setBuildingId(long buildingId) {
-        this.buildingId = buildingId;
+    public void setKingdomId(long kingdomId) {
+        this.kingdomId = kingdomId;
     }
 }
