@@ -8,10 +8,8 @@ import javax.persistence.Inheritance;
 @Entity
 @Inheritance
 public class UpgradeTroopEvent extends TimedEvent {
-//    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
-    @Column(name = "building_id")
-    private long buildingId;
-//    @OneToOne(mappedBy = "troop", cascade = CascadeType.ALL)
+    @Column(name = "kingdom_id")
+    private long kingdomId;
     @Column(name = "troop_id")
     private long troopId;
 
@@ -19,18 +17,18 @@ public class UpgradeTroopEvent extends TimedEvent {
 
     }
 
-    public UpgradeTroopEvent(long executionTime, long buildingId, long troopId) {
+    public UpgradeTroopEvent(long executionTime, long kingdomId, long troopId) {
         super(executionTime);
-        this.buildingId = buildingId;
+        this.kingdomId = kingdomId;
         this.troopId = troopId;
     }
 
-    public long getBuildingId() {
-        return buildingId;
+    public long getKingdomId() {
+        return kingdomId;
     }
 
-    public void setBuildingId(long buildingId) {
-        this.buildingId = buildingId;
+    public void setKingdomId(long kingdomId) {
+        this.kingdomId = kingdomId;
     }
 
     public long getTroopId() {
@@ -44,7 +42,7 @@ public class UpgradeTroopEvent extends TimedEvent {
     @Override
     public String toString() {
         return "UpgradeTroopEvent{" + super.toString() +
-                "buildingId=" + buildingId +
+                "kingdomId=" + kingdomId +
                 ", troopId=" + troopId +
                 '}';
     }

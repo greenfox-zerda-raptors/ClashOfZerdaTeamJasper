@@ -93,7 +93,6 @@ public class TimedEventServices {
     public void cancelEvent(long eventID) {
         TimedEvent tempEvent = timedEventRepo.findOne(eventID);
         tempEvent.setWasExecuted(true);
-        // Here retrieve resources etc.
         timedEventRepo.save(tempEvent);
     }
     public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
@@ -102,18 +101,17 @@ public class TimedEventServices {
     }
 
     public void addNewUpgradeTroopEvent(long troopId, long kingdomId){
-        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(upgradeTroopTime(kingdomId), kingdomId, troopId);
+        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(upgradeTroopTime(kingdomId),kingdomId, troopId);
         timedEventRepo.save(upgradingTroop);
     }
 
-    public void addNewLevelUpEvent(long buildingID) {
+    public void addNewLevelUpEvent(long buildingID, long kingdomId) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          TimedEvent levelUpEvent = new LevelUpEvent(
-                 buildingLevelUpTime(temporaryBuilding),  buildingID
+                 buildingLevelUpTime(temporaryBuilding), kingdomId,  buildingID
                  );
         timedEventRepo.save(levelUpEvent);
     }
-
 
     private long getQueueTime(long kingdomId) {
         long queueTime = 0;
@@ -153,10 +151,6 @@ public class TimedEventServices {
     }
     private long buildingLevelUpTime(Building temporaryBuilding) {
         return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding);
-    }
-    public long troopProductionTime(long kingdomId){
-        int totalBarrackLevel = buildingServices.calculateTotalLevel(kingdomId, "barrack");
-        return System.currentTimeMillis() + baseTime/totalBarrackLevel +  getQueueTime(kingdomId);
     }
     private long battleTime() {
         // TODO scales with kingdom distances

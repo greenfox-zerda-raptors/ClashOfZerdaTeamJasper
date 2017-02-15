@@ -62,6 +62,7 @@ public class TroopServices {
 
     public void addNewTroop(long kingdomId) {
         Troop newTroop = new Troop(kingdomServices.findOneById(kingdomId));
+        troopRepo.save(newTroop);
         timedEventServices.addNewUpgradeTroopEvent(newTroop.getTroopId(), kingdomId);
     }
 }
