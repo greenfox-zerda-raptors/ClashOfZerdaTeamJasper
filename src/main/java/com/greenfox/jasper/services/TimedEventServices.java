@@ -1,8 +1,13 @@
 package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.TimedEvent.*;
+import com.greenfox.jasper.domain.TimedEvent.BattleEvent;
+import com.greenfox.jasper.domain.TimedEvent.LevelUpEvent;
+import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
+import com.greenfox.jasper.domain.TimedEvent.UpgradeTroopEvent;
 import com.greenfox.jasper.domain.Troop;
+import com.greenfox.jasper.repos.TimedEventRepos.BattleEventRepo;
+import com.greenfox.jasper.repos.TimedEventRepos.LevelUpEventRepo;
 import com.greenfox.jasper.repos.TimedEventRepos.TimedEventRepo;
 import com.greenfox.jasper.repos.TimedEventRepos.UpgradeTroopEventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,10 @@ public class TimedEventServices {
     private TimedEventRepo timedEventRepo;
     @Autowired
     private UpgradeTroopEventRepo upgradeTroopEventRepo;
+    @Autowired
+    private LevelUpEventRepo levelUpEventRepo;
+    @Autowired
+    private BattleEventRepo battleEventRepo;
     @Autowired
     private TroopServices troopServices;
     @Autowired
@@ -115,7 +124,7 @@ public class TimedEventServices {
 
     private long getQueueTime(long kingdomId) {
         long queueTime = 0;
-        List<UpgradeTroopEvent> allEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdOrderByExecutionTimeDesc(kingdomId);
+        List<UpgradeTroopEvent> allEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
         if (allEventForKingdom.size() > 0) {
             TimedEvent tempTimedEvent = allEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
