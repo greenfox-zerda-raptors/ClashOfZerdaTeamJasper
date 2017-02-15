@@ -22,6 +22,7 @@ public class RealmController {
     @Autowired
     private DTOServices dtoServices;
 
+    // TODO preauthorize to ONLY admin
     @RequestMapping(value = "")
     public ResponseEntity availableRealms(){
         List<Kingdom> allKingdoms = kingdomServices.findAll();
