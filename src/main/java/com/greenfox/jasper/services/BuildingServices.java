@@ -3,6 +3,7 @@ package com.greenfox.jasper.services;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.repos.BuildingRepo;
+import com.greenfox.jasper.repos.KingdomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class BuildingServices {
 
     @Autowired
     KingdomServices kingdomServices;
+
+    @Autowired
+    KingdomRepo kingdomRepo;
 
 
     public Building findOneBuilding(long buildingId){
