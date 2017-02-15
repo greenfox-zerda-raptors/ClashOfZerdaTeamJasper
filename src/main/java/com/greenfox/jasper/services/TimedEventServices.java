@@ -117,16 +117,26 @@ public class TimedEventServices {
     public void addNewLevelUpEvent(long buildingID, long kingdomId) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          TimedEvent levelUpEvent = new LevelUpEvent(
-                 buildingLevelUpTime(temporaryBuilding), kingdomId,  buildingID
-                 );
+                 buildingLevelUpTime(temporaryBuilding, kingdomId),
+                 kingdomId,
+                 buildingID);
         timedEventRepo.save(levelUpEvent);
     }
 
-    private long getQueueTime(long kingdomId) {
+    private long getQueueTimeForTroopEvents(long kingdomId) {
         long queueTime = 0;
-        List<UpgradeTroopEvent> allEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
-        if (allEventForKingdom.size() > 0) {
-            TimedEvent tempTimedEvent = allEventForKingdom.get(0);
+        List<UpgradeTroopEvent> allTroopEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
+        if (allTroopEventForKingdom.size() > 0) {
+            TimedEvent tempTimedEvent = allTroopEventForKingdom.get(0);
+            queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
+        }
+        return queueTime;
+    }
+    private long getQueueTimeForBuildings(long kingdomId) {
+        long queueTime = 0;
+        List<LevelUpEvent> allBuildingEventForKingdom = levelUpEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
+        if (allBuildingEventForKingdom.size() > 0) {
+            TimedEvent tempTimedEvent = allBuildingEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
         }
         return queueTime;
@@ -156,10 +166,10 @@ public class TimedEventServices {
     }
 
     private long upgradeTroopTime(long kingdomId) {
-        return System.currentTimeMillis()+baseTime + getQueueTime(kingdomId);
+        return System.currentTimeMillis()+baseTime + getQueueTimeForTroopEvents(kingdomId);
     }
-    private long buildingLevelUpTime(Building temporaryBuilding) {
-        return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding);
+    private long buildingLevelUpTime(Building temporaryBuilding, long kingdomId) {
+        return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding) + getQueueTimeForBuildings(kingdomId);
     }
     private long battleTime() {
         // TODO scales with kingdom distances
