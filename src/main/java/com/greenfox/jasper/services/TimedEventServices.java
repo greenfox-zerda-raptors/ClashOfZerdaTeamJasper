@@ -114,7 +114,7 @@ public class TimedEventServices {
         timedEventRepo.save(upgradingTroop);
     }
 
-    public void addNewLevelUpEvent(long buildingID, long kingdomId) {
+    public void addNewLevelUpEvent(long kingdomId, long buildingID) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
          TimedEvent levelUpEvent = new LevelUpEvent(
                  buildingLevelUpTime(temporaryBuilding, kingdomId),
@@ -166,7 +166,7 @@ public class TimedEventServices {
     }
 
     private long upgradeTroopTime(long kingdomId) {
-        return System.currentTimeMillis()+baseTime + getQueueTimeForTroopEvents(kingdomId);
+        return System.currentTimeMillis() + baseTime + getQueueTimeForTroopEvents(kingdomId);
     }
     private long buildingLevelUpTime(Building temporaryBuilding, long kingdomId) {
         return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding) + getQueueTimeForBuildings(kingdomId);
