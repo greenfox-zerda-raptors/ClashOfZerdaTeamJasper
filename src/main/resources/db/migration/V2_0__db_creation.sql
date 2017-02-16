@@ -1,4 +1,4 @@
-CREATE TABLE user_table(user_id BIGSERIAL NOT NULL, user_name VARCHAR(50) NOT NULL, password VARCHAR(100) NOT NULL, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, enabled BOOLEAN NOT NULL, last_pwd_reset DATE NOT NULL, points INTEGER NOT NULL, PRIMARY KEY(user_id));
+CREATE TABLE user_table(user_id BIGSERIAL NOT NULL, user_name VARCHAR(50) NOT NULL, password VARCHAR(100) NOT NULL, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, enabled BOOLEAN NOT NULL, last_pwd_reset_date DATE NOT NULL, points INTEGER NOT NULL, PRIMARY KEY(user_id));
 CREATE TABLE authority_table (authority_id BIGSERIAL NOT NULL, authority_name VARCHAR(50) NOT NULL, PRIMARY KEY (authority_id));
 CREATE TABLE user_authority_table(user_id BIGINT REFERENCES user_table(user_id), authority_id BIGINT REFERENCES authority_table(authority_id), PRIMARY KEY (user_id, authority_id));
 CREATE TABLE kingdom_table(kingdom_id BIGSERIAL NOT NULL, kingdom_name VARCHAR(255), user_id BIGINT REFERENCES user_table(user_id), last_update_time BIGINT, pos_x INTEGER, pos_y INTEGER, PRIMARY KEY (kingdom_id));
