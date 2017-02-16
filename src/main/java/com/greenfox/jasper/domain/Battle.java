@@ -16,8 +16,15 @@ public class Battle {
     private int defenderAttackPower;
     private int attackerDefensePower;
     private int defenderDefensePower;
+    private int attackerDamageDone;
+    private int defenderDamageDone;
     private List<Troop> attackerCasualties;
     private List<Troop> defenderCasualties;
+    private int buildingDamage;
+
+    public Battle(){
+
+    }
 
     public Battle (Kingdom attacker, Kingdom defender, List<Troop> attackerTroops, List<Troop> defenderTroops){
         this.attacker = attacker;
@@ -30,21 +37,19 @@ public class Battle {
         this.defenderAttackPower = getAttackPower(this.defenderTroops);
         this.attackerDefensePower = getDefensePower(this.attackerTroops);
         this.defenderDefensePower = getDefensePower(this.defenderTroops);
+        this.attackerDamageDone = this.attackerAttackPower - this.defenderDefensePower;
+        this.defenderDamageDone = this.defenderAttackPower - this.attackerDefensePower;
         this.attackerCasualties = getCasualties(
                 this.attackerTroops,
-                this.attackerHp,
-                this.defenderAttackPower,
                 this.attackerDefensePower
         );
         this.defenderCasualties = getCasualties(
                 this.defenderTroops,
-                this.defenderHp,
-                this.attackerAttackPower,
                 this.defenderDefensePower
         );
     }
 
-    private int getHp(List<Troop> troops){
+    public int getHp(List<Troop> troops){
         int hp = 0;
         for (Troop troop : troops){
             hp += troop.getHp();
@@ -52,7 +57,7 @@ public class Battle {
         return hp;
     }
 
-    private int getAttackPower(List<Troop> troops) {
+    public int getAttackPower(List<Troop> troops) {
         int attackPower = 0;
         for (Troop troop : troops){
             attackPower += troop.getAttack();
@@ -60,7 +65,7 @@ public class Battle {
         return attackPower;
     }
 
-    private int getDefensePower(List<Troop> troops) {
+    public int getDefensePower(List<Troop> troops) {
         int defensePower = 0;
         for (Troop troop : troops){
             defensePower += troop.getDefense();
@@ -68,11 +73,20 @@ public class Battle {
         return defensePower;
     }
 
-    private List<Troop> getCasualties(List<Troop> friendlyTroops, int friendlyHp, int foeAttack, int friendlyDefense){
+    public List<Troop> getCasualties(List<Troop> friendlyTroops, int foeAttack){
+
         List<Troop> casualties = new ArrayList<>();
+
+        int friendlyHp = getHp(friendlyTroops);
+
+        int friendlyDefense = getDefensePower(friendlyTroops);
+
         int totalHpLoss = foeAttack - friendlyDefense;
+
         if(friendlyHp <= totalHpLoss){
+            this.buildingDamage = totalHpLoss - friendlyHp;
             casualties.addAll(friendlyTroops);
+
         }else{
             while(totalHpLoss > 0){
                 for (Troop troop : friendlyTroops){
@@ -87,6 +101,18 @@ public class Battle {
             }
         }
         return casualties;
+    }
+
+    public int getAttackerDamageDone() {
+        return attackerDamageDone;
+    }
+
+    public int getDefenderDamageDone() {
+        return defenderDamageDone;
+    }
+
+    public int getBuildingDamage() {
+        return buildingDamage;
     }
 
     public long getBattleId() {
