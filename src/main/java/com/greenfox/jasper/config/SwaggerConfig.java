@@ -1,4 +1,4 @@
-package com.greenfox.jasper.config;
+package com.greenfox.jasper.Config;
 
 
 import com.fasterxml.classmate.TypeResolver;
@@ -25,6 +25,8 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+    //Travis?
 
     @Autowired
     TypeResolver typeResolver;
