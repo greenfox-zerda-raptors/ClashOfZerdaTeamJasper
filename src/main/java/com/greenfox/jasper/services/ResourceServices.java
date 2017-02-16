@@ -127,26 +127,21 @@ public class ResourceServices {
     public boolean levelUpBuildingMoneyCheck(long kingdomId, long buildingId){
         calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
-        float money;
-        money = gold.getAmount();
-        float cost;
+        float money = gold.getAmount();
         Building building = buildingServices.findOneBuilding(buildingId);
-        cost = (building.getLevel()+1)*100;
+        float cost = (building.getLevel()+1)*100;
         if (money>cost){
             money -= cost;
             gold.setAmount(money);
             resourceRepo.save(gold);
         }
-        boolean result;
-        result=money>cost;
-        return result;
+        return money>cost;
     }
 
     public boolean buyNewBuilding(long kingdomId){
         calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
-        float money;
-        money = gold.getAmount();
+        float money = gold.getAmount();
         boolean result;
         result=(money>=250);
         if(result){
@@ -156,5 +151,4 @@ public class ResourceServices {
         }
         return result;
     }
-
 }
