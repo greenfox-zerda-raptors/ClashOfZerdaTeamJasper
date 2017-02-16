@@ -41,11 +41,11 @@ public class Battle {
     @Column(name = "attacker_losses")
     private int attackerLosses;
 
-    public Battle (Kingdom attacker, Kingdom defender, List<Troop> attackerTroops){
+    public Battle (Kingdom attacker, Kingdom defender, List<Troop> attackerTroops, List<Troop> defenderTroops){
         this.attacker = attacker;
         this.defender = defender;
         this.attackerTroops = attackerTroops;
-        this.defenderTroops = getDefenderTroops(defender);
+        this.defenderTroops = defenderTroops;
         this.attackerHp = getHp(this.attackerTroops);
         this.defenderHp = getHp(this.defenderTroops);
         this.attackerAttackPower = getAttackPower(this.attackerTroops);
@@ -64,14 +64,6 @@ public class Battle {
                 this.attackerAttackPower,
                 this.defenderDefensePower
         );
-    }
-
-    private List<Troop> getDefenderTroops(Kingdom defender){
-        List<Troop> defenderTroops = new ArrayList<>();
-        for (Troop troop : defender.getTroops()){
-            defenderTroops.add(troop);
-        }
-        return defenderTroops;
     }
 
     private int getHp(List<Troop> troops){

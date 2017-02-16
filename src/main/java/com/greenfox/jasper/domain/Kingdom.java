@@ -47,6 +47,8 @@ public class Kingdom implements Serializable {
     @Column(name = "pos_y")
     private int posY;
 
+    // TODO positions
+
     public Kingdom() {
         this.name = "";
         this.buildings = new ArrayList<>();

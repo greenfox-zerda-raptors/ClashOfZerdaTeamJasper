@@ -34,12 +34,11 @@ public class Troop implements Serializable {
     private Kingdom kingdom;
 
     public Troop() {
-        this.level = 1;
+        this.level = 0;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;
     }
-
 
     public Troop(Kingdom kingdom) {
         this.level = 0;

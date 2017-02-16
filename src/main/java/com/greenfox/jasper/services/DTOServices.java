@@ -66,15 +66,34 @@ public class DTOServices {
 
     public ResourceDto convertResourceWithBuildingsDto(Resource resource, List<Building> buildings) {
         ResourceDto result = new ResourceDto();
-        result.setId(result.getId());
+        result.setId(resource.getId());
         result.setType(resource.getType());
         result.setAmount((int) resource.getAmount());
         result.setBuildings(convertBuildingListToDTO(buildings));
         return result;
     }
 
+    public List<KingdomDto> convertKingdomListToDTO(List<Kingdom> kingdomList){
+        return kingdomList.stream().map(this::convertKingdomToDTO).collect(Collectors.toList());
+    }
+
     public void takeRegisterDTO() {
 
+    }
+
+    public BattleResponseDto convertBattleToDto(Battle battle) {
+
+        BattleResponseDto result = new BattleResponseDto();
+
+        result.setAttackerTroops(battle.getAttackerTroops());
+        result.setAttackerCasualties(battle.getAttackerCasualties());
+        result.setAttackerDamage(battle.getAttackerAttackPower() - battle.getDefenderDefensePower());
+
+        result.setDefenderTroops(battle.getDefenderTroops());
+        result.setDefenderCasualties(battle.getDefenderCasualties());
+        result.setDefenderDamage(battle.getDefenderAttackPower() - battle.getAttackerDefensePower());
+
+        return result;
     }
 
 }

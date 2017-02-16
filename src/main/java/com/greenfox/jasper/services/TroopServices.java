@@ -15,6 +15,10 @@ public class TroopServices {
 
     @Autowired
     KingdomServices kingdomServices;
+
+    @Autowired
+    TimedEventServices timedEventServices;
+
     public Troop findOneTroop(long troopId){
         return troopRepo.findOne(troopId);
     }
@@ -35,9 +39,30 @@ public class TroopServices {
         troopRepo.save(troop);
     }
 
+    public void saveAllFromList(List<Troop> listOfTroops){
+        troopRepo.save(listOfTroops);
+    }
     public void deleteOneTroop(Troop troop) {
         troopRepo.delete(troop);
     }
 
+    public void deleteAllFromList(List<Troop> listOfTroops){
+        troopRepo.delete(listOfTroops);
+    }
 
+    public void deleteMany(List<Troop> ... Lists){
+        for(List<Troop> troops : Lists){
+            troopRepo.delete(troops);
+            }
+    }
+
+    public void deleteTest(long troopId) {
+        troopRepo.delete(troopId);
+    }
+
+    public void addNewTroop(long kingdomId) {
+        Troop newTroop = new Troop(kingdomServices.findOneById(kingdomId));
+        troopRepo.save(newTroop);
+        timedEventServices.addNewUpgradeTroopEvent(newTroop.getTroopId(), kingdomId);
+    }
 }

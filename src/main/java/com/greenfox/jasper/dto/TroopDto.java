@@ -2,17 +2,17 @@ package com.greenfox.jasper.dto;
 
 public class TroopDto {
 
-    private int id;
+    private long id;
     private int level;
     private int hp;
     private int attack;
     private int defense;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,5 +46,16 @@ public class TroopDto {
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    @Override
+    public String toString() {
+        return "TroopDto{" +
+                "id=" + id +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                '}';
     }
 }

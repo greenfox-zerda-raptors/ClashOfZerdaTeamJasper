@@ -5,10 +5,7 @@ import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingResponse;
 import com.greenfox.jasper.security.JwtUser;
-import com.greenfox.jasper.services.BuildingServices;
-import com.greenfox.jasper.services.DTOServices;
-import com.greenfox.jasper.services.ResourceServices;
-import com.greenfox.jasper.services.TimedEventServices;
+import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/kingdom/buildings")
 public class BuildingController {
+
+    @Autowired
+    private KingdomServices kingdomServices;
 
     @Autowired
     private BuildingServices buildingServices;
@@ -35,7 +35,7 @@ public class BuildingController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<BuildingResponse> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
-        long kingdomId = currentUser.getId();
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
         if (buildingList == null) {
@@ -56,10 +56,9 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/newbuilding", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity addNewBuildingPost(@AuthenticationPrincipal JwtUser currentUser,@RequestBody Building building) {
-        long kingdomId = currentUser.getId();
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         boolean available = resourceServices.buyNewBuilding(kingdomId);
         if (!available) {
             return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
@@ -72,38 +71,15 @@ public class BuildingController {
 
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
     public ResponseEntity upgradeBuilding(@AuthenticationPrincipal JwtUser currentUser, @RequestBody Building building) {
-        long kingdomId = currentUser.getId();
+        long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         long buildingId = building.getBuildingId();
         boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
         if (!available) {
             return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
         }
-        timedEventServices.addNewLevelUpEvent(buildingId);
+        timedEventServices.addNewLevelUpEvent(buildingId, kingdomId);
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         return new ResponseEntity<>(result, HttpStatus.OK);
-        }
     }
+}
 
-//    @RequestMapping(value = "/levelup/{buildingId}", method = RequestMethod.PUT)
-//    public ResponseEntity<BuildingDto> levelUpBuildingById(@PathVariable int kingdomId, @PathVariable int buildingId) throws IOException {
-//        boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
-//        if (!available) {
-//            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
-//         }
-//        timedEventServices.addNewLevelUpEvent(buildingId);
-//        BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-//
-//
-//    @RequestMapping(value = "/newbuilding/{type}", method = RequestMethod.GET)
-//    public ResponseEntity<BuildingDto> addNewBuilding(@PathVariable int kingdomId, @PathVariable String type) throws IOException {
-//        boolean available = resourceServices.buyNewBuilding(kingdomId);
-//        if (!available) {
-//            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
-//        }
-//            buildingServices.addNewBuilding(kingdomId, type);
-//            BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findLastBuilding(kingdomId));
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        }
-//    }
