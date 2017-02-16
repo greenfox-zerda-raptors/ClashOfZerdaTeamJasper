@@ -3,7 +3,7 @@ package com.greenfox.jasper.dto;
 import java.util.List;
 
 public class KingdomDto {
-
+// TODO posX-Y
 
     private UserDto user;
     private List<BuildingDto> buildings;

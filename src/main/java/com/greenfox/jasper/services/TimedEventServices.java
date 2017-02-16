@@ -20,6 +20,8 @@ import java.util.List;
 @Service
 public class TimedEventServices {
 
+    // TODO building / troop end time set
+
     private long baseTime = 60000; // currently set for 1 min., more balance changes required
 
     @Autowired

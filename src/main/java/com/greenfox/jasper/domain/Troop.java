@@ -27,7 +27,7 @@ public class Troop implements Serializable {
     private int defense;
 
     @Column(name="upgrade_time")
-    private long upgradeTime;
+    private long upgradeTime = 0;
 
     @ManyToOne
     @JsonIgnore
@@ -98,5 +98,13 @@ public class Troop implements Serializable {
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public long getUpgradeTime() {
+        return upgradeTime;
+    }
+
+    public void setUpgradeTime(long upgradeTime) {
+        this.upgradeTime = upgradeTime;
     }
 }

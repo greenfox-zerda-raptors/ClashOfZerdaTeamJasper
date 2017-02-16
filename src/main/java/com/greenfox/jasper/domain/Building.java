@@ -32,7 +32,7 @@ public class Building implements Serializable {
     private Resource resource;
 
     @Column(name = "levelup_time")
-    private long levelUpTime;
+    private long levelUpTime = 0;
 
     public Building() {
     }
