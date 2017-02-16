@@ -13,4 +13,5 @@ public interface TimedEventRepo extends CrudRepository <TimedEvent, Long > {
 
     @Query("SELECT a FROM TimedEvent a WHERE a.wasExecuted = false and a.executionTime < :currentTime ")
     List<TimedEvent> findAllWaitingForExecution(@Param("currentTime") long currentTime);
+
 }

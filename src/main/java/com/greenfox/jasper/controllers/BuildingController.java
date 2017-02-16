@@ -77,7 +77,7 @@ public class BuildingController {
         if (!available) {
             return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
         }
-        timedEventServices.addNewLevelUpEvent(buildingId);
+        timedEventServices.addNewLevelUpEvent(buildingId, kingdomId);
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

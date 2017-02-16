@@ -15,6 +15,10 @@ public class TroopServices {
 
     @Autowired
     KingdomServices kingdomServices;
+
+    @Autowired
+    TimedEventServices timedEventServices;
+
     public Troop findOneTroop(long troopId){
         return troopRepo.findOne(troopId);
     }
@@ -52,4 +56,13 @@ public class TroopServices {
             }
     }
 
+    public void deleteTest(long troopId) {
+        troopRepo.delete(troopId);
+    }
+
+    public void addNewTroop(long kingdomId) {
+        Troop newTroop = new Troop(kingdomServices.findOneById(kingdomId));
+        troopRepo.save(newTroop);
+        timedEventServices.addNewUpgradeTroopEvent(newTroop.getTroopId(), kingdomId);
+    }
 }
