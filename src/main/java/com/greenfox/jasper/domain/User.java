@@ -15,62 +15,62 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "APPUSER")
+@Table(name = "user_table")
 @Component
 @SequenceGenerator(name = "user_seq", initialValue = 4)
 public class User implements Serializable {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     //@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "USERNAME", length = 50, unique = true)
+    @Column(name = "user_name", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
     private String username;
 
-    @Column(name = "PASSWORD", length = 100)
+    @Column(name = "password", length = 100)
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column(name = "FIRSTNAME", length = 50)
+    @Column(name = "first_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String firstname;
 
-    @Column(name = "LASTNAME", length = 50)
+    @Column(name = "last_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String lastname;
 
-    @Column(name = "EMAIL", length = 50)
+    @Column(name = "email", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String email;
 
-    @Column(name = "ENABLED")
+    @Column(name = "enabled")
     @NotNull
     private Boolean enabled;
 
-    @Column(name = "LASTPASSWORDRESETDATE")
+    @Column(name = "last_pwd_reset_date")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "USER_AUTHORITY",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+            name = "user_authority_table",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authority_id")})
     private List<Authority> authorities;
 
     @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Kingdom kingdom;
-    @Column(name = "POINTS")
+    @Column(name = "points")
     @NotNull
     private int points; // TODO method to calc. points, when to calc points? 2nd @scheduler?
 

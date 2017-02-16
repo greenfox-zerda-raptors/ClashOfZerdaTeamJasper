@@ -5,6 +5,7 @@ import com.greenfox.jasper.domain.Troop;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 
 
@@ -14,8 +15,11 @@ public class BattleEvent extends TimedEvent {
 
     @Column(name = "attacker_id")
     private long attackerKingdomId;
-    @Column(name = "troops")
+
+    @Transient
+    @Column(name = "troops_list")
     private ArrayList<Troop> attackingTroops; // decide how we will save troops on the move
+
     @Column(name = "defender_id")
     private long defenderKingdomId;
 

@@ -1,9 +1,5 @@
 package com.greenfox.jasper;
 
-import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.Kingdom;
-import com.greenfox.jasper.domain.Resource;
-import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -35,15 +31,6 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        kingdomServices.saveOneKingdom(new Kingdom("romania", userServices.findOneUser(1)));
-        resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("romania")));
-        resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("romania")));
-        buildingServices.saveOneBuilding(new Building("farm", kingdomServices.findKingdomByName("romania"), 60));
-        buildingServices.saveOneBuilding(new Building("mine", kingdomServices.findKingdomByName("romania"), 60));
-        buildingServices.saveOneBuilding(new Building("townhall", kingdomServices.findKingdomByName("romania"), 1));
-        buildingServices.saveOneBuilding(new Building("barrack", kingdomServices.findKingdomByName("romania")));
-        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-        troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+        
     }
 }

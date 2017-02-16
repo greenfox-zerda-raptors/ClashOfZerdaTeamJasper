@@ -1,4 +1,4 @@
-package com.greenfox.jasper.config;
+package com.greenfox.jasper.Config;
 
 import com.greenfox.jasper.security.JwtAuthenticationEntryPoint;
 import com.greenfox.jasper.security.JwtAuthenticationTokenFilter;
@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/swagger-ui.html#/**").permitAll()
+                .antMatchers("/flyway").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/configuration/**").permitAll()
                 .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
