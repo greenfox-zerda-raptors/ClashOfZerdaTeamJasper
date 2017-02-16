@@ -1,9 +1,5 @@
 package com.greenfox.jasper;
 
-import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.Resource;
-import com.greenfox.jasper.domain.Troop;
-import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

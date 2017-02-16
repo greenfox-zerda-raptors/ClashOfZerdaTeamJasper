@@ -26,8 +26,6 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    //Travis?
-
     @Autowired
     TypeResolver typeResolver;
 
