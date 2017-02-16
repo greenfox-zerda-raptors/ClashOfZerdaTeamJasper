@@ -17,7 +17,7 @@ branches:
   only:
     - master
     - bncbodrogi
-    - adam-db
+    - database-update
     - zoltan-refactoring-cleaningcode
 
 before_cache:
