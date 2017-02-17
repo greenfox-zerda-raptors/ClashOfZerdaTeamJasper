@@ -7,6 +7,7 @@ public class TroopDto {
     private int hp;
     private int attack;
     private int defense;
+    private long upgradeTime;
 
     public long getId() {
         return id;
@@ -48,6 +49,14 @@ public class TroopDto {
         this.defense = defense;
     }
 
+    public long getUpgradeTime() {
+        return upgradeTime;
+    }
+
+    public void setUpgradeTime(long upgradeTime) {
+        this.upgradeTime = upgradeTime;
+    }
+
     @Override
     public String toString() {
         return "TroopDto{" +
@@ -56,6 +65,7 @@ public class TroopDto {
                 ", hp=" + hp +
                 ", attack=" + attack +
                 ", defense=" + defense +
+                ", upgradeTime=" + upgradeTime +
                 '}';
     }
 }

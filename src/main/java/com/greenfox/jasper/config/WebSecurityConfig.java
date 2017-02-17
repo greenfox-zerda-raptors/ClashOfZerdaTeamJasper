@@ -1,4 +1,4 @@
-package com.greenfox.jasper.Config;
+package com.greenfox.jasper.config;
 
 import com.greenfox.jasper.security.JwtAuthenticationEntryPoint;
 import com.greenfox.jasper.security.JwtAuthenticationTokenFilter;

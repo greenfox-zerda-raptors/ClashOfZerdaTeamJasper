@@ -112,17 +112,22 @@ public class TimedEventServices {
     }
 
     public void addNewUpgradeTroopEvent(long troopId, long kingdomId){
-        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(upgradeTroopTime(kingdomId),kingdomId, troopId);
+        long upgradeTroopTime = upgradeTroopTime(kingdomId);
+        UpgradeTroopEvent upgradingTroop = new UpgradeTroopEvent(upgradeTroopTime,kingdomId, troopId);
         timedEventRepo.save(upgradingTroop);
+        Troop troop = troopServices.findOneTroop(troopId);
+        troop.setUpgradeTime(upgradeTroopTime);
+        troopServices.saveOneTroop(troop);
     }
 
     public void addNewLevelUpEvent(long kingdomId, long buildingID) {
          Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
+        long buildingLevelUpTime = buildingLevelUpTime(temporaryBuilding, kingdomId);
+        temporaryBuilding.setLevelUpTime(buildingLevelUpTime);
          TimedEvent levelUpEvent = new LevelUpEvent(
-                 buildingLevelUpTime(temporaryBuilding, kingdomId),
-                 kingdomId,
-                 buildingID);
+                 buildingLevelUpTime, kingdomId, buildingID);
         timedEventRepo.save(levelUpEvent);
+        buildingServices.saveOneBuilding(temporaryBuilding);
     }
 
     private long getQueueTimeForTroopEvents(long kingdomId) {

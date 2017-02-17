@@ -114,6 +114,7 @@ public class Building implements Serializable {
     public void levelUp() {
 //        TODO formula for stat changes due to lvl
         this.level++;
+        this.levelUpTime = 0;
     }
 
     public void decreaseLvl() {

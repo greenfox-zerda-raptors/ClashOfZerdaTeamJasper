@@ -16,8 +16,6 @@ public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    // TODO Battle converter for battle
-
     public KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
@@ -33,7 +31,6 @@ public class DTOServices {
     }
 
     public BuildingDto convertBuildingToDTO(Building building) {
-        // TODO set finish time
         return modelMapper.map(building, BuildingDto.class);
     }
 

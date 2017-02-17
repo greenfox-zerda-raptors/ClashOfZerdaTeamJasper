@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -55,8 +57,22 @@ public class BuildingControllerTest extends AbstractJUnit4SpringContextTests{
 
     @Test
     public void buildingControllerTest() throws Exception {
-      //  mockMvc.perform(get("https:/localhost:8080/kingdom/buildings")).andExpect(status().isForbidden());
+        mockMvc.perform(get("/2/buildings")).andExpect(status().isNotFound());
     }
+    @Test
+    public void realmTest() throws Exception {
+        mockMvc.perform(get("/realm"))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+//    @Test
+//    public void testTest() throws Exception {
+//        mockMvc.perform(post("/api/users").header("Authorization", base64ForTestUser).contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"userName\":\"testUserDetails\",\"firstName\":\"xxx\",\"lastName\":\"xxx\",\"password\":\"xxx\"}"))
+//                .andDo(print())
+//                .andExpect(status().isBadRequest())
+//                .andReturn();
+//    }
 
 
 
