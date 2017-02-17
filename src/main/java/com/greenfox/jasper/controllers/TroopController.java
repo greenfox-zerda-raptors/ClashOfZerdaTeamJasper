@@ -70,7 +70,7 @@ public class TroopController {
         if (kingdomId == 0) {
             return new ResponseEntity(new CustomError("No suxh kingdom", 404), HttpStatus.NOT_FOUND);
         }
-        Troop troopToBeUpgraded = troopServices.findOneTroop(troopPostDto.getTroopId())
+        Troop troopToBeUpgraded = troopServices.findOneTroop(troopPostDto.getTroopId());
         if(troopToBeUpgraded == null){
             return new ResponseEntity(new CustomError("No such troop", 404), HttpStatus.NOT_FOUND);
         }
