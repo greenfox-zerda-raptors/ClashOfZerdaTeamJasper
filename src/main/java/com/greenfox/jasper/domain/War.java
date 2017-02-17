@@ -24,13 +24,21 @@ public class War {
         int accumulatedBuildingDamage = 0;
 
         List<Long> defenderLostBuildingIds = new ArrayList<>();
+
         List<Long> attackerTroopIds = migrateTroopIds(initialBattle.getAttackerTroops());
+
         List<Long> defenderTroopIds = migrateTroopIds(initialBattle.getDefenderTroops());
+
         List<Long> lostAttackerTroopIds = migrateTroopIds(initialBattle.getAttackerCasualties());
+
         List<Long> lostDefenderTroopIds = migrateTroopIds(initialBattle.getDefenderCasualties());
+
         int attackerDamageDone = initialBattle.getAttackerDamageDone();
+
         int defenderDamageDone = initialBattle.getDefenderDamageDone();
+
         long attackerId = initialBattle.getAttacker().getUser().getId();
+
         long defenderId = initialBattle.getDefender().getUser().getId();
 
 

@@ -41,7 +41,7 @@ public class BattleTest {
     }};
 
     @Test
-    public void GetHpTest(){
+    public void GetHpTest() throws Exception {
 
         int actualHp = testBattle.getHp(testWithFiveTroops);
 
@@ -49,7 +49,7 @@ public class BattleTest {
     }
 
     @Test
-    public void GetAttackTest(){
+    public void GetAttackTest() throws Exception {
 
         int actualAttack = testBattle.getAttackPower(testWithFiveTroops);
 
@@ -57,7 +57,7 @@ public class BattleTest {
     }
 
     @Test
-    public void GetDefenseTest(){
+    public void GetDefenseTest() throws Exception {
 
         int actualDefense = testBattle.getDefensePower(testWithFiveTroops);
 
@@ -66,7 +66,7 @@ public class BattleTest {
 
 
     @Test
-    public void GetCasualtiesZeroAttackerVersusOneDefendersTest(){
+    public void GetCasualtiesZeroAttackerVersusOneDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithOneTroop, 0);
 
         assertEquals(0, testCasualties.size());
@@ -74,7 +74,7 @@ public class BattleTest {
 
 
     @Test
-    public void GetCasualtiesOneAttackerVersusOneDefendersTest(){
+    public void GetCasualtiesOneAttackerVersusOneDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithOneTroop, 10);
 
         assertEquals(0, testCasualties.size());
@@ -82,7 +82,7 @@ public class BattleTest {
 
 
     @Test
-    public void GetCasualtiesThreeAttackerVersusOneDefendersTest(){
+    public void GetCasualtiesThreeAttackerVersusOneDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithOneTroop, 30);
 
         assertEquals(1, testCasualties.size());
@@ -90,28 +90,35 @@ public class BattleTest {
     }
 
     @Test
-    public void GetCasualtiesZeroAttackerVersusFiveDefendersTest(){
+    public void GetCasualtiesZeroAttackerVersusFiveDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithFiveTroops, 0);
 
             assertEquals(0, testCasualties.size());
     }
 
     @Test
-    public void GetCasualtiesOneAttackerVersusFiveDefendersTest(){
+    public void GetCasualtiesOneAttackerVersusFiveDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithFiveTroops, 10);
 
         assertEquals(0, testCasualties.size());
     }
 
     @Test
-    public void GetCasualtiesTeoAttackerVersusFiveDefendersTest(){
+    public void GetCasualtiesTwoAttackerVersusFiveDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithFiveTroops, 20);
 
         assertEquals(0, testCasualties.size());
     }
 
     @Test
-    public void GetCasualtiesFIveAttackerVersusFiveDefendersTest(){
+    public void GetCasualtiesThreeAttackerVersusThreeDefendersTest() throws Exception {
+        List<Troop> testCasualties = testBattle.getCasualties(testWithThreeTroops, 30);
+
+        assertEquals(0, testCasualties.size());
+    }
+
+    @Test
+    public void GetCasualtiesFiveAttackerVersusFiveDefendersTest() throws Exception {
         List<Troop> testCasualties = testBattle.getCasualties(testWithFiveTroops, 50);
 
         assertEquals(1, testCasualties.size());
