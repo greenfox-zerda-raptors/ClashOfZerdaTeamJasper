@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
-import com.greenfox.jasper.dto.BuildingResponse;
+import com.greenfox.jasper.dto.BuildingListDTO;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,14 @@ public class BuildingController {
     private ResourceServices resourceServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<BuildingResponse> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
+    public ResponseEntity<BuildingListDTO> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
 
         if (buildingList == null) {
             return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
         }
-        BuildingResponse result = new BuildingResponse(dtoServices.convertBuildingListToDTO(buildingList));
+        BuildingListDTO result = new BuildingListDTO(dtoServices.convertBuildingListToDTO(buildingList));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -57,7 +57,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity addNewBuildingPost(@AuthenticationPrincipal JwtUser currentUser,@RequestBody Building building) {
+    public ResponseEntity<BuildingDto> addNewBuildingPost(@AuthenticationPrincipal JwtUser currentUser,@RequestBody Building building) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         boolean available = resourceServices.buyNewBuilding(kingdomId);
         if (!available) {
@@ -70,7 +70,7 @@ public class BuildingController {
 
 
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-    public ResponseEntity upgradeBuilding(@AuthenticationPrincipal JwtUser currentUser, @RequestBody Building building) {
+    public ResponseEntity<BuildingDto> upgradeBuilding(@AuthenticationPrincipal JwtUser currentUser, @RequestBody Building building) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         long buildingId = building.getBuildingId();
         boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);

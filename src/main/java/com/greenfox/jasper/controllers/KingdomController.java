@@ -31,7 +31,7 @@ public class KingdomController {
     private DTOServices dtoServices;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
+    public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         resourceServices.calculateResource(kingdomId);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);

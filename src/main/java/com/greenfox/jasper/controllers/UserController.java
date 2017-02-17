@@ -19,7 +19,7 @@ public class UserController {
 
 //    @RequestMapping(value = "/user", method = RequestMethod.GET)
 //    public User getUser(@AuthenticationPrincipal JwtUser currentUser) {
-//        long userId = currentUser.getId();
+//        long userId = currentUser.getHttpStatusCode();
 //        return userServices.findOneUser(userId);
 //    }
 

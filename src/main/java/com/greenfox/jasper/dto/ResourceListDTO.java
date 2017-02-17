@@ -6,13 +6,13 @@ import java.util.List;
 /**
  * Created by Zoltán on 2017.02.02..
  */
-public class ResourceResponse {
+public class ResourceListDTO {
     List<ResourceDto> resources = new ArrayList<>();
 
-    public ResourceResponse(ResourceDto resourceDto){
+    public ResourceListDTO(ResourceDto resourceDto){
         resources.add(resourceDto);
     }
-    public ResourceResponse(List<ResourceDto> resources) {
+    public ResourceListDTO(List<ResourceDto> resources) {
         this.resources = resources;
     }
 

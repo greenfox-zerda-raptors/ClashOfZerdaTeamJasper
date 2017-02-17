@@ -1,5 +1,6 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.KingdomListResponse;
 import com.greenfox.jasper.services.DTOServices;
@@ -24,11 +25,11 @@ public class RealmController {
 
     // TODO preauthorize to ONLY admin
     @RequestMapping(value = "")
-    public ResponseEntity availableRealms(){
+    public ResponseEntity<KingdomListResponse> availableRealms(){
         List<Kingdom> allKingdoms = kingdomServices.findAll();
         KingdomListResponse result = new KingdomListResponse(dtoServices.convertKingdomListToDTO(allKingdoms));
         if (result == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no kingdoms in this realm");
+            return new ResponseEntity(new CustomError("No kingdoms in this realm", 400), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
