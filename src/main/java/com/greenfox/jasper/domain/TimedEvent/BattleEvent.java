@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -18,7 +19,7 @@ public class BattleEvent extends TimedEvent {
 
     @Transient
     @Column(name = "troops_list")
-    private ArrayList<Troop> attackingTroops; // decide how we will save troops on the move
+    private List<Troop> attackingTroops; // decide how we will save troops on the move
 
     @Column(name = "defender_id")
     private long defenderKingdomId;
@@ -26,7 +27,7 @@ public class BattleEvent extends TimedEvent {
     public BattleEvent(){
 
     }
-    public BattleEvent(long executionTime, long attackerKingdomId, ArrayList<Troop> attackingTroops, long defenderKingdomId) {
+    public BattleEvent(long executionTime, long attackerKingdomId, List<Troop> attackingTroops, long defenderKingdomId) {
         super(executionTime);
         this.attackerKingdomId = attackerKingdomId;
         this.attackingTroops = attackingTroops;
@@ -41,7 +42,7 @@ public class BattleEvent extends TimedEvent {
         this.attackerKingdomId = attackerKingdomId;
     }
 
-    public ArrayList<Troop> getAttackingTroops() {
+    public List<Troop> getAttackingTroops() {
         return attackingTroops;
     }
 

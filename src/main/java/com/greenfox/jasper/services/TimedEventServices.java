@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -106,8 +105,8 @@ public class TimedEventServices {
         tempEvent.setWasExecuted(true);
         timedEventRepo.save(tempEvent);
     }
-    public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
-        BattleEvent battleEvent = new BattleEvent(battleTime(), attackerId, troops, defenderId);
+    public void addNewBattleEvent(long attackerId, List<Troop> troops, long defenderId){
+        BattleEvent battleEvent = new BattleEvent(battleTime(attackerId, defenderId), attackerId, troops, defenderId);
         timedEventRepo.save(battleEvent);
     }
 
@@ -178,7 +177,7 @@ public class TimedEventServices {
     private long buildingLevelUpTime(Building temporaryBuilding, long kingdomId) {
         return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding) + getQueueTimeForBuildings(kingdomId);
     }
-    private long battleTime() {
+    private long battleTime(long attackerId, long defenderId) {
         // TODO scales with kingdom distances
         return System.currentTimeMillis()+baseTime;
     }
