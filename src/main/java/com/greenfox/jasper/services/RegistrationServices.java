@@ -1,5 +1,6 @@
 package com.greenfox.jasper.services;
 
+import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.domain.User;
@@ -26,6 +27,9 @@ public class RegistrationServices {
     @Autowired
     private ResourceServices resourceServices;
 
+    @Autowired
+    private BuildingServices buildingServices;
+
     public void registerNewUser(User user){
 
         // TODO refactor / move to different service
@@ -33,7 +37,11 @@ public class RegistrationServices {
         List<Authority> authorities = user.getAuthorities();
         authorities.add(userAuthorityRepo.findOne((long)1));
         userRepo.save(user);
+        kingdomServices.saveOneKingdom(user.getKingdom());
         Kingdom newKigndom = kingdomServices.findOneByUserId(user.getId());
+        Building townhall = new Building("townhall", kingdomServices.findKingdomByName(user.getKingdom().getName()));
+        townhall.levelUp();
+        buildingServices.saveOneBuilding(townhall);
         resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName(user.getKingdom().getName())));
         resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName(user.getKingdom().getName())));
         List<Resource> starterResources = resourceServices.findAllResourcesByKingdomId(newKigndom.getKingdomId());

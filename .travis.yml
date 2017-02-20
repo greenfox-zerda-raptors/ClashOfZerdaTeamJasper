@@ -18,7 +18,7 @@ branches:
     - master
     - bncbodrogi
     - database-update
-    - zoltan-timed-battle
+    - zoltan-reqistercontroller
 
 
 before_cache:

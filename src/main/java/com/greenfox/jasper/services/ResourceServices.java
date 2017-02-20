@@ -35,9 +35,18 @@ public class ResourceServices {
         Resource goldResource = resourceRepo.findOneByKingdomAndType(kingdom, "gold");
 
         List<Building> farmBuildings = buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, "farm");
+        if(farmBuildings.size() == 0){
+            farmBuildings.add(new Building());
+        }
         List<Building> mineBuildings = buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, "mine");
+        if(mineBuildings.size() == 0){
+            mineBuildings.add(new Building());
+        }
         Building townhallBuilding = buildingServices.findTownHallByKingdom(kingdom);
         List<Troop> troops = troopServices.findAllTroopsByKingdomId(kingdomId);
+        if(troops.size() == 0){
+            troops.add(new Troop());
+        }
 
         long kingdomLastUpdateTime = kingdom.getUpdateTime();
 
