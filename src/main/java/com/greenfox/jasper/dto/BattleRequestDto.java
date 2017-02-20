@@ -1,6 +1,7 @@
 package com.greenfox.jasper.dto;
 
 import com.greenfox.jasper.domain.Troop;
+
 import java.util.List;
 
 
@@ -41,5 +42,15 @@ public class BattleRequestDto {
 
     public void setDefenderId(long defenderId) {
         this.defenderId = defenderId;
+    }
+
+    @Override
+    public String toString() {
+        return "BattleRequestDto{" +
+                "attackerTroops=" + attackerTroops +
+                ", defenderTroops=" + defenderTroops +
+                ", attackerId=" + attackerId +
+                ", defenderId=" + defenderId +
+                '}';
     }
 }

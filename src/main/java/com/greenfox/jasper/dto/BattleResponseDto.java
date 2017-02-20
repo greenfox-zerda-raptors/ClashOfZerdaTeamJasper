@@ -78,4 +78,18 @@ public class BattleResponseDto {
     public void setDefenderCasualties(List<Troop> defenderCasualties) {
         this.defenderCasualties = defenderCasualties;
     }
+
+    @Override
+    public String toString() {
+        return "BattleResponseDto{" +
+                "attackerId=" + attackerId +
+                ", attackerTroops=" + attackerTroops +
+                ", attackerDamage=" + attackerDamage +
+                ", attackerCasualties=" + attackerCasualties +
+                ", defenderId=" + defenderId +
+                ", defenderTroops=" + defenderTroops +
+                ", defenderDamage=" + defenderDamage +
+                ", defenderCasualties=" + defenderCasualties +
+                '}';
+    }
 }
