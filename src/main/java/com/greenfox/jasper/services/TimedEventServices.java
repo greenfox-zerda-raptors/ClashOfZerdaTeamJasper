@@ -1,6 +1,7 @@
 package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.TimedEvent.BattleEvent;
 import com.greenfox.jasper.domain.TimedEvent.LevelUpEvent;
 import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -85,6 +85,7 @@ public class TimedEventServices {
     public void executeBattle(TimedEvent timedEvent) {
         // TODO actually doing battle
         BattleEvent battleEvent = (BattleEvent) timedEvent;
+        System.out.println("battle donezo");
     }
 
     private void executeLevelUp(TimedEvent timedEvent) {
@@ -106,8 +107,8 @@ public class TimedEventServices {
         tempEvent.setWasExecuted(true);
         timedEventRepo.save(tempEvent);
     }
-    public void addNewBattleEvent(long attackerId, ArrayList<Troop> troops, long defenderId){
-        BattleEvent battleEvent = new BattleEvent(battleTime(), attackerId, troops, defenderId);
+    public void addNewBattleEvent(long attackerId, List<Troop> troops, long defenderId){
+        BattleEvent battleEvent = new BattleEvent(battleTime(attackerId, defenderId), attackerId, troops, defenderId);
         timedEventRepo.save(battleEvent);
     }
 
@@ -178,9 +179,17 @@ public class TimedEventServices {
     private long buildingLevelUpTime(Building temporaryBuilding, long kingdomId) {
         return System.currentTimeMillis() + baseTime * calculateBuildingTimeRatio(temporaryBuilding) + getQueueTimeForBuildings(kingdomId);
     }
-    private long battleTime() {
+    private long battleTime(long attackerId, long defenderId) {
         // TODO scales with kingdom distances
-        return System.currentTimeMillis()+baseTime;
+        Kingdom one = kingdomServices.findOneById(attackerId);
+        Kingdom two = kingdomServices.findOneById(defenderId);
+        return System.currentTimeMillis() + baseTime;
     }
+
+    private double calcuateDistance(int posX, int posY, int posX1, int posY1) {
+        return Math.sqrt((Math.pow(posX - posX1, 2)) + Math.pow(posY - posY1, 2));
+    }
+
+
 
 }

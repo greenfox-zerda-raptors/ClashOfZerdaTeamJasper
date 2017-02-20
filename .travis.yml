@@ -18,7 +18,7 @@ branches:
     - master
     - bncbodrogi
     - database-update
-    - zoltan-wiring-buildingtime-to-dto-and-timedevent
+    - zoltan-timed-battle
 
 
 before_cache:
