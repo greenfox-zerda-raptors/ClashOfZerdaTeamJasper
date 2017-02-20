@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-
 public class ControllerLoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerLoggingAspect.class);
