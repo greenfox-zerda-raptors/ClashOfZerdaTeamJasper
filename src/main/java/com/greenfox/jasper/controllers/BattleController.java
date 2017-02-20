@@ -61,6 +61,9 @@ public class BattleController {
     public ResponseEntity attackTest(@AuthenticationPrincipal JwtUser currentUser, @RequestBody BattleRequestDto requestDto){
         Kingdom dummy = kingdomServices.findOneByUserId(currentUser.getId());
 
+        if(dummy == null){
+            return new ResponseEntity("No such kingdom", HttpStatus.OK);
+        }
         timedEventServices.addNewBattleEvent(dummy.getKingdomId(), requestDto.getDefenderTroops(), requestDto.getDefenderId());
 
         return new ResponseEntity(HttpStatus.OK);

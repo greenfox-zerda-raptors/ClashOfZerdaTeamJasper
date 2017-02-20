@@ -1,6 +1,7 @@
 package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.Building;
+import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.TimedEvent.BattleEvent;
 import com.greenfox.jasper.domain.TimedEvent.LevelUpEvent;
 import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
@@ -84,6 +85,7 @@ public class TimedEventServices {
     public void executeBattle(TimedEvent timedEvent) {
         // TODO actually doing battle
         BattleEvent battleEvent = (BattleEvent) timedEvent;
+        System.out.println("battle donezo");
     }
 
     private void executeLevelUp(TimedEvent timedEvent) {
@@ -179,7 +181,15 @@ public class TimedEventServices {
     }
     private long battleTime(long attackerId, long defenderId) {
         // TODO scales with kingdom distances
-        return System.currentTimeMillis()+baseTime;
+        Kingdom one = kingdomServices.findOneById(attackerId);
+        Kingdom two = kingdomServices.findOneById(defenderId);
+        return System.currentTimeMillis() + baseTime;
     }
+
+    private double calcuateDistance(int posX, int posY, int posX1, int posY1) {
+        return Math.sqrt((Math.pow(posX - posX1, 2)) + Math.pow(posY - posY1, 2));
+    }
+
+
 
 }
