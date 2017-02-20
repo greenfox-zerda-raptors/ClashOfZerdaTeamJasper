@@ -6,13 +6,16 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 
 /**
  * Created by almasics on 2017.02.20..
  */
 
+@Component
 @Aspect
+
 public class ControllerLoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerLoggingAspect.class);

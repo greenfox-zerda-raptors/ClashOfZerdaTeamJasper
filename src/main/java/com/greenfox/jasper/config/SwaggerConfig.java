@@ -1,4 +1,4 @@
-package com.greenfox.jasper.Config;
+package com.greenfox.jasper.config;
 
 
 import com.fasterxml.classmate.TypeResolver;
