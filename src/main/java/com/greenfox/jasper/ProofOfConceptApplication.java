@@ -31,6 +31,16 @@ public class ProofOfConceptApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+//          kingdomServices.saveOneKingdom(new Kingdom("romania", userServices.findOneUser(1)));
+//                resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("romania")));
+//                resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("romania")));
+//                buildingServices.saveOneBuilding(new Building("farm", kingdomServices.findKingdomByName("romania"), 60));
+//                buildingServices.saveOneBuilding(new Building("mine", kingdomServices.findKingdomByName("romania"), 60));
+//                buildingServices.saveOneBuilding(new Building("townhall", kingdomServices.findKingdomByName("romania"), 1));
+//                buildingServices.saveOneBuilding(new Building("barrack", kingdomServices.findKingdomByName("romania")));
+//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
+
     }
 }

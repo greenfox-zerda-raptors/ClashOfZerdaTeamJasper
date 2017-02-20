@@ -3,14 +3,14 @@ package com.greenfox.jasper.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingResponse{
+public class BuildingListDTO {
 
     private List<BuildingDto> buildings = new ArrayList<>();
 
-    public BuildingResponse() {
+    public BuildingListDTO() {
     }
 
-    public BuildingResponse(List<BuildingDto> buildings) {
+    public BuildingListDTO(List<BuildingDto> buildings) {
         this.buildings = buildings;
     }
 

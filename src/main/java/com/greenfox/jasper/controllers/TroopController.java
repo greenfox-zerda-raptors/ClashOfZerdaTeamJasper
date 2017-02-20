@@ -2,8 +2,9 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
+import com.greenfox.jasper.dto.TroopDto;
 import com.greenfox.jasper.dto.TroopPostDto;
-import com.greenfox.jasper.dto.TroopResponse;
+import com.greenfox.jasper.dto.troopListDTO;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,26 +32,26 @@ public class TroopController {
     private BuildingServices buildingServices;
 
     @Autowired
-    private DTOServices DTOServices;
+    private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<TroopResponse> getTroops(@AuthenticationPrincipal JwtUser currentUser) {
+    public ResponseEntity<troopListDTO> getTroops(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
         if (troopList == null) {
             return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
         }
-        TroopResponse result = new TroopResponse(DTOServices.convertTroopListToDTO(troopList));
+        troopListDTO result = new troopListDTO(dtoServices.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{troopId}", method = RequestMethod.GET)
-    public ResponseEntity getOneTroop(@PathVariable long troopId) {
+    public ResponseEntity<TroopDto> getOneTroop(@PathVariable long troopId) {
         Troop result = troopServices.findOneTroop(troopId);
         if (result == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such troop");
+            return new ResponseEntity(new CustomError("No troop found with that id", 404), HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoServices.convertTRoopToDTO(result));
     }
 
 
@@ -64,20 +65,25 @@ public class TroopController {
 
     // TODO remove building dependency cd to kingdom
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-    public ResponseEntity upgradeTroop(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto) {
+    public ResponseEntity<TroopDto> upgradeTroop(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         if (kingdomId == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such kingdom");
+            return new ResponseEntity(new CustomError("No suxh kingdom", 404), HttpStatus.NOT_FOUND);
+        }
+        Troop troopToBeUpgraded = troopServices.findOneTroop(troopPostDto.getTroopId());
+        if(troopToBeUpgraded == null){
+            return new ResponseEntity(new CustomError("No such troop", 404), HttpStatus.NOT_FOUND);
         }
         timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
-        return ResponseEntity.status(HttpStatus.OK).body("Troop with id " + troopPostDto.getTroopId() + " will be upgraded");
+        TroopDto result = dtoServices.convertTRoopToDTO(troopToBeUpgraded);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity delete(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto){
+    public ResponseEntity<TroopDto> delete(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto){
         Troop result = troopServices.findOneTroop(troopPostDto.getTroopId());
         troopServices.deleteTest(troopPostDto.getTroopId());
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoServices.convertTRoopToDTO(result));
     }
 
 

@@ -2,7 +2,7 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
-import com.greenfox.jasper.dto.ResourceResponse;
+import com.greenfox.jasper.dto.ResourceListDTO;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
@@ -33,20 +33,20 @@ public class ResourceController {
     private DTOServices dtoServices;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResources(@AuthenticationPrincipal JwtUser currentUser) {
+    public ResponseEntity<ResourceListDTO> getResources(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         resourceServices.calculateResource(kingdomId);
         List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if (resourceList == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        ResourceResponse result = new ResourceResponse(
+        ResourceListDTO result = new ResourceListDTO(
                 dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((kingdomId))));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public ResponseEntity<ResourceResponse> getResourceBuildingByType(@AuthenticationPrincipal JwtUser currentUser, @PathVariable String type) {
+    public ResponseEntity<ResourceListDTO> getResourceBuildingByType(@AuthenticationPrincipal JwtUser currentUser, @PathVariable String type) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         resourceServices.calculateResource(kingdomId);
         Resource resourceList = resourceServices.findAllResourcesByKingdomIdAndType(kingdomId, type);
@@ -62,7 +62,7 @@ public class ResourceController {
         if (resourceList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceResponse result = new ResourceResponse(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceListDTO result = new ResourceListDTO(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

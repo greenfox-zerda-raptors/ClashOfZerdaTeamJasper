@@ -69,25 +69,5 @@ public class BuildingServicesTest{
         assertEquals(0, obtainedList.get(3).getLevel());
 
     }
-
-//    @Test
-//    public void findAllBuildingsByKingdomByTypeTest(){
-//        initMocks(this);
-//        Kingdom testKingdom = new Kingdom();
-//        testKingdom.setKingdomId(20);
-//        List<Building> testFarmList = new ArrayList<>(Arrays.asList(
-//           new Building("farm"), new Building("farm")
-//        ));
-//
-//        when(kingdomRepo.findOne(20L)).thenReturn(testKingdom);
-//        when(kingdomServices.findOneById(20)).thenReturn(testKingdom);
-//        when(buildingRepo.findAllBuildingByKingdomAndType(any(Kingdom.class), eq("farm") )).thenReturn(testFarmList);
-//        List<Building> obtainedFarms = buildingServices.findAllBuildingByKingdomIdAndByType(20L, ("farm"));
-//        assertNotNull(obtainedFarms);
-//        assertEquals(2, obtainedFarms.size());
-//        assertEquals("farm", obtainedFarms.get(0).getType());
-//
-//
-//    }
 }
 

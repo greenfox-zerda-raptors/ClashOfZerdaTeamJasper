@@ -6,6 +6,7 @@ public class BuildingDto {
     private String type;
     private int level;
     private int hp;
+    private long levelUpTime;
 
     public String getType() {
         return type;
@@ -39,6 +40,14 @@ public class BuildingDto {
         this.hp = hp;
     }
 
+    public long getLevelUpTime() {
+        return levelUpTime;
+    }
+
+    public void setLevelUpTime(long levelUpTime) {
+        this.levelUpTime = levelUpTime;
+    }
+
     @Override
     public String toString() {
         return "BuildingDto{" +
@@ -46,6 +55,7 @@ public class BuildingDto {
                 ", type='" + type + '\'' +
                 ", level=" + level +
                 ", hp=" + hp +
+                ", levelUpTime=" + levelUpTime +
                 '}';
     }
 }
