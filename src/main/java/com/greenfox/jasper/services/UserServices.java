@@ -2,7 +2,6 @@ package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.KingdomDto;
-import com.greenfox.jasper.dto.UserDto;
 import com.greenfox.jasper.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +52,6 @@ public class UserServices {
     }
 
     public List<User> findAllByScore() {
-        return userRepo.findAllOrderByPointsDesc();
+        return userRepo.findAllOrderByPointsByDesc();
     }
 }
