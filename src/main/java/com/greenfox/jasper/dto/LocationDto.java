@@ -22,4 +22,12 @@ public class LocationDto {
     public void setyPostition(long yPostition) {
         this.yPostition = yPostition;
     }
+
+    @Override
+    public String toString() {
+        return "LocationDto{" +
+                "xPostition=" + xPostition +
+                ", yPostition=" + yPostition +
+                '}';
+    }
 }

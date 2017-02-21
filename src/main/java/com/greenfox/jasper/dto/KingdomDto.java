@@ -42,4 +42,13 @@ public class KingdomDto {
         this.troops = troops;
     }
 
+    @Override
+    public String toString() {
+        return "KingdomDto{" +
+                "user=" + user +
+                ", buildings=" + buildings +
+                ", resources=" + resources +
+                ", troops=" + troops +
+                '}';
+    }
 }
