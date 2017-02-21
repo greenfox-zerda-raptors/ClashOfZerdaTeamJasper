@@ -37,6 +37,14 @@ public class Troop implements Serializable {
         this.defense = 5;
     }
 
+    public Troop(int id) {
+        this.troopId = id;
+        this.level = 1;
+        this.hp = 20;
+        this.attack = 10;
+        this.defense = 5;
+    }
+
     public Troop(Troop troop) {
         this.level = troop.getLevel();
         this.hp = troop.getHp();

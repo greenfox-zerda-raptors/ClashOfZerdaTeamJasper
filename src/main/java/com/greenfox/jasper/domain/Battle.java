@@ -27,6 +27,9 @@ public class Battle {
     }
 
     public Battle (Kingdom attacker, Kingdom defender, List<Troop> attackerTroops, List<Troop> defenderTroops){
+
+        System.out.println("Battle initiated");
+
         this.attacker = attacker;
         this.defender = defender;
         this.attackerTroops = attackerTroops;
@@ -41,12 +44,14 @@ public class Battle {
         this.defenderDamageDone = this.defenderAttackPower - this.attackerDefensePower;
         this.attackerCasualties = getCasualties(
                 this.attackerTroops,
-                this.attackerDefensePower
+                this.defenderAttackPower
         );
         this.defenderCasualties = getCasualties(
                 this.defenderTroops,
-                this.defenderDefensePower
+                this.attackerAttackPower
         );
+        this.attackerTroops.removeAll(attackerCasualties);
+        this.defenderTroops.removeAll(defenderCasualties);
     }
 
     public int getHp(List<Troop> troops){
@@ -73,7 +78,9 @@ public class Battle {
         return defensePower;
     }
 
-    public List<Troop> getCasualties(List<Troop> friendlyTroops, int foeAttack){
+    public List<Troop> getCasualties(List<Troop> friendlyInitialTroops, int foeAttack){
+
+        List<Troop> friendlyTroops = new ArrayList<>(friendlyInitialTroops);
 
         List<Troop> casualties = new ArrayList<>();
 
@@ -84,21 +91,33 @@ public class Battle {
         int totalHpLoss = foeAttack - friendlyDefense;
 
         if(friendlyHp <= totalHpLoss){
+
             this.buildingDamage = totalHpLoss - friendlyHp;
+
+            for (Troop troop : friendlyTroops){
+                troop.setHp(0);
+            }
+
             casualties.addAll(friendlyTroops);
 
         }else{
-            while(totalHpLoss > 0){
-                for (Troop troop : friendlyTroops){
-                    if (totalHpLoss >= troop.getHp()){
-                        casualties.add(troop);
-                        totalHpLoss -= troop.getHp();
-                    }else{
+                    for (Troop troop : friendlyTroops) {
+
+                        int topTroopinitialHp = troop.getHp();
+
                         troop.setHp(troop.getHp() - totalHpLoss);
-                        totalHpLoss = 0;
+
+                        totalHpLoss -= topTroopinitialHp;
+
+                        if (totalHpLoss < 0) {
+                            totalHpLoss = 0;
+                        }
+
+                        if (troop.getHp() <= 0) {
+                            casualties.add(troop);
+                        }
+
                     }
-                }
-            }
         }
         return casualties;
     }

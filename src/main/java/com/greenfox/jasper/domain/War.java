@@ -9,12 +9,11 @@ public class War {
 
         List<Troop> remainingAttackers = firstBattle.getAttackerTroops();
 
-        remainingAttackers.removeAll(firstBattle.getAttackerCasualties());
-
+        //remainingAttackers.removeAll(firstBattle.getAttackerCasualties());
 
         List<Troop> remainingDefenders = firstBattle.getDefenderTroops();
 
-        remainingDefenders.removeAll(firstBattle.getDefenderCasualties());
+        //remainingDefenders.removeAll(firstBattle.getDefenderCasualties());
 
         return new Battle(firstBattle.getAttacker(), firstBattle.getDefender(), remainingAttackers, remainingDefenders);
     }
@@ -42,11 +41,19 @@ public class War {
         long defenderId = initialBattle.getDefender().getUser().getId();
 
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
 
             accumulatedBuildingDamage += initialBattle.getBuildingDamage();
 
             initialBattle = repeatAttack(initialBattle);
+
+            lostAttackerTroopIds.addAll(migrateTroopIds(initialBattle.getAttackerCasualties()));
+
+            lostDefenderTroopIds.addAll(migrateTroopIds(initialBattle.getDefenderCasualties()));
+
+            attackerDamageDone += initialBattle.getAttackerDamageDone();
+
+            defenderDamageDone += initialBattle.getDefenderDamageDone();
         }
         while (accumulatedBuildingDamage > 0) {
 

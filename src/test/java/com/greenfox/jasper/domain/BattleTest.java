@@ -12,31 +12,41 @@ public class BattleTest {
 
     Battle testBattle = new Battle();
 
+    Kingdom testAttacker = new Kingdom();
+
+    Kingdom testDefender = new Kingdom();
+
     List<Troop> testWithOneTroop = new ArrayList<Troop>() {{
             add(new Troop());
     }};
 
     List<Troop> testWithTwoTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 2; i++) {
-            add(new Troop());
+            add(new Troop(i));
         }
     }};
 
     List<Troop> testWithThreeTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 3; i++) {
-            add(new Troop());
+            add(new Troop(i));
         }
     }};
 
     List<Troop> testWithFiveTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 5; i++) {
-            add(new Troop());
+            add(new Troop(i));
+        }
+    }};
+
+    List<Troop> testWithFiveTroopsEnemy = new ArrayList<Troop>(){{
+        for(int i = 0; i < 5; i++) {
+            add(new Troop(i));
         }
     }};
 
     List<Troop> testWithTenTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 10; i++) {
-            add(new Troop());
+            add(new Troop(i));
         }
     }};
 
@@ -122,6 +132,22 @@ public class BattleTest {
         List<Troop> testCasualties = testBattle.getCasualties(testWithFiveTroops, 50);
 
         assertEquals(1, testCasualties.size());
+    }
+
+    @Test
+    public void GetDefenderCasualtiesFiveAttackerVersusFiveDefendersTest() throws Exception {
+
+        Battle battleTest = new Battle(testAttacker, testDefender, testWithFiveTroops, testWithFiveTroopsEnemy);
+
+        assertEquals(1, battleTest.getDefenderCasualties().size());
+    }
+
+    @Test
+    public void GetAttackerCasualtiesFiveAttackerVersusFiveDefendersTest() throws Exception {
+
+        Battle battleTest = new Battle(testAttacker, testDefender, testWithFiveTroops, testWithFiveTroopsEnemy);
+
+        assertEquals(1, battleTest.getAttackerCasualties().size());
     }
 
 }

@@ -12,13 +12,19 @@ public class WarTest {
 
     List<Troop> testArmyOfFiveTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 5; i++) {
-            add(new Troop());
+            add(new Troop(i));
+        }
+    }};
+
+    List<Troop> testArmyOfFiveTroopsEnemy = new ArrayList<Troop>() {{
+        for(int i = 0; i < 5; i++) {
+            add(new Troop(i));
         }
     }};
 
     List<Troop> testArmyOfSixTroops = new ArrayList<Troop>() {{
         for(int i = 0; i < 6; i++) {
-            add(new Troop());
+            add(new Troop(i));
         }
     }};
 
@@ -26,36 +32,55 @@ public class WarTest {
 
     Kingdom testDefender = new Kingdom();
 
-    Battle testBattle = new Battle(testAttacker, testDefender, testArmyOfFiveTroops, testArmyOfFiveTroops);
+    Battle testBattle = new Battle(testAttacker, testDefender, testArmyOfFiveTroops, testArmyOfFiveTroopsEnemy);
 
     War testWar = new War();
 
     @Test
     public void repeatAttackOnceTest() throws Exception {
 
-        assertEquals(0, testWar.repeatAttack(testBattle).getAttackerCasualties().size());
+        assertEquals(1, testWar.repeatAttack(testBattle).getAttackerCasualties().size());
 
     }
 
     @Test
     public void repeatAttackThriceTest() throws Exception {
 
-        for(int i = 0; i < 3; i++){
-           testBattle = testWar.repeatAttack(testBattle);
-        }
+        Battle testBattleThree = testWar.repeatAttack(testWar.repeatAttack(testBattle));
 
-        assertEquals(2, testWar.repeatAttack(testBattle).getAttackerCasualties().size());
 
-    }
-
-    @Test
-    public void doWarTest() throws Exception {
+        assertEquals(1,testBattleThree.getAttackerCasualties().size());
 
     }
 
     @Test
-    public void migrateTroopIdsTest() throws Exception {
+    public void doWarTestDefenderCasualtiesFiveVersusFive() throws Exception {
 
+
+        testBattle.getAttacker().setUser(new User());
+
+        testBattle.getDefender().setUser(new User());
+
+        testBattle.getAttacker().getUser().setId((long)1);
+
+        testBattle.getDefender().getUser().setId((long)2);
+
+        assertEquals(3, testWar.doWar(testBattle).getLostDefenderTroopIds().size());
+    }
+
+    @Test
+    public void doWarTestAttackerCasualtiesFiveVersusFive() throws Exception {
+
+
+        testBattle.getAttacker().setUser(new User());
+
+        testBattle.getDefender().setUser(new User());
+
+        testBattle.getAttacker().getUser().setId((long)2);
+
+        testBattle.getDefender().getUser().setId((long)1);
+
+        assertEquals(3, testWar.doWar(testBattle).getLostAttackerTroopIds().size());
     }
 
 }
