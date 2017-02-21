@@ -52,6 +52,6 @@ public class UserServices {
     }
 
     public List<User> findAllByScore() {
-        return userRepo.findAllOrderByPointsByDesc();
+        return userRepo.findAll();
     }
 }

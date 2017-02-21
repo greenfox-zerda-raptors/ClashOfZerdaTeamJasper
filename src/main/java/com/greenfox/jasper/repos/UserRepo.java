@@ -10,5 +10,5 @@ public interface UserRepo extends CrudRepository<User, Long> {
     User findByKingdom(String kingdom);
     User findByEmail(String email);
 
-    List<User> findAllOrderByPointsByDesc();
+    List<User> findAll();
 }
