@@ -18,4 +18,12 @@ public class JwtAuthenticationResponse implements Serializable {
     public String getToken() {
         return this.token;
     }
+
+
+    @Override
+    public String toString() {
+        return "JwtAuthenticationResponse{" +
+                "token='" + token + '\'' +
+                '}';
+    }
 }
