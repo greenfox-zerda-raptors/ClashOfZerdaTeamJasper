@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class ProofOfConceptApplication implements CommandLineRunner {
+public class ProofOfConceptApplication{
 
     @Autowired
     KingdomServices kingdomServices;
@@ -29,18 +29,4 @@ public class ProofOfConceptApplication implements CommandLineRunner {
         SpringApplication.run(ProofOfConceptApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-//          kingdomServices.saveOneKingdom(new Kingdom("romania", userServices.findOneUser(1)));
-//                resourceServices.saveOneResource(new Resource("food", kingdomServices.findKingdomByName("romania")));
-//                resourceServices.saveOneResource(new Resource("gold", kingdomServices.findKingdomByName("romania")));
-//                buildingServices.saveOneBuilding(new Building("farm", kingdomServices.findKingdomByName("romania"), 60));
-//                buildingServices.saveOneBuilding(new Building("mine", kingdomServices.findKingdomByName("romania"), 60));
-//                buildingServices.saveOneBuilding(new Building("townhall", kingdomServices.findKingdomByName("romania"), 1));
-//                buildingServices.saveOneBuilding(new Building("barrack", kingdomServices.findKingdomByName("romania")));
-//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-//                troopServices.saveOneTroop(new Troop(kingdomServices.findKingdomByName("romania")));
-
-    }
 }
