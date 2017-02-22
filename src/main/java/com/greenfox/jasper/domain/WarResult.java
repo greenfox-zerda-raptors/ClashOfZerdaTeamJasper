@@ -11,22 +11,31 @@ public class WarResult {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "war_result_id")
     private long warResultId;
+
     @Transient
     private List<Long> defenderLostBuildingIds;
+
     @Transient
     private  List<Long> attackerTroopIds;
+
     @Transient
     private List<Long> defenderTroopIds;
+
     @Transient
     private List<Long> lostAttackerTroopIds;
+
     @Transient
     private List<Long> lostDefenderTroopIds;
+
     @Column(name = "attacker_damage_done")
     private int attackerDamageDone;
+
     @Column(name = "defender_damage_done")
     private int defenderDamageDone;
+
     @Column(name = "atacker_id")
     private long attackerId;
+
     @Column(name = "defender_id")
     private long defenderId;
 
