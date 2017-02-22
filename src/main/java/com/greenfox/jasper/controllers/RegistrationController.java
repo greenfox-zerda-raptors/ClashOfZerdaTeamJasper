@@ -3,6 +3,10 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.UserDto;
+import com.greenfox.jasper.exception.EmailAddressAlreadyTakenException;
+import com.greenfox.jasper.exception.KingdomNameAlreadyTakenException;
+import com.greenfox.jasper.exception.PasswordTooShortException;
+import com.greenfox.jasper.exception.UserNameAlreadyTakenException;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.RegistrationServices;
 import com.greenfox.jasper.services.UserServices;
@@ -49,14 +53,15 @@ public class RegistrationController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Successful registration");
         } else if (userServices.findeOneUserByName(userDto.getUsername()) != null) {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-                    .body("Duplicate username");
+                throw new UserNameAlreadyTakenException(userDto.getUsername());
         } else if (userServices.findOneUserByEmail(userDto.getEmail()) != null) {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-                    .body("Duplicate email address");
-        } else {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-                    .body("Duplicate kingdom");
+            throw new EmailAddressAlreadyTakenException(userDto.getEmail());
+        } else if(userDto.getPassword().length() <= 4) {
+            throw new PasswordTooShortException();
+        } else if (kingdomServices.findKingdomByName(userDto.getKingdomname()) != null){
+           throw new KingdomNameAlreadyTakenException(userDto.getKingdomname());
+        }else {
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("Sth went wrong");
         }
 
 

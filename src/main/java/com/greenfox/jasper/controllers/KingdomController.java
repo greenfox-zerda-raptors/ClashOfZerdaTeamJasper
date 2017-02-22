@@ -1,9 +1,9 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.KingdomDto;
 import com.greenfox.jasper.dto.LocationDto;
+import com.greenfox.jasper.exception.KingdomNotFoundException;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
@@ -36,7 +36,7 @@ public class KingdomController {
         resourceServices.calculateResource(kingdomId);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if (kingdom == null) {
-            return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
+            throw new KingdomNotFoundException(kingdomId);
         }
         KingdomDto result = dtoServices.convertKingdomToDTO(kingdom);
         return new ResponseEntity<>(result, HttpStatus.OK);

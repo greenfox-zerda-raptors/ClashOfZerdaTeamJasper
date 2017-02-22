@@ -1,9 +1,9 @@
 package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.Building;
-import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.dto.BuildingDto;
 import com.greenfox.jasper.dto.BuildingListDTO;
+import com.greenfox.jasper.exception.*;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,8 @@ public class BuildingController {
     public ResponseEntity<BuildingListDTO> getBuildings(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Building> buildingList = buildingServices.findAllBuildingsByKingdomId(kingdomId);
-
         if (buildingList == null) {
-            return new ResponseEntity(new CustomError("Buildings not found", 404), HttpStatus.NOT_FOUND);
+            throw new NoBuildingsFoundException(kingdomId);
         }
         BuildingListDTO result = new BuildingListDTO(dtoServices.convertBuildingListToDTO(buildingList));
 
@@ -48,11 +47,11 @@ public class BuildingController {
 
     @RequestMapping(value = "/{buildingId}", method = RequestMethod.GET)
     public ResponseEntity<BuildingDto> getOneBuilding(@PathVariable long buildingId) {
-        BuildingDto result =
-                dtoServices.convertBuildingToDTO(buildingServices.findOneBuilding(buildingId));
-        if (result == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        Building building = buildingServices.findOneBuilding(buildingId);
+        if (building == null) {
+            throw new BuildingNotFoundException(buildingId);
         }
+        BuildingDto result = dtoServices.convertBuildingToDTO(building);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -61,7 +60,7 @@ public class BuildingController {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         boolean available = resourceServices.buyNewBuilding(kingdomId);
         if (!available) {
-            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+            throw new NotEnoughResourcesException("gold");
         }
         buildingServices.addNewBuilding(kingdomId, building.getType());
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingServices.findLastBuilding(kingdomId));
@@ -73,19 +72,19 @@ public class BuildingController {
     public ResponseEntity<BuildingDto> upgradeBuilding(@AuthenticationPrincipal JwtUser currentUser, @RequestBody BuildingDto buildingDto) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         if (kingdomId == 0) {
-            return new ResponseEntity(new CustomError("No suxh kingdom", 404), HttpStatus.NOT_FOUND);
+             throw new KingdomNotFoundException(kingdomId);
         }
         long buildingId = buildingDto.getId();
         Building buildingToBeUpgraded = buildingServices.findOneBuilding(buildingId);
         if(buildingToBeUpgraded == null){
-            return new ResponseEntity(new CustomError("No such building", 404), HttpStatus.NOT_FOUND);
+             throw new BuildingNotFoundException(buildingId);
         }
         if(buildingToBeUpgraded.getLevelUpTime() !=0){
-            return new ResponseEntity(new CustomError("Already upgrading this building", 400), HttpStatus.BAD_REQUEST);
+           throw new BuildingOccupiedException(buildingId);
         }
         boolean available = resourceServices.levelUpBuildingMoneyCheck(kingdomId, buildingId);
         if (!available) {
-            return new ResponseEntity(new CustomError("Not enough gold", 400), HttpStatus.BAD_REQUEST);
+            throw new NotEnoughResourcesException("gold");
         }
 
         timedEventServices.addNewLevelUpEvent(buildingId, kingdomId);
