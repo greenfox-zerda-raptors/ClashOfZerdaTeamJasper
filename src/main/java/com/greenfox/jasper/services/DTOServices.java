@@ -18,16 +18,21 @@ public class DTOServices {
 
     public KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
-        kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
+        kingdom.setPosX(kingdom.getPosX());
+        kingdom.setPosY(kingdom.getPosY());
+        kingdomDto.setUser(convertSafeUserDto(kingdom.getUser()));
         kingdomDto.setBuildings(convertBuildingListToDTO(kingdom.getBuildings()));
         kingdomDto.setResources(convertResourcesListToDTO(kingdom.getResources()));
         kingdomDto.setTroops(convertTroopListToDTO(kingdom.getTroops()));
         return kingdomDto;
     }
 
+    private SafeUserDto convertSafeUserDto(User user) {
+       return modelMapper.map(user, SafeUserDto.class);
+    }
+
     public List<BuildingDto> convertBuildingListToDTO(List<Building> buildingList) {
         return buildingList.stream().map(this::convertBuildingToDTO).collect(Collectors.toList());
-        // might not work with earlier versions of java
     }
 
     public BuildingDto convertBuildingToDTO(Building building) {
