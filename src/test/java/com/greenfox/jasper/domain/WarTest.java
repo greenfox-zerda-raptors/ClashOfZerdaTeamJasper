@@ -112,7 +112,7 @@ public class WarTest {
 
         testBattle20v5.getDefender().setBuildings(testBuildings);
 
-        assertEquals(0, testWar.doWar(testBattle20v5).getDefenderLostBuildingIds().size());
+        assertEquals(2, testWar.doWar(testBattle20v5).getDefenderLostBuildingIds().size());
     }
 
 }
