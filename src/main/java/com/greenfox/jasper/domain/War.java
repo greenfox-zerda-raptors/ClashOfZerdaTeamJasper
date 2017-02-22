@@ -9,11 +9,7 @@ public class War {
 
         List<Troop> remainingAttackers = firstBattle.getAttackerTroops();
 
-        //remainingAttackers.removeAll(firstBattle.getAttackerCasualties());
-
         List<Troop> remainingDefenders = firstBattle.getDefenderTroops();
-
-        //remainingDefenders.removeAll(firstBattle.getDefenderCasualties());
 
         return new Battle(firstBattle.getAttacker(), firstBattle.getDefender(), remainingAttackers, remainingDefenders);
     }

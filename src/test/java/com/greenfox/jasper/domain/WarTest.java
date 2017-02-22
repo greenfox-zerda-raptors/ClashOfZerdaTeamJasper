@@ -28,25 +28,33 @@ public class WarTest {
         }
     }};
 
+   List<Troop> testArmyOfTwentyTroops = new ArrayList<Troop>() {{
+        for(int i = 0; i < 20; i++) {
+            add(new Troop(i));
+        }
+    }};
+
     Kingdom testAttacker = new Kingdom();
 
     Kingdom testDefender = new Kingdom();
 
-    Battle testBattle = new Battle(testAttacker, testDefender, testArmyOfFiveTroops, testArmyOfFiveTroopsEnemy);
+    Battle testBattle5v5 = new Battle(testAttacker, testDefender, testArmyOfFiveTroops, testArmyOfFiveTroopsEnemy);
+
+    Battle testBattle20v5 = new Battle(testAttacker, testDefender, testArmyOfTwentyTroops, testArmyOfSixTroops);
 
     War testWar = new War();
 
     @Test
     public void repeatAttackOnceTest() throws Exception {
 
-        assertEquals(1, testWar.repeatAttack(testBattle).getAttackerCasualties().size());
+        assertEquals(1, testWar.repeatAttack(testBattle5v5).getAttackerCasualties().size());
 
     }
 
     @Test
     public void repeatAttackThriceTest() throws Exception {
 
-        Battle testBattleThree = testWar.repeatAttack(testWar.repeatAttack(testBattle));
+        Battle testBattleThree = testWar.repeatAttack(testWar.repeatAttack(testBattle5v5));
 
 
         assertEquals(1,testBattleThree.getAttackerCasualties().size());
@@ -57,30 +65,54 @@ public class WarTest {
     public void doWarTestDefenderCasualtiesFiveVersusFive() throws Exception {
 
 
-        testBattle.getAttacker().setUser(new User());
+        testBattle5v5.getAttacker().setUser(new User());
 
-        testBattle.getDefender().setUser(new User());
+        testBattle5v5.getDefender().setUser(new User());
 
-        testBattle.getAttacker().getUser().setId((long)1);
+        testBattle5v5.getAttacker().getUser().setId((long)1);
 
-        testBattle.getDefender().getUser().setId((long)2);
+        testBattle5v5.getDefender().getUser().setId((long)2);
 
-        assertEquals(3, testWar.doWar(testBattle).getLostDefenderTroopIds().size());
+        assertEquals(3, testWar.doWar(testBattle5v5).getLostDefenderTroopIds().size());
     }
 
     @Test
     public void doWarTestAttackerCasualtiesFiveVersusFive() throws Exception {
 
 
-        testBattle.getAttacker().setUser(new User());
+        testBattle5v5.getAttacker().setUser(new User());
 
-        testBattle.getDefender().setUser(new User());
+        testBattle5v5.getDefender().setUser(new User());
 
-        testBattle.getAttacker().getUser().setId((long)2);
+        testBattle5v5.getAttacker().getUser().setId((long)2);
 
-        testBattle.getDefender().getUser().setId((long)1);
+        testBattle5v5.getDefender().getUser().setId((long)1);
 
-        assertEquals(3, testWar.doWar(testBattle).getLostAttackerTroopIds().size());
+        assertEquals(3, testWar.doWar(testBattle5v5).getLostAttackerTroopIds().size());
+    }
+
+
+    @Test
+    public void doWarTestBuildingCasualtiesTwentyVersusFive() throws Exception {
+
+
+        testBattle20v5.getAttacker().setUser(new User());
+
+        testBattle20v5.getDefender().setUser(new User());
+
+        testBattle20v5.getAttacker().getUser().setId((long)2);
+
+        testBattle20v5.getDefender().getUser().setId((long)1);
+
+        List<Building> testBuildings = new ArrayList<Building>() {{
+            for(int i = 0; i < 5; i++) {
+                add(new Building("mine"));
+            }
+        }};
+
+        testBattle20v5.getDefender().setBuildings(testBuildings);
+
+        assertEquals(0, testWar.doWar(testBattle20v5).getDefenderLostBuildingIds().size());
     }
 
 }
