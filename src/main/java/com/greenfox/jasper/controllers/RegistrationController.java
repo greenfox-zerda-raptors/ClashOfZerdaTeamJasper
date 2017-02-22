@@ -3,10 +3,10 @@ package com.greenfox.jasper.controllers;
 
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.UserDto;
-import com.greenfox.jasper.exception.EmailAddressAlreadyTakenException;
-import com.greenfox.jasper.exception.KingdomNameAlreadyTakenException;
-import com.greenfox.jasper.exception.PasswordTooShortException;
-import com.greenfox.jasper.exception.UserNameAlreadyTakenException;
+import com.greenfox.jasper.exception.notacceptable.EmailAddressAlreadyTakenException;
+import com.greenfox.jasper.exception.notacceptable.KingdomNameAlreadyTakenException;
+import com.greenfox.jasper.exception.notacceptable.PasswordTooShortException;
+import com.greenfox.jasper.exception.notacceptable.UserNameAlreadyTakenException;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.RegistrationServices;
 import com.greenfox.jasper.services.UserServices;

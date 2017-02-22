@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceListDTO;
-import com.greenfox.jasper.exception.ResourcesNotFoundException;
+import com.greenfox.jasper.exception.notfound.ResourcesNotFoundException;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;

@@ -1,5 +1,6 @@
-package com.greenfox.jasper.exception;
+package com.greenfox.jasper.exception.notfound;
 
+import com.greenfox.jasper.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class BuildingNotFoundException extends CustomException{
+public class BuildingNotFoundException extends CustomException {
     public BuildingNotFoundException(long id) {
         super("No building with such id, (id = " + id + ")");
     }

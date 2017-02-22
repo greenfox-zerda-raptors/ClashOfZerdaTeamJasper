@@ -3,7 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.KingdomDto;
 import com.greenfox.jasper.dto.LocationDto;
-import com.greenfox.jasper.exception.KingdomNotFoundException;
+import com.greenfox.jasper.exception.notfound.KingdomNotFoundException;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
