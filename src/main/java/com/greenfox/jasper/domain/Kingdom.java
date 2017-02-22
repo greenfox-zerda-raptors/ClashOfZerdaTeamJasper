@@ -23,7 +23,7 @@ public class Kingdom implements Serializable {
     private String name;
 
     @JsonManagedReference
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)

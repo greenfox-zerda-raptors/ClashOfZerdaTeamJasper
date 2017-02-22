@@ -60,7 +60,7 @@ public class User implements Serializable {
     @NotNull
     private Date lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_authority_table",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
