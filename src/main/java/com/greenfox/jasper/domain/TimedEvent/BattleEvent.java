@@ -5,7 +5,9 @@ import com.greenfox.jasper.domain.Troop;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
+import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -14,15 +16,18 @@ public class BattleEvent extends TimedEvent {
 
     @Column(name = "attacker_id")
     private long attackerKingdomId;
-    @Column(name = "troops")
-    private ArrayList<Troop> attackingTroops; // decide how we will save troops on the move
+
+    @Transient
+    @Column(name = "troops_list")
+    private List<Troop> attackingTroops; // decide how we will save troops on the move
+
     @Column(name = "defender_id")
     private long defenderKingdomId;
 
     public BattleEvent(){
 
     }
-    public BattleEvent(long executionTime, long attackerKingdomId, ArrayList<Troop> attackingTroops, long defenderKingdomId) {
+    public BattleEvent(long executionTime, long attackerKingdomId, List<Troop> attackingTroops, long defenderKingdomId) {
         super(executionTime);
         this.attackerKingdomId = attackerKingdomId;
         this.attackingTroops = attackingTroops;
@@ -37,7 +42,7 @@ public class BattleEvent extends TimedEvent {
         this.attackerKingdomId = attackerKingdomId;
     }
 
-    public ArrayList<Troop> getAttackingTroops() {
+    public List<Troop> getAttackingTroops() {
         return attackingTroops;
     }
 

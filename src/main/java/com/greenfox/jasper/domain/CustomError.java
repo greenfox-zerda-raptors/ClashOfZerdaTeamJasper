@@ -3,14 +3,14 @@ package com.greenfox.jasper.domain;
 public class CustomError {
 
     private String message;
-    private long id;
+    private long httpStatusCode;
 
     public CustomError() {
     }
 
-    public CustomError(String message, long id) {
+    public CustomError(String message, long httpStatusCode) {
         this.message = message;
-        this.id = id;
+        this.httpStatusCode = httpStatusCode;
     }
 
     public String getMessage() {
@@ -21,11 +21,11 @@ public class CustomError {
         this.message = message;
     }
 
-    public long getId() {
-        return id;
+    public long getHttpStatusCode() {
+        return httpStatusCode;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setHttpStatusCode(long httpStatusCode) {
+        this.httpStatusCode = httpStatusCode;
     }
 }

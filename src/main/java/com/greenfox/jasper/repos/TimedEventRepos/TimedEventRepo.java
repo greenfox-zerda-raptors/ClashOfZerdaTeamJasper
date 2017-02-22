@@ -1,4 +1,4 @@
-package com.greenfox.jasper.repos;
+package com.greenfox.jasper.repos.TimedEventRepos;
 
 import com.greenfox.jasper.domain.TimedEvent.TimedEvent;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +13,5 @@ public interface TimedEventRepo extends CrudRepository <TimedEvent, Long > {
 
     @Query("SELECT a FROM TimedEvent a WHERE a.wasExecuted = false and a.executionTime < :currentTime ")
     List<TimedEvent> findAllWaitingForExecution(@Param("currentTime") long currentTime);
+
 }

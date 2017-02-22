@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping(value = "/", method = RequestMethod.GET)
 public class RegistrationController {
@@ -33,11 +32,11 @@ public class RegistrationController {
     KingdomServices kingdomServices;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity registerNewUser (@RequestBody UserDto userDto){
+    public ResponseEntity registerNewUser(@RequestBody UserDto userDto) {
 
         if (userServices.findeOneUserByName(userDto.getUsername()) == null
                 && kingdomServices.findKingdomByName(userDto.getKingdomname()) == null
-                && userServices.findOneUserByEmail(userDto.getEmail()) == null){
+                && userServices.findOneUserByEmail(userDto.getEmail()) == null) {
 
             registrationServices.registerNewUser(new User(
                     userDto.getKingdomname(),
@@ -46,16 +45,16 @@ public class RegistrationController {
                     userDto.getFirstname(),
                     userDto.getLastname(),
                     userDto.getEmail()));
-        //TODO new error dto to send Json back
+            //TODO new error dto to send Json back
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Successful registration");
-        }else if (userServices.findeOneUserByName(userDto.getUsername()) != null){
+        } else if (userServices.findeOneUserByName(userDto.getUsername()) != null) {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate username");
-        }else if (userServices.findOneUserByEmail(userDto.getEmail()) != null){
+        } else if (userServices.findOneUserByEmail(userDto.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate email address");
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("Duplicate kingdom");
         }

@@ -26,12 +26,15 @@ public class Troop implements Serializable {
 
     private int defense;
 
+    @Column(name="upgrade_time")
+    private long upgradeTime = 0;
+
     @ManyToOne
     @JsonIgnore
     private Kingdom kingdom;
 
     public Troop() {
-        this.level = 1;
+        this.level = 0;
         this.hp = 20;
         this.attack = 10;
         this.defense = 5;
@@ -61,7 +64,9 @@ public class Troop implements Serializable {
     }
 
     public void upgrade(){
-        level++;
+        // TODO statChanges per level
+        this.level++;
+        this.upgradeTime = 0;
     }
 
     public Kingdom getKingdom() {
@@ -110,5 +115,13 @@ public class Troop implements Serializable {
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public long getUpgradeTime() {
+        return upgradeTime;
+    }
+
+    public void setUpgradeTime(long upgradeTime) {
+        this.upgradeTime = upgradeTime;
     }
 }

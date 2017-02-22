@@ -3,6 +3,7 @@ package com.greenfox.jasper.services;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.repos.BuildingRepo;
+import com.greenfox.jasper.repos.KingdomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class BuildingServices {
 
     @Autowired
     KingdomServices kingdomServices;
+
+    @Autowired
+    KingdomRepo kingdomRepo;
 
 
     public Building findOneBuilding(long buildingId){
@@ -42,7 +46,7 @@ public class BuildingServices {
         if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
             Building newBuilding = new Building(type, kingdomServices.findOneById(kingdomId));
             buildingRepo.save(newBuilding);
-            timedEventServices.addNewLevelUpEvent(newBuilding.getBuildingId());
+            timedEventServices.addNewLevelUpEvent(kingdomId, newBuilding.getBuildingId());
         }
     }
     public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {
@@ -57,4 +61,9 @@ public class BuildingServices {
         return buildingRepo.findAllByKingdom(kingdomServices.findOneById(kingdomId));
     }
 
+    public int calculateTotalLevel(long kingdomId, String buildingType) {
+        return 1;
+        // TODO total level
+                //buildingRepo.calculateTotalLevel(kingdomServices.findOneById(kingdomId), buildingType);
+    }
 }

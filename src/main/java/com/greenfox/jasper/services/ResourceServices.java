@@ -19,7 +19,6 @@ public class ResourceServices {
 
     @Autowired
     ResourceRepo resourceRepo;
-
     @Autowired
     BuildingServices buildingServices;
     @Autowired
@@ -120,11 +119,13 @@ public class ResourceServices {
         return buildingServices.findAllBuildingByKingdomIdAndByType(kingdomId, mine);
     }
 
+
     public void saveOneResource(Resource resource){
         resourceRepo.save(resource);
     }
 
     public boolean levelUpBuildingMoneyCheck(long kingdomId, long buildingId){
+        calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money;
         money = gold.getAmount();
@@ -142,6 +143,7 @@ public class ResourceServices {
     }
 
     public boolean buyNewBuilding(long kingdomId){
+        calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money;
         money = gold.getAmount();

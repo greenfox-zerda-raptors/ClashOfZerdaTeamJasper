@@ -17,8 +17,6 @@ public class DTOServices {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    // TODO Battle converter for battle
-
     public KingdomDto convertKingdomToDTO(Kingdom kingdom) {
         KingdomDto kingdomDto = new KingdomDto();
         kingdomDto.setUser(convertUserToDto(kingdom.getUser()));
@@ -34,7 +32,6 @@ public class DTOServices {
     }
 
     public BuildingDto convertBuildingToDTO(Building building) {
-        // TODO set finish time
         return modelMapper.map(building, BuildingDto.class);
     }
 
@@ -74,6 +71,10 @@ public class DTOServices {
         return result;
     }
 
+    public List<KingdomDto> convertKingdomListToDTO(List<Kingdom> kingdomList){
+        return kingdomList.stream().map(this::convertKingdomToDTO).collect(Collectors.toList());
+    }
+
     public void takeRegisterDTO() {
 
     }
@@ -93,6 +94,15 @@ public class DTOServices {
         result.setLostDefenderTroopIds(war.getLostDefenderTroopIds());
         result.setDefenderLostBuildingIds(war.getDefenderLostBuildingIds());
 
+        return result;
+    }
+
+    public List<UserWithPointsDto> convertUserListToLeaderboard(List<User> users){
+        return users.stream().map(this::convertUserToUserLeaderboard).collect(Collectors.toList());
+    }
+
+    private UserWithPointsDto convertUserToUserLeaderboard(User user) {
+        UserWithPointsDto result = modelMapper.map(user, UserWithPointsDto.class);
         return result;
     }
 

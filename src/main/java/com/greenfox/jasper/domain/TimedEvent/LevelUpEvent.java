@@ -1,7 +1,5 @@
 package com.greenfox.jasper.domain.TimedEvent;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -9,20 +7,19 @@ import javax.persistence.Inheritance;
 
 @Entity
 @Inheritance
-@Configurable
 public class LevelUpEvent extends TimedEvent {
-    // TODO dto can (probably) handle this better
-//    @OneToOne(mappedBy = "building", cascade = CascadeType.ALL)
     @Column(name = "building_id")
     private long buildingId;
-
+    @Column(name = "kingdom_id")
+    private long kingdomId;
     public LevelUpEvent(){
 
     }
 
-    public LevelUpEvent(long executionTime, long buildingId) {
+    public LevelUpEvent(long executionTime, long kingdomId, long buildingId) {
         super(executionTime);
         this.buildingId = buildingId;
+        this.kingdomId = kingdomId;
     }
 
     public long getBuildingId() {
@@ -33,13 +30,11 @@ public class LevelUpEvent extends TimedEvent {
         this.buildingId = buildingId;
     }
 
+    public long getKingdomId() {
+        return kingdomId;
+    }
 
-
-    @Override
-    public String toString() {
-        return "LevelUpEvent{" +
-                super.toString() +
-                "buildingId=" + buildingId +
-                '}';
+    public void setKingdomId(long kingdomId) {
+        this.kingdomId = kingdomId;
     }
 }

@@ -87,4 +87,18 @@ public class BattleResponseDto {
     public void setDefenderId(long defenderId) {
         this.defenderId = defenderId;
     }
+
+    @Override
+    public String toString() {
+        return "BattleResponseDto{" +
+                "attackerId=" + attackerId +
+                ", attackerTroops=" + attackerTroops +
+                ", attackerDamage=" + attackerDamage +
+                ", attackerCasualties=" + attackerCasualties +
+                ", defenderId=" + defenderId +
+                ", defenderTroops=" + defenderTroops +
+                ", defenderDamage=" + defenderDamage +
+                ", defenderCasualties=" + defenderCasualties +
+                '}';
+    }
 }

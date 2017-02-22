@@ -3,14 +3,14 @@ package com.greenfox.jasper.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TroopResponse {
+public class troopListDTO {
 
     private List<TroopDto> troops = new ArrayList<>();
 
-    public TroopResponse() {
+    public troopListDTO() {
     }
 
-    public TroopResponse(List<TroopDto> troops) {
+    public troopListDTO(List<TroopDto> troops) {
         this.troops = troops;
     }
 

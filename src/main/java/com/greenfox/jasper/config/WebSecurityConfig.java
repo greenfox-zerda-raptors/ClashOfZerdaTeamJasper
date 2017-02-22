@@ -53,10 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
                 .authorizeRequests()
                 // allow anonymous resource requests
                 .antMatchers(
@@ -71,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/swagger-ui.html#/**").permitAll()
+                .antMatchers("/flyway").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/configuration/**").permitAll()
                 .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
