@@ -33,7 +33,7 @@ public class KingdomController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<KingdomDto> getKingdom(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
-//        resourceServices.calculateResource(kingdomId);
+        resourceServices.calculateResource(kingdomId);
         Kingdom kingdom = kingdomServices.findOneKingdom(kingdomId);
         if (kingdom == null) {
             return new ResponseEntity(new CustomError("Kingdom not found", 404), HttpStatus.NOT_FOUND);
