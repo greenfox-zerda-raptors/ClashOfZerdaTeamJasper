@@ -2,6 +2,7 @@ package com.greenfox.jasper.services;
 
 import com.greenfox.jasper.domain.*;
 import com.greenfox.jasper.dto.*;
+import jdk.nashorn.internal.runtime.regexp.joni.WarnCallback;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -78,18 +79,30 @@ public class DTOServices {
 
     }
 
-    public BattleResponseDto convertBattleToDto(Battle battle) {
+    public BattleResponseDto convertBattleToDto(WarResult war) {
 
         BattleResponseDto result = new BattleResponseDto();
 
-        result.setAttackerTroops(battle.getAttackerTroops());
-        result.setAttackerCasualties(battle.getAttackerCasualties());
-        result.setAttackerDamage(battle.getAttackerAttackPower() - battle.getDefenderDefensePower());
+        result.setAttackerId(war.getAttackerId());
+        result.setAttackerDamageDone(war.getAttackerDamageDone());
+        result.setAttackerTroopIds(war.getAttackerTroopIds());
+        result.setLostAttackerTroopIds(war.getLostAttackerTroopIds());
 
-        result.setDefenderTroops(battle.getDefenderTroops());
-        result.setDefenderCasualties(battle.getDefenderCasualties());
-        result.setDefenderDamage(battle.getDefenderAttackPower() - battle.getAttackerDefensePower());
+        result.setDefenderId(war.getDefenderId());
+        result.setDefenderDamageDone(war.getDefenderDamageDone());
+        result.setDefenderTroopIds(war.getDefenderTroopIds());
+        result.setLostDefenderTroopIds(war.getLostDefenderTroopIds());
+        result.setDefenderLostBuildingIds(war.getDefenderLostBuildingIds());
 
+        return result;
+    }
+
+    public List<UserWithPointsDto> convertUserListToLeaderboard(List<User> users){
+        return users.stream().map(this::convertUserToUserLeaderboard).collect(Collectors.toList());
+    }
+
+    private UserWithPointsDto convertUserToUserLeaderboard(User user) {
+        UserWithPointsDto result = modelMapper.map(user, UserWithPointsDto.class);
         return result;
     }
 

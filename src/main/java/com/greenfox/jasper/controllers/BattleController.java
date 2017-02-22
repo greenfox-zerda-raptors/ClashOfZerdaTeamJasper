@@ -1,5 +1,6 @@
 package com.greenfox.jasper.controllers;
 
+import com.greenfox.jasper.domain.War;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.dto.BattleRequestDto;
 import com.greenfox.jasper.dto.BattleResponseDto;
@@ -49,10 +50,14 @@ public class BattleController {
     @RequestMapping(value = "/attack", method = RequestMethod.POST)
     public ResponseEntity<BattleResponseDto> attackOneKingdom(@RequestBody BattleRequestDto requestDto) {
 
-        BattleResponseDto result = dtoServices.convertBattleToDto(battleServices.doBattle(requestDto));
+        War war = new War();
 
-        troopServices.deleteAllFromList(result.getAttackerCasualties());
-        troopServices.deleteAllFromList(result.getDefenderCasualties());
+        BattleResponseDto result = dtoServices.convertBattleToDto(war.doWar(battleServices.doBattle(requestDto)));
+
+        troopServices.deleteAllFromList(result.getLostAttackerTroopIds());
+        troopServices.deleteAllFromList(result.getLostDefenderTroopIds());
+
+
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

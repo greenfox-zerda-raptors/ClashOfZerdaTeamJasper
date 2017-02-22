@@ -1,18 +1,65 @@
-package com.greenfox.jasper.dto;
+package com.greenfox.jasper.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
-public class BattleResponseDto {
+@Entity
+@Table(name = "war_result_table")
+public class WarResult {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "war_result_id")
+    private long warResultId;
+    @Transient
     private List<Long> defenderLostBuildingIds;
+    @Transient
     private  List<Long> attackerTroopIds;
+    @Transient
     private List<Long> defenderTroopIds;
+    @Transient
     private List<Long> lostAttackerTroopIds;
+    @Transient
     private List<Long> lostDefenderTroopIds;
+    @Column(name = "attacker_damage_done")
     private int attackerDamageDone;
+    @Column(name = "defender_damage_done")
     private int defenderDamageDone;
+    @Column(name = "atacker_id")
     private long attackerId;
+    @Column(name = "defender_id")
     private long defenderId;
+
+
+    public WarResult(
+            List<Long> defenderLostBuildingIds,
+            List<Long> attackerTroopIds,
+            List<Long> defenderTroopIds,
+            List<Long> lostAttackerTroopIds,
+            List<Long> lostDefenderTroopIds,
+            int attackerDamageDone,
+            int defenderDamageDone,
+            long attackerId,
+            long defenderId) {
+
+        this.defenderLostBuildingIds = defenderLostBuildingIds;
+        this.attackerTroopIds = attackerTroopIds;
+        this.defenderTroopIds = defenderTroopIds;
+        this.lostAttackerTroopIds = lostAttackerTroopIds;
+        this.lostDefenderTroopIds = lostDefenderTroopIds;
+        this.attackerDamageDone = attackerDamageDone;
+        this.defenderDamageDone = defenderDamageDone;
+        this.attackerId = attackerId;
+        this.defenderId = defenderId;
+    }
+
+    public long getWarResultId() {
+        return warResultId;
+    }
+
+    public void setWarResultId(long warResultId) {
+        this.warResultId = warResultId;
+    }
 
     public List<Long> getDefenderLostBuildingIds() {
         return defenderLostBuildingIds;
@@ -84,20 +131,5 @@ public class BattleResponseDto {
 
     public void setDefenderId(long defenderId) {
         this.defenderId = defenderId;
-    }
-
-    @Override
-    public String toString() {
-        return "BattleResponseDto{" +
-                "defenderLostBuildingIds=" + defenderLostBuildingIds +
-                ", attackerTroopIds=" + attackerTroopIds +
-                ", defenderTroopIds=" + defenderTroopIds +
-                ", lostAttackerTroopIds=" + lostAttackerTroopIds +
-                ", lostDefenderTroopIds=" + lostDefenderTroopIds +
-                ", attackerDamageDone=" + attackerDamageDone +
-                ", defenderDamageDone=" + defenderDamageDone +
-                ", attackerId=" + attackerId +
-                ", defenderId=" + defenderId +
-                '}';
     }
 }

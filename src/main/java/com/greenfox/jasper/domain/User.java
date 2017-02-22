@@ -24,7 +24,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     //@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
-    private Long id;
+    private long id;
 
     @Column(name = "user_name", length = 50, unique = true)
     @NotNull
@@ -90,11 +90,11 @@ public class User implements Serializable {
         this.points = 0;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

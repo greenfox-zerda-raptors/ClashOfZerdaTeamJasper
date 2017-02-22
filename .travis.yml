@@ -18,7 +18,7 @@ branches:
     - master
     - bncbodrogi
     - database-update
-    - zoltan-reqistercontroller
+    - zoltan-fixingregister
 
 
 before_cache:

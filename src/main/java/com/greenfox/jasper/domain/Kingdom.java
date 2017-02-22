@@ -26,15 +26,12 @@ public class Kingdom implements Serializable {
     @OneToOne
     private User user;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private List<Building> buildings;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private List<Troop> troops;
 
-    @Transient
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)
     private List<Resource> resources;
 
@@ -47,14 +44,14 @@ public class Kingdom implements Serializable {
     @Column(name = "pos_y")
     private int posY;
 
-    // TODO positions
-
     public Kingdom() {
         this.name = "";
         this.buildings = new ArrayList<>();
         this.resources = new ArrayList<>();
-         this.troops = new ArrayList<>();
+        this.troops = new ArrayList<>();
         this.updateTime = System.currentTimeMillis();
+        this.posX = 0;
+        this.posY = 0;
     }
 
     public Kingdom(String name, User user) {

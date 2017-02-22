@@ -1,0 +1,2 @@
+DROP TABLE battle_result_table;
+CREATE TABLE war_result_table (war_result_id BIGSERIAL, attacker_damage_done INTEGER, defender_damage_done INTEGER, attacker_id BIGINT, defender_id BIGINT, PRIMARY KEY (war_result_id));
