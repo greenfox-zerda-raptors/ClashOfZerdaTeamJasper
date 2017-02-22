@@ -256,19 +256,15 @@ public class Battle {
         this.defenderCasualties = defenderCasualties;
     }
 
-    public int getDefenderLosses() {
-        return defenderLosses;
+    public void setAttackerDamageDone(int attackerDamageDone) {
+        this.attackerDamageDone = attackerDamageDone;
     }
 
-    public void setDefenderLosses(int defenderLosses) {
-        this.defenderLosses = defenderLosses;
+    public void setDefenderDamageDone(int defenderDamageDone) {
+        this.defenderDamageDone = defenderDamageDone;
     }
 
-    public int getAttackerLosses() {
-        return attackerLosses;
-    }
-
-    public void setAttackerLosses(int attackerLosses) {
-        this.attackerLosses = attackerLosses;
+    public void setBuildingDamage(int buildingDamage) {
+        this.buildingDamage = buildingDamage;
     }
 }
