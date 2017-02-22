@@ -1,7 +1,5 @@
 package com.greenfox.jasper.dto;
 
-import com.greenfox.jasper.domain.Troop;
-
 import java.util.List;
 
 public class BattleResponseDto {
@@ -91,14 +89,15 @@ public class BattleResponseDto {
     @Override
     public String toString() {
         return "BattleResponseDto{" +
-                "attackerId=" + attackerId +
-                ", attackerTroops=" + attackerTroops +
-                ", attackerDamage=" + attackerDamage +
-                ", attackerCasualties=" + attackerCasualties +
+                "defenderLostBuildingIds=" + defenderLostBuildingIds +
+                ", attackerTroopIds=" + attackerTroopIds +
+                ", defenderTroopIds=" + defenderTroopIds +
+                ", lostAttackerTroopIds=" + lostAttackerTroopIds +
+                ", lostDefenderTroopIds=" + lostDefenderTroopIds +
+                ", attackerDamageDone=" + attackerDamageDone +
+                ", defenderDamageDone=" + defenderDamageDone +
+                ", attackerId=" + attackerId +
                 ", defenderId=" + defenderId +
-                ", defenderTroops=" + defenderTroops +
-                ", defenderDamage=" + defenderDamage +
-                ", defenderCasualties=" + defenderCasualties +
                 '}';
     }
 }
