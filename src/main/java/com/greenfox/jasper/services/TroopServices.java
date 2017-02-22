@@ -46,8 +46,10 @@ public class TroopServices {
         troopRepo.delete(troop);
     }
 
-    public void deleteAllFromList(List<Troop> listOfTroops){
-        troopRepo.delete(listOfTroops);
+    public void deleteAllFromList(List<Long> listOfTroops){
+        for(Long id : listOfTroops){
+            troopRepo.delete(id);
+            }
     }
 
     public void deleteMany(List<Troop> ... Lists){

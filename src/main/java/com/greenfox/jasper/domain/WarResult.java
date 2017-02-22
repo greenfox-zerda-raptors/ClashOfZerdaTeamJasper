@@ -1,10 +1,8 @@
-package com.greenfox.jasper.dto;
-
-import com.greenfox.jasper.domain.Troop;
+package com.greenfox.jasper.domain;
 
 import java.util.List;
 
-public class BattleResponseDto {
+public class WarResult {
 
     private List<Long> defenderLostBuildingIds;
     private  List<Long> attackerTroopIds;
@@ -15,6 +13,29 @@ public class BattleResponseDto {
     private int defenderDamageDone;
     private long attackerId;
     private long defenderId;
+
+
+    public WarResult(
+            List<Long> defenderLostBuildingIds,
+            List<Long> attackerTroopIds,
+            List<Long> defenderTroopIds,
+            List<Long> lostAttackerTroopIds,
+            List<Long> lostDefenderTroopIds,
+            int attackerDamageDone,
+            int defenderDamageDone,
+            long attackerId,
+            long defenderId) {
+
+        this.defenderLostBuildingIds = defenderLostBuildingIds;
+        this.attackerTroopIds = attackerTroopIds;
+        this.defenderTroopIds = defenderTroopIds;
+        this.lostAttackerTroopIds = lostAttackerTroopIds;
+        this.lostDefenderTroopIds = lostDefenderTroopIds;
+        this.attackerDamageDone = attackerDamageDone;
+        this.defenderDamageDone = defenderDamageDone;
+        this.attackerId = attackerId;
+        this.defenderId = defenderId;
+    }
 
     public List<Long> getDefenderLostBuildingIds() {
         return defenderLostBuildingIds;
@@ -86,19 +107,5 @@ public class BattleResponseDto {
 
     public void setDefenderId(long defenderId) {
         this.defenderId = defenderId;
-    }
-
-    @Override
-    public String toString() {
-        return "BattleResponseDto{" +
-                "attackerId=" + attackerId +
-                ", attackerTroops=" + attackerTroops +
-                ", attackerDamage=" + attackerDamage +
-                ", attackerCasualties=" + attackerCasualties +
-                ", defenderId=" + defenderId +
-                ", defenderTroops=" + defenderTroops +
-                ", defenderDamage=" + defenderDamage +
-                ", defenderCasualties=" + defenderCasualties +
-                '}';
     }
 }
