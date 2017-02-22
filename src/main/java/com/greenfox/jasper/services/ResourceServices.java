@@ -143,7 +143,7 @@ public class ResourceServices {
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money = gold.getAmount();
         boolean result;
-        result=(money>=250);
+        result = (money>=250);
         if(result){
             money -= 250;
             gold.setAmount(money);

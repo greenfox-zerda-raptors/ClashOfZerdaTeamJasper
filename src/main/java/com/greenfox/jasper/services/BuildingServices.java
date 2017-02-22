@@ -49,6 +49,7 @@ public class BuildingServices {
             timedEventServices.addNewLevelUpEvent(kingdomId, newBuilding.getBuildingId());
         }
     }
+
     public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {
         return buildingRepo.findAllBuildingByKingdomAndType(kingdomServices.findOneById(kingdomId), type);
     }

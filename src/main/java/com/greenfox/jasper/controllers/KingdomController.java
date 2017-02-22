@@ -47,5 +47,4 @@ public class KingdomController {
         kingdomServices.updateLocation(currentUser, locationDto);
         return ResponseEntity.status(HttpStatus.OK).body("Kingdom moved");
     }
-
 }
