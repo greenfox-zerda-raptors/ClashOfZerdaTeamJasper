@@ -4,40 +4,25 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="battle_result_table")
+
 public class Battle {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "battle_id")
+
     private long battleId;
-    @Column(name = "attacker_kingdom")
     private Kingdom attacker;
-    @Column(name = "defender_kingdom")
     private Kingdom defender;
-    @Transient
     private List<Troop> attackerTroops;
-    @Transient
     private List<Troop> defenderTroops;
-    @Transient
     private int attackerHp;
-    @Transient
     private int defenderHp;
-    @Column(name = "attacker_attack_power")
     private int attackerAttackPower;
-    @Column(name = "defender_attack_power")
     private int defenderAttackPower;
-    @Column(name = "attacker_defense_power")
     private int attackerDefensePower;
-    @Column(name = "defender_defense_power")
     private int defenderDefensePower;
     private int attackerDamageDone;
     private int defenderDamageDone;
     private List<Troop> attackerCasualties;
-    @Transient
     private List<Troop> defenderCasualties;
-
     private int buildingDamage;
 
     public Battle(){

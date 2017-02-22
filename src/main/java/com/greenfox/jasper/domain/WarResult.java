@@ -1,17 +1,33 @@
 package com.greenfox.jasper.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "war_result_table")
 public class WarResult {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "war_result_id")
+    private long warResultId;
+    @Transient
     private List<Long> defenderLostBuildingIds;
+    @Transient
     private  List<Long> attackerTroopIds;
+    @Transient
     private List<Long> defenderTroopIds;
+    @Transient
     private List<Long> lostAttackerTroopIds;
+    @Transient
     private List<Long> lostDefenderTroopIds;
+    @Column(name = "attacker_damage_done")
     private int attackerDamageDone;
+    @Column(name = "defender_damage_done")
     private int defenderDamageDone;
+    @Column(name = "atacker_id")
     private long attackerId;
+    @Column(name = "defender_id")
     private long defenderId;
 
 
@@ -35,6 +51,14 @@ public class WarResult {
         this.defenderDamageDone = defenderDamageDone;
         this.attackerId = attackerId;
         this.defenderId = defenderId;
+    }
+
+    public long getWarResultId() {
+        return warResultId;
+    }
+
+    public void setWarResultId(long warResultId) {
+        this.warResultId = warResultId;
     }
 
     public List<Long> getDefenderLostBuildingIds() {
