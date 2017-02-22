@@ -12,6 +12,7 @@ import com.greenfox.jasper.repos.TimedEventRepos.LevelUpEventRepo;
 import com.greenfox.jasper.repos.TimedEventRepos.TimedEventRepo;
 import com.greenfox.jasper.repos.TimedEventRepos.UpgradeTroopEventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class TimedEventServices {
     // @Inheritance, timedEventRepo will obtain everything you need, "subrepos" will only obtain the data for that class (no data from superclass only ID)
     // If you want to filter in different event types, there is a field automatically generated, use custom queries for them
 
-//    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 1000)
     public void checkForEvents() {
         long currentTime = System.currentTimeMillis();
         List<TimedEvent> listedEvents = timedEventRepo.findAllWaitingForExecution(currentTime);
