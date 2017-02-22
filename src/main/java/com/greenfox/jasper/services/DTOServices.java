@@ -93,4 +93,13 @@ public class DTOServices {
         return result;
     }
 
+    public List<UserWithPointsDto> convertUserListToLeaderboard(List<User> users){
+        return users.stream().map(this::convertUserToUserLeaderboard).collect(Collectors.toList());
+    }
+
+    private UserWithPointsDto convertUserToUserLeaderboard(User user) {
+        UserWithPointsDto result = modelMapper.map(user, UserWithPointsDto.class);
+        return result;
+    }
+
 }

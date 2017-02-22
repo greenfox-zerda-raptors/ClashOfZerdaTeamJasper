@@ -24,7 +24,7 @@ public class Building implements Serializable {
     private int level;
     private int hp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Kingdom kingdom;
     @ManyToOne

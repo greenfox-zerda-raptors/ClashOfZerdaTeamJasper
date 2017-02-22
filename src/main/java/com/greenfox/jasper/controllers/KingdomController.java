@@ -42,6 +42,7 @@ public class KingdomController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "/location", method = RequestMethod.PUT)
     public ResponseEntity newLocation(@AuthenticationPrincipal JwtUser currentUser, @RequestBody LocationDto locationDto){
         kingdomServices.updateLocation(currentUser, locationDto);
