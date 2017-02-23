@@ -26,9 +26,12 @@ public class Building implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
+    @JoinColumn(name = "kingdom_id")
     private Kingdom kingdom;
+
     @ManyToOne
     @JsonIgnore
+    @Transient
     private Resource resource;
 
     @Column(name = "levelup_time")
@@ -54,6 +57,7 @@ public class Building implements Serializable {
         this(type, kingdom);
         this.level = level;
     }
+
 
     public long getBuildingId() {
         return buildingId;

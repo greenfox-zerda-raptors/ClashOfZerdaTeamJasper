@@ -25,10 +25,12 @@ public class Resource implements Serializable {
     private float amount;
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
+    @Transient
     private List<Building> buildings;
 
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "kingdom_id")
     private Kingdom kingdom;
 
     public Resource() {

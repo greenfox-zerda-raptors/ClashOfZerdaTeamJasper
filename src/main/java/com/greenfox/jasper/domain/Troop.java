@@ -31,6 +31,7 @@ public class Troop implements Serializable {
 
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "kingdom_id")
     private Kingdom kingdom;
 
     public Troop() {

@@ -62,7 +62,7 @@ public class ResourceController {
         if (resourceList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResourceListDTO result = new ResourceListDTO(dtoServices.convertResourceWithBuildingsDto(resourceList, buildingList));
+        ResourceListDTO result = new ResourceListDTO(dtoServices.convertResourcesToDTO(resourceList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

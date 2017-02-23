@@ -25,7 +25,6 @@ public class Kingdom implements Serializable {
     @JsonManagedReference
     @OneToOne
     @JoinColumn(name="user_id")
-
     private User user;
 
     @OneToMany(mappedBy = "kingdom", cascade = CascadeType.ALL)

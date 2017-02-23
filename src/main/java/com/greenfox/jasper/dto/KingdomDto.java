@@ -3,12 +3,13 @@ package com.greenfox.jasper.dto;
 import java.util.List;
 
 public class KingdomDto {
-// TODO posX-Y
 
     private UserDto user;
     private List<BuildingDto> buildings;
     private List<ResourceDto> resources;
     private List<TroopDto> troops;
+    private int posX;
+    private int posY;
 
     public UserDto getUser() {
         return user;
@@ -42,6 +43,22 @@ public class KingdomDto {
         this.troops = troops;
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
     @Override
     public String toString() {
         return "KingdomDto{" +
@@ -49,6 +66,8 @@ public class KingdomDto {
                 ", buildings=" + buildings +
                 ", resources=" + resources +
                 ", troops=" + troops +
+                ", posX=" + posX +
+                ", posY=" + posY +
                 '}';
     }
 }

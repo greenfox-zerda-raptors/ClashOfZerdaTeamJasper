@@ -17,13 +17,11 @@ import java.util.List;
 @Entity
 @Table(name = "user_table")
 @Component
-@SequenceGenerator(name = "user_seq", initialValue = 4)
 public class User implements Serializable {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    //@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "user_name", length = 50, unique = true)
@@ -60,7 +58,7 @@ public class User implements Serializable {
     @NotNull
     private Date lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_authority_table",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},

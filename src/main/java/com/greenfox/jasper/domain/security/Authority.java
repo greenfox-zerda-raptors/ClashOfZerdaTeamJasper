@@ -12,12 +12,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "authority_table")
-@SequenceGenerator(name="authority_seq", initialValue=100)
+//@SequenceGenerator(name="authority_seq", initialValue=100)
 public class Authority {
 
     @Id
     @Column(name = "authority_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
     private Long id;
 
@@ -26,7 +26,7 @@ public class Authority {
     @Enumerated(EnumType.STRING)
     private AuthorityName name;
 
-    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
     private List<User> users;
 
     public Long getId() {

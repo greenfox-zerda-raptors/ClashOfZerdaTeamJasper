@@ -58,16 +58,6 @@ public class DTOServices {
         result.setId(resource.getId());
         result.setType(resource.getType());
         result.setAmount((int) resource.getAmount());
-        result.setBuildings(convertBuildingListToDTO(resource.getBuildings()));
-        return result;
-    }
-
-    public ResourceDto convertResourceWithBuildingsDto(Resource resource, List<Building> buildings) {
-        ResourceDto result = new ResourceDto();
-        result.setId(resource.getId());
-        result.setType(resource.getType());
-        result.setAmount((int) resource.getAmount());
-        result.setBuildings(convertBuildingListToDTO(buildings));
         return result;
     }
 
