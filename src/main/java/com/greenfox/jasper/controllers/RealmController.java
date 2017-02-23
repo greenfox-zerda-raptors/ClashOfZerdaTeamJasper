@@ -1,10 +1,11 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Kingdom;
 import com.greenfox.jasper.domain.User;
 import com.greenfox.jasper.dto.KingdomListResponse;
 import com.greenfox.jasper.dto.UserWithPointsDto;
+import com.greenfox.jasper.exception.notfound.NoKingdomsFoundException;
+import com.greenfox.jasper.exception.notfound.NoUsersFoundException;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
 import com.greenfox.jasper.services.UserServices;
@@ -36,7 +37,7 @@ public class RealmController {
         List<Kingdom> allKingdoms = kingdomServices.findAll();
         KingdomListResponse result = new KingdomListResponse(dtoServices.convertKingdomListToDTO(allKingdoms));
         if (result == null){
-            return new ResponseEntity(new CustomError("No kingdoms in this realm", 400), HttpStatus.NOT_FOUND);
+            throw new NoKingdomsFoundException();
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -45,7 +46,7 @@ public class RealmController {
     public ResponseEntity<List<UserWithPointsDto>> leaderboardofKingdoms(){
         List<User> allUsersByPoints = userServices.findAllByScore();
         if(allUsersByPoints.size() == 0){
-            return new ResponseEntity(new CustomError("No users", 400), HttpStatus.NOT_FOUND);
+           throw new NoUsersFoundException();
         }
 
         List<UserWithPointsDto> result =  dtoServices.convertUserListToLeaderboard(allUsersByPoints);

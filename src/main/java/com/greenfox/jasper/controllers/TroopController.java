@@ -1,10 +1,12 @@
 package com.greenfox.jasper.controllers;
 
-import com.greenfox.jasper.domain.CustomError;
 import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopDto;
 import com.greenfox.jasper.dto.TroopPostDto;
 import com.greenfox.jasper.dto.troopListDTO;
+import com.greenfox.jasper.exception.notfound.KingdomNotFoundException;
+import com.greenfox.jasper.exception.notfound.NoTroopsFoundException;
+import com.greenfox.jasper.exception.notfound.TroopNotFoundException;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class TroopController {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         List<Troop> troopList = troopServices.findAllTroopsByKingdomId(kingdomId);
         if (troopList == null) {
-            return new ResponseEntity(new CustomError("No troops found", 404), HttpStatus.NOT_FOUND);
+            throw new NoTroopsFoundException();
         }
         troopListDTO result = new troopListDTO(dtoServices.convertTroopListToDTO(troopList));
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -49,7 +51,7 @@ public class TroopController {
     public ResponseEntity<TroopDto> getOneTroop(@PathVariable long troopId) {
         Troop result = troopServices.findOneTroop(troopId);
         if (result == null) {
-            return new ResponseEntity(new CustomError("No troop found with that id", 404), HttpStatus.NOT_FOUND);
+            throw new TroopNotFoundException(troopId);
         }
         return ResponseEntity.status(HttpStatus.OK).body(dtoServices.convertTRoopToDTO(result));
     }
@@ -68,11 +70,11 @@ public class TroopController {
     public ResponseEntity<TroopDto> upgradeTroop(@AuthenticationPrincipal JwtUser currentUser, @RequestBody TroopPostDto troopPostDto) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
         if (kingdomId == 0) {
-            return new ResponseEntity(new CustomError("No suxh kingdom", 404), HttpStatus.NOT_FOUND);
+            throw new KingdomNotFoundException(kingdomId);
         }
         Troop troopToBeUpgraded = troopServices.findOneTroop(troopPostDto.getTroopId());
         if(troopToBeUpgraded == null){
-            return new ResponseEntity(new CustomError("No such troop", 404), HttpStatus.NOT_FOUND);
+           throw new TroopNotFoundException(troopPostDto.getTroopId());
         }
         timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
         TroopDto result = dtoServices.convertTRoopToDTO(troopToBeUpgraded);
