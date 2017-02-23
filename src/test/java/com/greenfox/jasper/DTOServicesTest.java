@@ -106,28 +106,7 @@ public class DTOServicesTest {
             expected.setId(0);
             expected.setAmount(1);
             expected.setType("gold");
-            expected.setBuildings(new ArrayList<>());
 
             assertEquals(expected.toString(), converted.toString());
-        }
-
-        @Test
-       public void convertResourcesDtoWithBuildingsTest(){
-            Resource testResource = new Resource("gold");
-            List<Building> testBuildingList = new ArrayList<>(
-                    Arrays.asList(new Building("mine"))
-            );
-            testResource.setBuildings(testBuildingList);
-
-            ResourceDto converted = dtoServices.convertResourceWithBuildingsDto(testResource, testBuildingList);
-
-            ResourceDto expected = new ResourceDto();
-            expected.setId(0);
-            expected.setAmount(1);
-            expected.setType("gold");
-            expected.setBuildings(dtoServices.convertBuildingListToDTO(testBuildingList));
-
-            assertEquals(expected.toString(), converted.toString());
-            assertEquals(expected.getBuildings().get(0).toString(), converted.getBuildings().get(0).toString());
         }
 }
