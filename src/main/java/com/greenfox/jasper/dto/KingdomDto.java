@@ -4,18 +4,18 @@ import java.util.List;
 
 public class KingdomDto {
 
-    private UserDto user;
+    private SafeUserDto user;
     private List<BuildingDto> buildings;
     private List<ResourceDto> resources;
     private List<TroopDto> troops;
-    private int posX;
-    private int posY;
+    private long posX;
+    private long posY;
 
-    public UserDto getUser() {
+    public SafeUserDto getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(SafeUserDto user) {
         this.user = user;
     }
 
@@ -43,19 +43,19 @@ public class KingdomDto {
         this.troops = troops;
     }
 
-    public int getPosX() {
+    public long getPosX() {
         return posX;
     }
 
-    public void setPosX(int posX) {
+    public void setPosX(long posX) {
         this.posX = posX;
     }
 
-    public int getPosY() {
+    public long getPosY() {
         return posY;
     }
 
-    public void setPosY(int posY) {
+    public void setPosY(long posY) {
         this.posY = posY;
     }
 

@@ -3,6 +3,7 @@ package com.greenfox.jasper.controllers;
 import com.greenfox.jasper.domain.Building;
 import com.greenfox.jasper.domain.Resource;
 import com.greenfox.jasper.dto.ResourceListDTO;
+import com.greenfox.jasper.exception.notfound.ResourcesNotFoundException;
 import com.greenfox.jasper.security.JwtUser;
 import com.greenfox.jasper.services.DTOServices;
 import com.greenfox.jasper.services.KingdomServices;
@@ -38,7 +39,7 @@ public class ResourceController {
         resourceServices.calculateResource(kingdomId);
         List<Resource> resourceList = resourceServices.findAllResourcesByKingdomId(kingdomId);
         if (resourceList == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new ResourcesNotFoundException();
         }
         ResourceListDTO result = new ResourceListDTO(
                 dtoServices.convertResourcesListToDTO(resourceServices.findAllResourcesByKingdomId((kingdomId))));
@@ -60,7 +61,7 @@ public class ResourceController {
         }
 
         if (resourceList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ResourcesNotFoundException();
         }
         ResourceListDTO result = new ResourceListDTO(dtoServices.convertResourcesToDTO(resourceList));
         return new ResponseEntity<>(result, HttpStatus.OK);

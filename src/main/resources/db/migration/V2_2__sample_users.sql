@@ -7,3 +7,7 @@ INSERT INTO user_authority_table (user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authority_table (user_id, authority_id) VALUES (1, 2);
 INSERT INTO user_authority_table (user_id, authority_id) VALUES (2, 1);
 INSERT INTO user_authority_table (user_id, authority_id) VALUES (3, 1);
+INSERT INTO  kingdom_table (kingdom_id, kingdom_name, pos_x, pos_y, last_update_time, user_user_id) VALUES (1, 'admin', 0, 0, 1487759590975, 1);
+INSERT INTO  building_table (building_id, hp, building_level, levelup_time, building_type, kingdom_kingdom_id, resource_resource_id ) values (10, 100, 1, 0, 'townhall', 1, null);
+INSERT INTO RESOURCE_TABLE (resource_id, amount, resource_type, kingdom_kingdom_id) values (77, 500, 'gold', 1);
+INSERT INTO RESOURCE_TABLE (resource_id, amount, resource_type, kingdom_kingdom_id) values (78, 500, 'food', 1);
