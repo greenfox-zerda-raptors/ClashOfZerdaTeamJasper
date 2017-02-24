@@ -20,9 +20,7 @@ import java.util.List;
 @Service
 public class TimedEventServices {
 
-    // TODO building / troop end time set
-
-    private long baseTime = 60000; // currently set for 1 min., more balance changes required
+    private long baseTime = 5000; // currently set for 1 min., more balance changes required
 
     @Autowired
     private TimedEventRepo timedEventRepo;
@@ -41,8 +39,6 @@ public class TimedEventServices {
     @Autowired
     private KingdomServices kingdomServices;
 
-    // @Inheritance, timedEventRepo will obtain everything you need, "subrepos" will only obtain the data for that class (no data from superclass only ID)
-    // If you want to filter in different event types, there is a field automatically generated, use custom queries for them
 
     @Scheduled(fixedRate = 1000)
     public void checkForEvents() {
