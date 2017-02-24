@@ -13,8 +13,8 @@ CREATE SEQUENCE hibernate_sequence
   MAXVALUE 9223372036854775807
   START 200
   CACHE 1;
-ALTER TABLE hibernate_sequence
-  OWNER TO postgres;
+--ALTER TABLE hibernate_sequence;
+ -- OWNER TO postgres;
 CREATE SEQUENCE user_seq
   INCREMENT 1
   MINVALUE 0
