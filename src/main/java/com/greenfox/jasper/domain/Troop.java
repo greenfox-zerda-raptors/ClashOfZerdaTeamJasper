@@ -65,9 +65,10 @@ public class Troop implements Serializable {
     }
 
     public void upgrade(){
-        // TODO statChanges per level
         this.level++;
         this.upgradeTime = 0;
+        this.attack++;
+        this.defense++;
     }
 
     public Kingdom getKingdom() {
