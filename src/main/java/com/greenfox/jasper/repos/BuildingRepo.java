@@ -22,6 +22,4 @@ public interface BuildingRepo extends CrudRepository<Building, Long>{
     @Query("SELECT a FROM Building a where a.kingdom = :kingdom order by a.buildingId desc")
     List<Building> findAllOrderByBuildingIdDesc(@Param("kingdom") Kingdom kingdom);
 
-//    @Query("SELECT SUM(a.buildinglevel) FROM Building a WHERE a.kingdom = :kingdom and a.type = :buildingtype")
-//    int calculateTotalLevel(@Param("kingdom") Kingdom kingdom, @Param("buildingtype") String buildingType);
 }

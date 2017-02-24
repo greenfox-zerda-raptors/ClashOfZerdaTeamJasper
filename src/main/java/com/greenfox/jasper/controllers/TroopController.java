@@ -4,6 +4,7 @@ import com.greenfox.jasper.domain.Troop;
 import com.greenfox.jasper.dto.TroopDto;
 import com.greenfox.jasper.dto.TroopPostDto;
 import com.greenfox.jasper.dto.troopListDTO;
+import com.greenfox.jasper.exception.badrequest.NotEnoughResourcesException;
 import com.greenfox.jasper.exception.notfound.KingdomNotFoundException;
 import com.greenfox.jasper.exception.notfound.NoTroopsFoundException;
 import com.greenfox.jasper.exception.notfound.TroopNotFoundException;
@@ -31,7 +32,7 @@ public class TroopController {
     private TimedEventServices timedEventServices;
 
     @Autowired
-    private BuildingServices buildingServices;
+    private ResourceServices resourceServices;
 
     @Autowired
     private DTOServices dtoServices;
@@ -56,11 +57,13 @@ public class TroopController {
         return ResponseEntity.status(HttpStatus.OK).body(dtoServices.convertTRoopToDTO(result));
     }
 
-
-    // TODO remove building time cd to kingdom - calculate max available troop (from barrack level)
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public ResponseEntity trainNewTroop(@AuthenticationPrincipal JwtUser currentUser) {
         long kingdomId = kingdomServices.getKingdomIdFromJWTUser(currentUser);
+        boolean available = resourceServices.buyNewTroop(kingdomId);
+        if (!available) {
+            throw new NotEnoughResourcesException("gold");
+        }
         troopServices.addNewTroop(kingdomId);
         return ResponseEntity.status(HttpStatus.OK).body("Mkay");
     }
@@ -75,6 +78,10 @@ public class TroopController {
         Troop troopToBeUpgraded = troopServices.findOneTroop(troopPostDto.getTroopId());
         if(troopToBeUpgraded == null){
            throw new TroopNotFoundException(troopPostDto.getTroopId());
+        }
+        boolean available = resourceServices.levelUpTroopMoneyCheck(kingdomId, troopPostDto.getTroopId());
+        if (!available) {
+            throw new NotEnoughResourcesException("gold");
         }
         timedEventServices.addNewUpgradeTroopEvent(troopPostDto.getTroopId(), kingdomId);
         TroopDto result = dtoServices.convertTRoopToDTO(troopToBeUpgraded);

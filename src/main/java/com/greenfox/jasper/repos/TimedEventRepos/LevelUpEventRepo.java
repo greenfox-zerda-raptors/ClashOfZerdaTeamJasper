@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface LevelUpEventRepo extends CrudRepository<LevelUpEvent, Long> {
 
-    List<LevelUpEvent> findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(long kingdomId, boolean wasExecuted);
+    List<LevelUpEvent> findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(long kingdomId, int wasExecuted);
 }

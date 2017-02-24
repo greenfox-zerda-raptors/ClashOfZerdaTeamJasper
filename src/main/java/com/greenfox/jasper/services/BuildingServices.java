@@ -46,7 +46,7 @@ public class BuildingServices {
         if(type.equals("farm") || type.equals("barrack") || type.equals("mine")) {
             Building newBuilding = new Building(type, kingdomServices.findOneById(kingdomId));
             buildingRepo.save(newBuilding);
-            timedEventServices.addNewLevelUpEvent(kingdomId, newBuilding.getBuildingId());
+            timedEventServices.addNewLevelUpEvent(kingdomId, newBuilding);
         }
     }
     public List<Building> findAllBuildingByKingdomIdAndByType(long kingdomId, String type) {
