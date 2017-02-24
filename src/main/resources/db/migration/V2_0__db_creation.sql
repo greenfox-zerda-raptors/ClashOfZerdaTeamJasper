@@ -5,7 +5,7 @@ CREATE TABLE kingdom_table(kingdom_id BIGSERIAL NOT NULL, kingdom_name VARCHAR(2
 CREATE TABLE building_table(building_id BIGSERIAL NOT NULL, kingdom_id BIGINT REFERENCES kingdom_table(kingdom_id), building_type VARCHAR(255), building_level INTEGER, hp INTEGER, levelup_time BIGINT, PRIMARY KEY (building_id));
 CREATE TABLE resource_table(resource_id BIGSERIAL NOT NULL, resource_type VARCHAR(255) NOT NULL , kingdom_id BIGINT REFERENCES kingdom_table(kingdom_id), amount DOUBLE PRECISION, PRIMARY KEY (resource_id));
 CREATE TABLE troop_table(troop_id BIGSERIAL NOT NULL, attack INTEGER, defense INTEGER, hp INTEGER, troop_level INTEGER, upgrade_time BIGINT, kingdom_id BIGINT REFERENCES kingdom_table(kingdom_id), PRIMARY KEY (troop_id));
-CREATE TABLE timed_event_table(dtype VARCHAR(255) NOT NULL, timed_event_id BIGSERIAL NOT NULL, execution_time BIGINT NOT NULL, was_executed BIT NOT NULL, kingdom_id BIGINT, building_id BIGINT, troop_id BIGINT, attacker_id BIGINT, defender_id BIGINT, PRIMARY KEY (timed_event_id));
+CREATE TABLE timed_event_table(dtype VARCHAR(255) NOT NULL, timed_event_id BIGSERIAL NOT NULL, execution_time BIGINT NOT NULL, was_executed INTEGER, kingdom_id BIGINT, building_id BIGINT, troop_id BIGINT, attacker_id BIGINT, defender_id BIGINT, PRIMARY KEY (timed_event_id));
 CREATE TABLE battle_result_table(battle_id BIGSERIAL, attacker_kingdom BIGINT REFERENCES kingdom_table(kingdom_id), defender_kingdom BIGINT REFERENCES kingdom_table(kingdom_id), attacker_attack_power INTEGER, defender_attack_power INTEGER, attacker_defense_power INTEGER, defender_defense_power INTEGER, PRIMARY KEY (battle_id));
 CREATE SEQUENCE hibernate_sequence
   INCREMENT 1

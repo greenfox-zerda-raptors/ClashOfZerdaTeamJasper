@@ -91,7 +91,7 @@ public class BuildingController {
             throw new NotEnoughResourcesException("gold");
         }
 
-        timedEventServices.addNewLevelUpEvent(buildingId, kingdomId);
+        timedEventServices.addNewLevelUpEvent(kingdomId, buildingToBeUpgraded);
         BuildingDto result = dtoServices.convertBuildingToDTO(buildingToBeUpgraded);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

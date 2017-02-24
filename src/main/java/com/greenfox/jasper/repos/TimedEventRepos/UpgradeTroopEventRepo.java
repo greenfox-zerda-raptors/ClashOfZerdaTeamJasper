@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Zoltán on 2017.02.08..
  */
 public interface UpgradeTroopEventRepo extends CrudRepository<UpgradeTroopEvent,Long>{
-    List<UpgradeTroopEvent> findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(long kingdomId, boolean wasExecuted);
+    List<UpgradeTroopEvent> findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(long kingdomId, int wasExecuted);
 }

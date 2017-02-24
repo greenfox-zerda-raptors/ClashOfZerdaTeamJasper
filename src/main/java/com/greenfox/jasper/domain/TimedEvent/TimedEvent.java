@@ -15,14 +15,14 @@ public abstract class TimedEvent implements Serializable{
     @Column(name = "execution_time")
     private long executionTime;
     @Column(name = "was_executed")
-    private boolean wasExecuted;
+    private int wasExecuted;
 
     public TimedEvent(){
 
     }
 
     public TimedEvent(long executionTime){
-        this.wasExecuted = false;
+        this.wasExecuted = 0;
         this.executionTime = executionTime;
     }
 
@@ -42,14 +42,13 @@ public abstract class TimedEvent implements Serializable{
         this.executionTime = executionTime;
     }
 
-    public boolean isWasExecuted() {
+    public int getWasExecuted() {
         return wasExecuted;
     }
 
-    public void setWasExecuted(boolean wasExecuted) {
+    public void setWasExecuted(int wasExecuted) {
         this.wasExecuted = wasExecuted;
     }
-
 
     @Override
     public String toString() {

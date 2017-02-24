@@ -32,8 +32,6 @@ public class RegistrationServices {
 
     public void registerNewUser(User user){
 
-        // TODO refactor / move to different service
-        // TODO - - - - R E F A C T O R - - - - - - -
         List<Authority> authorities = user.getAuthorities();
         authorities.add(userAuthorityRepo.findOne((long)1));
         userRepo.save(user);

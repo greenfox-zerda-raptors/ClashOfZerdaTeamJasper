@@ -66,7 +66,7 @@ public class TimedEventServices {
        } else{
            System.out.println("No such event-method");
        }
-        timedEvent.setWasExecuted(true);
+        timedEvent.setWasExecuted(1);
         timedEventRepo.save(timedEvent);
     }
 
@@ -104,7 +104,7 @@ public class TimedEventServices {
     }
     public void cancelEvent(long eventID) {
         TimedEvent tempEvent = timedEventRepo.findOne(eventID);
-        tempEvent.setWasExecuted(true);
+        tempEvent.setWasExecuted(1);
         timedEventRepo.save(tempEvent);
     }
     public void addNewBattleEvent(long attackerId, List<Troop> troops, long defenderId){
@@ -121,19 +121,18 @@ public class TimedEventServices {
         troopServices.saveOneTroop(troop);
     }
 
-    public void addNewLevelUpEvent(long kingdomId, long buildingID) {
-         Building temporaryBuilding = buildingServices.findOneBuilding(buildingID);
-        long buildingLevelUpTime = buildingLevelUpTime(temporaryBuilding, kingdomId);
-        temporaryBuilding.setLevelUpTime(buildingLevelUpTime);
+    public void addNewLevelUpEvent(long kingdomId, Building building) {
+        long buildingLevelUpTime = buildingLevelUpTime(building, kingdomId);
+        building.setLevelUpTime(buildingLevelUpTime);
          TimedEvent levelUpEvent = new LevelUpEvent(
-                 buildingLevelUpTime, kingdomId, buildingID);
+                 buildingLevelUpTime, kingdomId, building.getBuildingId());
         timedEventRepo.save(levelUpEvent);
-        buildingServices.saveOneBuilding(temporaryBuilding);
+        buildingServices.saveOneBuilding(building);
     }
 
     private long getQueueTimeForTroopEvents(long kingdomId) {
         long queueTime = 0;
-        List<UpgradeTroopEvent> allTroopEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
+        List<UpgradeTroopEvent> allTroopEventForKingdom = upgradeTroopEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, 0);
         if (allTroopEventForKingdom.size() > 0) {
             TimedEvent tempTimedEvent = allTroopEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();
@@ -142,7 +141,7 @@ public class TimedEventServices {
     }
     private long getQueueTimeForBuildings(long kingdomId) {
         long queueTime = 0;
-        List<LevelUpEvent> allBuildingEventForKingdom = levelUpEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, false);
+        List<LevelUpEvent> allBuildingEventForKingdom = levelUpEventRepo.findAllByKingdomIdAndWasExecutedOrderByExecutionTimeDesc(kingdomId, 0);
         if (allBuildingEventForKingdom.size() > 0) {
             TimedEvent tempTimedEvent = allBuildingEventForKingdom.get(0);
             queueTime += tempTimedEvent.getExecutionTime() - System.currentTimeMillis();

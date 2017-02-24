@@ -142,19 +142,45 @@ public class ResourceServices {
         return result;
     }
 
+    public boolean levelUpTroopMoneyCheck(long kingdomId, long troopId) {
+        calculateResource(kingdomId);
+        Resource gold = findAllGoldResourceByKingdomId(kingdomId);
+        float money;
+        money = gold.getAmount();
+        float cost;
+        Building building = buildingServices.findOneBuilding(troopId);
+        cost = 25;
+        if (money>cost){
+            money -= cost;
+            gold.setAmount(money);
+            resourceRepo.save(gold);
+        }
+        boolean result;
+        result=money>cost;
+        return result;
+
+    }
+
     public boolean buyNewBuilding(long kingdomId){
+        return buyNew(kingdomId, 250);
+    }
+
+    public boolean buyNewTroop(long kingdomId) {
+        return buyNew(kingdomId, 50);
+    }
+
+    private boolean buyNew(long kingdomId, int cost){
         calculateResource(kingdomId);
         Resource gold = findAllGoldResourceByKingdomId(kingdomId);
         float money;
         money = gold.getAmount();
         boolean result;
-        result=(money>=250);
+        result=(money>=cost);
         if(result){
-            money -= 250;
+            money -= cost;
             gold.setAmount(money);
             resourceRepo.save(gold);
         }
         return result;
     }
-
 }
